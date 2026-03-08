@@ -377,6 +377,12 @@
         {%- endfor -%}
       </div>
     </div>
+
+    <div class="video-banner__scroll-hint" aria-hidden="true">
+      <div class="video-banner__scroll-mouse">
+        <span class="video-banner__scroll-dot"></span>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -387,9 +393,10 @@
     color: rgb(var(--color-foreground));
   }
 
+  /* ================================================
+     FRAME
+  ================================================ */
   .video-banner__frame {
-    --vb-content-horizontal: center;
-    --vb-content-vertical: center;
     position: relative;
     display: flex;
     overflow: hidden;
@@ -413,6 +420,9 @@
     }
   }
 
+  /* ================================================
+     MEDIA LAYER
+  ================================================ */
   .video-banner__media {
     position: absolute;
     inset: 0;
@@ -444,35 +454,45 @@
   }
 
   .video-banner__video--desktop { display: none; }
-  .video-banner__video--mobile { display: block; }
+  .video-banner__video--mobile  { display: block; }
 
   @media (min-width: 750px) {
     .video-banner__video--desktop { display: block; }
-    .video-banner__video--mobile { display: none; }
+    .video-banner__video--mobile  { display: none; }
   }
 
+  /* ================================================
+     CINEMATIC OVERLAY — vignette + gradient
+  ================================================ */
   .video-banner__overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(
-      120deg,
-      rgba(var(--color-foreground), 0.12),
-      transparent 40%,
-      rgba(var(--color-foreground), 0.08)
-    ), var(--vb-overlay-color);
+    background:
+      radial-gradient(ellipse 110% 80% at 50% 50%, transparent 15%, rgba(0, 0, 0, 0.3) 100%),
+      linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.2) 0%,
+        transparent 30%,
+        transparent 60%,
+        rgba(0, 0, 0, 0.55) 100%
+      ),
+      var(--vb-overlay-color);
     opacity: var(--vb-overlay-opacity);
-    mix-blend-mode: multiply;
     pointer-events: none;
   }
 
+  /* ================================================
+     CONTENT AREA
+  ================================================ */
   .video-banner__content {
     position: absolute;
     inset: 0;
     display: flex;
     align-items: var(--vb-content-vertical-desktop, center);
     justify-content: var(--vb-content-horizontal-desktop, center);
-    padding: clamp(16px, 4vw, var(--vb-content-padding));
+    padding: clamp(20px, 5vw, var(--vb-content-padding));
     text-align: var(--vb-text-align);
+    z-index: 2;
   }
 
   .video-banner__content-inner {
@@ -480,48 +500,61 @@
     display: grid;
     gap: var(--vb-content-gap-desktop);
     margin: var(--vb-content-margin-top-desktop) var(--vb-content-margin-right-desktop) var(--vb-content-margin-bottom-desktop) var(--vb-content-margin-left-desktop);
-    animation: vb-fade-up 0.7s ease 0.12s both;
+    animation: vb-reveal 0.9s cubic-bezier(.22,.61,.36,1) 0.1s both;
   }
 
   .video-banner__content-inner.is-surfaced {
-    background: rgba(var(--color-foreground), 0.08);
     background: color-mix(in srgb, var(--vb-content-bg) var(--vb-content-bg-opacity), transparent);
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(16px) saturate(1.3);
+    -webkit-backdrop-filter: blur(16px) saturate(1.3);
     border-radius: var(--vb-content-radius);
-    padding: clamp(16px, 3vw, var(--vb-content-padding));
-    border: 1px solid rgba(var(--color-foreground), 0.08);
+    padding: clamp(20px, 4vw, var(--vb-content-padding));
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    box-shadow: 0 8px 48px rgba(0, 0, 0, 0.22);
   }
 
+  /* ================================================
+     HEADING
+  ================================================ */
   .video-banner__heading {
     margin: 0;
-    letter-spacing: -0.01em;
+    letter-spacing: -0.02em;
+    text-shadow: 0 2px 28px rgba(0, 0, 0, 0.5), 0 1px 5px rgba(0, 0, 0, 0.32);
   }
 
-  .video-banner__heading.heading--xl { font-size: clamp(28px, 5vw, 54px); line-height: 1.05; }
-  .video-banner__heading.heading--lg { font-size: clamp(24px, 4.4vw, 44px); line-height: 1.08; }
-  .video-banner__heading.heading--md { font-size: clamp(20px, 4vw, 32px); line-height: 1.12; }
+  .video-banner__heading.heading--xl { font-size: clamp(30px, 5.5vw, 62px); line-height: 1.02; }
+  .video-banner__heading.heading--lg { font-size: clamp(26px, 4.8vw, 50px); line-height: 1.05; }
+  .video-banner__heading.heading--md { font-size: clamp(21px, 4vw, 36px); line-height: 1.1; }
 
+  /* ================================================
+     BODY TEXT
+  ================================================ */
   .video-banner__text {
     margin: 0;
-    opacity: 0.92;
+    opacity: 0.93;
+    text-shadow: 0 1px 14px rgba(0, 0, 0, 0.4);
   }
 
-  .video-banner__text.text--lg { font-size: clamp(16px, 3.2vw, 20px); line-height: 1.5; }
-  .video-banner__text.text--md { font-size: clamp(15px, 3vw, 18px); line-height: 1.55; }
-  .video-banner__text.text--sm { font-size: clamp(14px, 2.8vw, 16px); line-height: 1.6; }
+  .video-banner__text.text--lg { font-size: clamp(16px, 3.2vw, 20px); line-height: 1.55; }
+  .video-banner__text.text--md { font-size: clamp(15px, 3vw, 18px); line-height: 1.6; }
+  .video-banner__text.text--sm { font-size: clamp(14px, 2.8vw, 16px); line-height: 1.65; }
 
-  .video-banner__text p {
-    margin: 0;
-  }
+  .video-banner__text p { margin: 0; }
 
+  /* ================================================
+     ACTIONS ROW
+  ================================================ */
   .video-banner__actions {
     display: flex;
     width: 100%;
     flex-wrap: wrap;
     justify-content: var(--vb-actions-align);
-    gap: 12px;
+    gap: 14px;
   }
 
+  /* ================================================
+     BADGE
+  ================================================ */
   .video-banner__badge-wrap {
     width: fit-content;
     max-width: 100%;
@@ -533,50 +566,77 @@
     max-width: 100%;
   }
 
+  /* ================================================
+     PREMIUM BUTTON
+  ================================================ */
   .video-banner__button {
     position: relative;
     isolation: isolate;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 9px;
-    min-width: clamp(152px, 22vw, 214px);
-    padding: 12px 24px;
+    gap: 10px;
+    min-width: clamp(180px, 26vw, 252px);
+    padding: 16px 40px;
     border-radius: 999px;
     font-weight: var(--vb-button-font-weight, 700);
-    letter-spacing: 0.01em;
+    font-size: clamp(13px, 1.5vw, 15px);
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
     text-decoration: none;
-    transition: transform 0.26s cubic-bezier(.22,.61,.36,1), box-shadow 0.26s ease, background 0.26s ease, color 0.26s ease, border-color 0.26s ease;
-    border: 1px solid var(--vb-button-border);
+    cursor: pointer;
     color: var(--vb-button-text);
-    background: linear-gradient(135deg, var(--vb-button-bg), var(--vb-button-bg-alt));
+    background: linear-gradient(135deg, var(--vb-button-bg) 0%, var(--vb-button-bg-alt) 100%);
+    border: 1.5px solid color-mix(in srgb, var(--vb-button-border) 75%, rgba(255, 255, 255, 0.45));
     box-shadow:
-      0 10px 26px color-mix(in srgb, var(--vb-button-glow) var(--vb-button-glow-primary), transparent),
-      inset 0 1px 0 rgba(255, 255, 255, 0.22);
+      inset 0 2px 0 rgba(255, 255, 255, 0.3),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.14),
+      0 6px 28px color-mix(in srgb, var(--vb-button-glow) var(--vb-button-glow-primary), transparent),
+      0 2px 8px rgba(0, 0, 0, 0.32),
+      0 0 0 0px color-mix(in srgb, var(--vb-button-glow) 18%, transparent),
+      0 0 0 0px color-mix(in srgb, var(--vb-button-glow) 8%, transparent);
     overflow: hidden;
-    animation: vb-glow 3.2s ease-in-out infinite;
+    transition:
+      transform 0.32s cubic-bezier(.22,.61,.36,1),
+      box-shadow 0.32s ease,
+      background 0.3s ease,
+      border-color 0.3s ease,
+      color 0.3s ease;
+    animation: vb-btn-breathe 3s ease-in-out infinite;
   }
 
+  /* Inner gloss highlight */
   .video-banner__button::before {
     content: "";
     position: absolute;
-    inset: 1px;
+    inset: 0;
     border-radius: inherit;
-    background: linear-gradient(160deg, rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0) 45%, rgba(255, 255, 255, 0.12) 100%);
+    background: linear-gradient(
+      160deg,
+      rgba(255, 255, 255, 0.3) 0%,
+      rgba(255, 255, 255, 0) 50%,
+      rgba(255, 255, 255, 0.1) 100%
+    );
     pointer-events: none;
     z-index: 0;
   }
 
+  /* Shimmer sweep on hover */
   .video-banner__button::after {
     content: "";
     position: absolute;
     top: -120%;
-    left: -45%;
-    width: 58%;
+    left: -60%;
+    width: 50%;
     height: 340%;
-    background: linear-gradient(108deg, transparent 0%, rgba(255, 255, 255, 0.52) 42%, transparent 76%);
-    transform: translateX(-140%) rotate(14deg);
-    transition: transform 0.55s ease;
+    background: linear-gradient(
+      108deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.62) 46%,
+      transparent 72%
+    );
+    transform: translateX(-220%) rotate(14deg);
+    transition: transform 0.72s ease;
     pointer-events: none;
     z-index: 0;
   }
@@ -587,48 +647,156 @@
   }
 
   .video-banner__button-icon {
-    transition: transform 0.24s ease;
+    transition: transform 0.28s cubic-bezier(.22,.61,.36,1);
+    font-size: 1.05em;
+    display: inline-block;
   }
 
+  /* Primary variant */
   .video-banner__button.btn--primary {
-    border-color: var(--vb-button-border);
+    border-color: color-mix(in srgb, var(--vb-button-border) 75%, rgba(255, 255, 255, 0.45));
   }
 
+  /* Secondary variant */
   .video-banner__button.btn--secondary {
     background: linear-gradient(
       135deg,
-      color-mix(in srgb, var(--vb-button-bg) 18%, transparent),
-      color-mix(in srgb, var(--vb-button-bg-alt) 28%, transparent)
+      color-mix(in srgb, var(--vb-button-bg) 22%, transparent),
+      color-mix(in srgb, var(--vb-button-bg-alt) 32%, transparent)
     );
-    color: var(--vb-button-text);
-    border-color: color-mix(in srgb, var(--vb-button-border) 45%, transparent);
-    box-shadow: 0 8px 22px color-mix(in srgb, var(--vb-button-glow) var(--vb-button-glow-secondary), transparent);
+    border-color: color-mix(in srgb, var(--vb-button-border) 50%, transparent);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.18),
+      0 6px 22px color-mix(in srgb, var(--vb-button-glow) var(--vb-button-glow-secondary), transparent);
   }
 
+  /* Ghost variant */
   .video-banner__button.is-ghost {
-    background: color-mix(in srgb, var(--vb-button-bg) 10%, transparent);
-    color: var(--vb-button-text);
-    border-color: color-mix(in srgb, var(--vb-button-border) 65%, transparent);
-    backdrop-filter: blur(4px);
+    background: color-mix(in srgb, var(--vb-button-bg) 12%, transparent);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border-color: color-mix(in srgb, var(--vb-button-border) 60%, transparent);
   }
 
-  .video-banner__button.is-full {
-    width: 100%;
-    max-width: 420px;
-  }
+  /* Full width mobile */
+  .video-banner__button.is-full { width: 100%; max-width: 440px; }
 
   @media (min-width: 750px) {
-    .video-banner__button.is-full {
-      width: auto;
-      max-width: none;
+    .video-banner__button.is-full { width: auto; max-width: none; }
+  }
+
+  /* Breathing halo rings */
+  @keyframes vb-btn-breathe {
+    0%, 100% {
+      box-shadow:
+        inset 0 2px 0 rgba(255, 255, 255, 0.3),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.14),
+        0 6px 28px color-mix(in srgb, var(--vb-button-glow) var(--vb-button-glow-anim-low), transparent),
+        0 2px 8px rgba(0, 0, 0, 0.32),
+        0 0 0 0px color-mix(in srgb, var(--vb-button-glow) 18%, transparent),
+        0 0 0 0px color-mix(in srgb, var(--vb-button-glow) 8%, transparent);
+    }
+    50% {
+      box-shadow:
+        inset 0 2px 0 rgba(255, 255, 255, 0.3),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.14),
+        0 14px 52px color-mix(in srgb, var(--vb-button-glow) var(--vb-button-glow-anim-high), transparent),
+        0 2px 8px rgba(0, 0, 0, 0.32),
+        0 0 0 9px color-mix(in srgb, var(--vb-button-glow) 16%, transparent),
+        0 0 0 20px color-mix(in srgb, var(--vb-button-glow) 6%, transparent);
     }
   }
 
+  /* Hover */
+  @media (hover: hover) and (pointer: fine) {
+    .video-banner__button:hover {
+      transform: translateY(-5px) scale(1.03);
+      background: linear-gradient(135deg, var(--vb-button-bg-hover), var(--vb-button-bg-hover-alt));
+      border-color: color-mix(in srgb, var(--vb-button-border-hover) 75%, rgba(255, 255, 255, 0.45));
+      color: var(--vb-button-text-hover);
+      box-shadow:
+        inset 0 2px 0 rgba(255, 255, 255, 0.32),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.14),
+        0 22px 64px color-mix(in srgb, var(--vb-button-glow) var(--vb-button-glow-hover), transparent),
+        0 4px 14px rgba(0, 0, 0, 0.38),
+        0 0 0 11px color-mix(in srgb, var(--vb-button-glow) 20%, transparent),
+        0 0 0 24px color-mix(in srgb, var(--vb-button-glow) 7%, transparent);
+      animation-play-state: paused;
+    }
+
+    .video-banner__button:hover::after {
+      transform: translateX(165%) rotate(14deg);
+    }
+
+    .video-banner__button:hover .video-banner__button-icon {
+      transform: translateX(5px);
+    }
+  }
+
+  .video-banner__button:active {
+    transform: translateY(-1px) scale(0.99);
+    box-shadow:
+      inset 0 2px 0 rgba(255, 255, 255, 0.2),
+      0 4px 16px color-mix(in srgb, var(--vb-button-glow) var(--vb-button-glow-active), transparent),
+      0 2px 6px rgba(0, 0, 0, 0.3);
+  }
+
+  /* ================================================
+     SCROLL INDICATOR
+  ================================================ */
+  .video-banner__scroll-hint {
+    position: absolute;
+    bottom: 26px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 3;
+    opacity: 0.5;
+    pointer-events: none;
+    animation: vb-scroll-fade 1.4s ease 1.4s both;
+  }
+
+  .video-banner__scroll-mouse {
+    width: 22px;
+    height: 36px;
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    padding-top: 6px;
+  }
+
+  .video-banner__scroll-dot {
+    width: 4px;
+    height: 7px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 2px;
+    animation: vb-scroll-drop 1.8s ease-in-out infinite;
+  }
+
+  @keyframes vb-scroll-drop {
+    0%   { opacity: 1; transform: translateY(0); }
+    75%  { opacity: 0; transform: translateY(10px); }
+    76%  { opacity: 0; transform: translateY(0); }
+    100% { opacity: 0.4; transform: translateY(0); }
+  }
+
+  @keyframes vb-scroll-fade {
+    from { opacity: 0; transform: translateX(-50%) translateY(8px); }
+    to   { opacity: 0.5; transform: translateX(-50%) translateY(0); }
+  }
+
+  /* ================================================
+     RESPONSIVE
+  ================================================ */
   @media (max-width: 749px) {
     .video-banner__content {
       align-items: var(--vb-content-vertical-mobile, center);
       justify-content: var(--vb-content-horizontal-mobile, center);
       text-align: var(--vb-text-align-mobile);
+      padding: clamp(16px, 5vw, 24px);
     }
 
     .video-banner__content-inner {
@@ -636,63 +804,32 @@
       margin: var(--vb-content-margin-top-mobile) var(--vb-content-margin-right-mobile) var(--vb-content-margin-bottom-mobile) var(--vb-content-margin-left-mobile);
     }
 
-    .video-banner__actions {
-      justify-content: var(--vb-actions-align-mobile);
-    }
-
-    .video-banner__badge-wrap {
-      justify-self: var(--vb-badge-align-mobile);
-    }
+    .video-banner__actions { justify-content: var(--vb-actions-align-mobile); }
+    .video-banner__badge-wrap { justify-self: var(--vb-badge-align-mobile); }
 
     .video-banner__button {
-      min-width: clamp(132px, 60vw, 188px);
-      padding: 11px 18px;
+      min-width: clamp(148px, 62vw, 210px);
+      padding: 14px 28px;
+      font-size: 13px;
     }
 
-    .video-banner__button.is-full {
-      width: min(92%, 320px);
-    }
-  }
+    .video-banner__button.is-full { width: min(92%, 340px); max-width: 100%; }
 
-  @media (hover: hover) and (pointer: fine) {
-    .video-banner__button:hover {
-      transform: translateY(-3px) scale(1.01);
-      box-shadow:
-        0 18px 36px color-mix(in srgb, var(--vb-button-glow) var(--vb-button-glow-hover), transparent),
-        inset 0 1px 0 rgba(255, 255, 255, 0.3);
-      background: linear-gradient(135deg, var(--vb-button-bg-hover), var(--vb-button-bg-hover-alt));
-      border-color: var(--vb-button-border-hover);
-      color: var(--vb-button-text-hover);
-    }
-
-    .video-banner__button:hover::after {
-      transform: translateX(130%) rotate(14deg);
-    }
-
-    .video-banner__button:hover .video-banner__button-icon {
-      transform: translateX(3px);
-    }
-  }
-
-  .video-banner__button:active {
-    transform: translateY(-1px);
-    box-shadow: 0 8px 18px color-mix(in srgb, var(--vb-button-glow) var(--vb-button-glow-active), transparent);
-  }
-
-  @keyframes vb-fade-up {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  @keyframes vb-glow {
-    0%, 100% { box-shadow: 0 10px 26px color-mix(in srgb, var(--vb-button-glow) var(--vb-button-glow-anim-low), transparent); }
-    50% { box-shadow: 0 14px 34px color-mix(in srgb, var(--vb-button-glow) var(--vb-button-glow-anim-high), transparent); }
+    .video-banner__scroll-hint { display: none; }
   }
 
   @media (min-width: 900px) {
     .video-banner__content {
-      padding: clamp(24px, 4vw, var(--vb-content-padding));
+      padding: clamp(28px, 5vw, var(--vb-content-padding));
     }
+  }
+
+  /* ================================================
+     KEYFRAMES
+  ================================================ */
+  @keyframes vb-reveal {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
   }
 
 {%- endstyle -%}
