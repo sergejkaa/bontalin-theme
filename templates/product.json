@@ -27,7 +27,7 @@
           "type": "price",
           "settings": {}
         },
-        "feature_cards_mJ4V7U": {
+        "feature_cards_LB4F4H": {
           "type": "feature-cards",
           "settings": {
             "visible_items": 4,
@@ -249,7 +249,7 @@
         "custom_liquid_f7GGbL",
         "title",
         "price",
-        "feature_cards_mJ4V7U",
+        "feature_cards_LB4F4H",
         "variant_picker",
         "quantity_selector",
         "inventory_nAgpdF",
