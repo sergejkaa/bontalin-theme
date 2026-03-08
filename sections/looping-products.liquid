@@ -10,29 +10,14 @@
     },
     {
       "type": "select",
-      "id": "heading_size_class",
-      "label": "Heading size (Shopify classes)",
+      "id": "heading_size",
+      "label": "Heading size",
       "options": [
-        {
-          "value": "h2",
-          "label": "Small (h2)"
-        },
-        {
-          "value": "h1",
-          "label": "Medium (h1)"
-        },
-        {
-          "value": "h0",
-          "label": "Large (h0)"
-        },
-        {
-          "value": "hxl",
-          "label": "Extra Large (hxl)"
-        },
-        {
-          "value": "hxxl",
-          "label": "Extra Extra Large (hxxl)"
-        }
+        { "value": "h2", "label": "Small" },
+        { "value": "h1", "label": "Medium" },
+        { "value": "h3", "label": "Large" },
+        { "value": "h4", "label": "Extra large" },
+        { "value": "h5", "label": "Extra extra large" }
       ],
       "default": "h1"
     },
@@ -333,7 +318,7 @@
   {% if section.settings.marquee_heading != blank %}
     <div class="page-width">
       <div class="title-wrapper-with-link title-wrapper--self-padded-mobile title-wrapper--no-top-margin">
-        <h2 data-aos="fade-left" class="title inline-richtext {{ section.settings.heading_size_class | default: 'h1' }}">
+        <h2 data-aos="fade-left" class="title inline-richtext {{ section.settings.heading_size | default: 'h1' }}">
           {{ section.settings.marquee_heading }}
         </h2>
       </div>

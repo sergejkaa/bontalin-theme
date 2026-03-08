@@ -4,11 +4,11 @@
   Uses theme color scheme (foreground/background) via CSS variables.
 {%- endcomment -%}
 
-<section class="price-anchor color-{{ section.settings.color_scheme }}" style="--pa-scale: {{ section.settings.font_scale | divided_by: 100.0 }};">
+<section class="price-anchor color-{{ section.settings.color_scheme }}" style="--pa-scale: {{ section.settings.font_scale | divided_by: 100.0 }}; padding-top: {{ section.settings.padding_top | default: 44 }}px; padding-bottom: {{ section.settings.padding_bottom | default: 44 }}px;">
   <div class="price-anchor__inner">
 
     {% if section.settings.heading != blank %}
-      <h2 class="price-anchor__heading">
+      <h2 class="price-anchor__heading {{ section.settings.heading_size | default: 'h2' }}">
         {{ section.settings.heading }}
       </h2>
     {% endif %}
@@ -65,7 +65,8 @@
 <style>
   .price-anchor {
     --pa-scale: 1;
-    padding: 44px 18px;
+    padding-left: 18px;
+    padding-right: 18px;
     background: rgb(var(--color-background));
     color: rgb(var(--color-foreground));
   }
@@ -77,7 +78,6 @@
   }
 
   .price-anchor__heading {
-    font-size: calc(26px * var(--pa-scale));
     line-height: 1.15;
     margin: 0 0 10px;
   }
@@ -217,7 +217,8 @@
 
   @media (min-width: 768px) {
     .price-anchor {
-      padding: 64px 28px;
+      padding-left: 28px;
+      padding-right: 28px;
     }
 
     .price-anchor__inner {
@@ -225,7 +226,6 @@
     }
 
     .price-anchor__heading {
-      font-size: calc(34px * var(--pa-scale));
       margin-bottom: 12px;
     }
 
@@ -338,6 +338,39 @@
       "step": 5,
       "unit": "%",
       "default": 100
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "Heading size",
+      "default": "h2",
+      "options": [
+        { "value": "h2", "label": "Small" },
+        { "value": "h1", "label": "Medium" },
+        { "value": "h3", "label": "Large" },
+        { "value": "h4", "label": "Extra large" },
+        { "value": "h5", "label": "Extra extra large" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 44
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 44
     },
     {
       "type": "text",
