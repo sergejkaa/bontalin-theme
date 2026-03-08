@@ -727,6 +727,116 @@
         "padding_bottom": 36
       }
     },
+    "how_we_compare_GBMJcy": {
+      "type": "how-we-compare",
+      "blocks": {
+        "feature_LwwngK": {
+          "type": "feature",
+          "settings": {
+            "feature_text": "Calms you down with L-theanine",
+            "primary_state": "check",
+            "primary_text": "",
+            "secondary_state": "cross",
+            "secondary_text": ""
+          }
+        },
+        "feature_Bd8cx7": {
+          "type": "feature",
+          "settings": {
+            "feature_text": "Natural griffonia seed extract",
+            "primary_state": "check",
+            "primary_text": "",
+            "secondary_state": "cross",
+            "secondary_text": ""
+          }
+        },
+        "feature_hnediT": {
+          "type": "feature",
+          "settings": {
+            "feature_text": "All natural melatonin",
+            "primary_state": "check",
+            "primary_text": "",
+            "secondary_state": "cross",
+            "secondary_text": ""
+          }
+        },
+        "feature_gRYXD8": {
+          "type": "feature",
+          "settings": {
+            "feature_text": "With soothing herbal extracts",
+            "primary_state": "check",
+            "primary_text": "",
+            "secondary_state": "cross",
+            "secondary_text": ""
+          }
+        },
+        "feature_ptMc3R": {
+          "type": "feature",
+          "settings": {
+            "feature_text": "Sugar free",
+            "primary_state": "check",
+            "primary_text": "",
+            "secondary_state": "cross",
+            "secondary_text": ""
+          }
+        }
+      },
+      "block_order": [
+        "feature_LwwngK",
+        "feature_Bd8cx7",
+        "feature_hnediT",
+        "feature_gRYXD8",
+        "feature_ptMc3R"
+      ],
+      "name": "💜 💜How we compare",
+      "settings": {
+        "heading_text": "How We Compare",
+        "heading_color": "#F05577",
+        "heading_size": 42,
+        "heading_spacing": 32,
+        "heading_weight": "500",
+        "enable_lottie": false,
+        "lottie_position": "product",
+        "lottie_json_url": "",
+        "lottie_loop": true,
+        "lottie_autoplay": true,
+        "lottie_speed": 1,
+        "lottie_width": 140,
+        "lottie_height": 140,
+        "lottie_offset_top": -19,
+        "lottie_mobile_offset_top": 0,
+        "lottie_offset_right": -19,
+        "show_feature_label": false,
+        "feature_column_label": "Features",
+        "feature_color": "#123643",
+        "feature_size": 18,
+        "feature_size_mobile": 16,
+        "feature_weight": "600",
+        "row_divider_color": "#C6E0E8",
+        "row_padding": 18,
+        "row_padding_mobile": 14,
+        "primary_column_bg": "#E2F4F7",
+        "primary_column_radius": 28,
+        "primary_check_color": "#4A9A2C",
+        "primary_cross_color": "#F05577",
+        "secondary_check_color": "#4A9A2C",
+        "secondary_cross_color": "#F05577",
+        "primary_text_color": "#123643",
+        "secondary_text_color": "#123643",
+        "icon_size": 32,
+        "icon_stroke": 2,
+        "primary_image_max_width": 110,
+        "primary_label": "Nutrii Deep Sleep",
+        "secondary_image_max_width": 90,
+        "secondary_label": "Traditional Gummies",
+        "content_max_width": 1180,
+        "section_background": "#FFFFFF",
+        "padding_top": 64,
+        "padding_top_mobile": 40,
+        "padding_bottom": 64,
+        "padding_bottom_mobile": 40
+      }
+    },
     "looping_products_JCDJiH": {
       "type": "looping-products",
       "blocks": {
@@ -818,6 +928,7 @@
     "collection_list_36fqLH",
     "logo_ticker_iYWCDQ",
     "collapsible_content_e8aGix",
+    "how_we_compare_GBMJcy",
     "looping_products_JCDJiH",
     "contact_form_tWjLiJ"
   ]
