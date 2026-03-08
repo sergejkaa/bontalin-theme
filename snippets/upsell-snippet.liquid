@@ -19,7 +19,6 @@
         endif
       -%}
 
-      {%- if upsell_products != blank -%}
         {%- assign cart_product_ids = cart.items | map: 'product_id' -%}
         {%- assign upsell_products_count = upsell_products.size | default: 0 -%}
         {%- assign enforce_hide_current_product = false -%}
@@ -82,6 +81,7 @@
         {%- assign upsell_button_bg_color = block.settings.free_shipping_upsell_button_bg_color | default: '#ffffff' -%}
         {%- assign upsell_button_border_color = block.settings.free_shipping_upsell_button_border_color | default: '#cbd5e1' -%}
         {%- assign upsell_button_weight = block.settings.free_shipping_upsell_button_weight | default: '600' -%}
+        {%- assign upsell_empty_text = block.settings.free_shipping_upsell_empty_text | default: 'Add Product' -%}
         {%- if upsell_heading_text == blank -%}
           {%- assign upsell_heading_text = 'Recommended for you' -%}
         {%- endif -%}
@@ -172,52 +172,52 @@
           {%- endfor -%}
         {%- endcapture -%}
 
-        {%- if rendered_upsell > 0 -%}
-          {%- assign upsell_slides_desktop = block.settings.free_shipping_upsell_slides_desktop | default: 1.1 | plus: 0 -%}
-          {%- assign upsell_slides_mobile = block.settings.free_shipping_upsell_slides_mobile | default: 1 | plus: 0 -%}
-          {%- if upsell_slides_desktop < 1 -%}{%- assign upsell_slides_desktop = 1 -%}{%- endif -%}
-          {%- if upsell_slides_mobile < 1 -%}{%- assign upsell_slides_mobile = 1 -%}{%- endif -%}
-          {%- if rendered_upsell == 1 -%}
-            {%- assign upsell_slides_desktop = 1 -%}
-            {%- assign upsell_slides_mobile = 1 -%}
-          {%- endif -%}
-          <div
-            class="ppu-upsell{% unless upsell_show_image %} ppu-upsell--hide-image{% endunless %}"
-            style="
-              --ppu-image-size: {{ upsell_image_size }}px;
-              --ppu-image-width: {{ upsell_image_width }}px;
-              --ppu-image-height: {{ upsell_image_height }}px;
-              --ppu-image-width-md: {{ upsell_image_width_md }}px;
-              --ppu-image-height-md: {{ upsell_image_height_md }}px;
-              --ppu-block-border: {{ upsell_block_border_color }};
-              --ppu-item-bg: {{ upsell_item_bg_color }};
-              --ppu-item-border: {{ upsell_item_border_color }};
-              --ppu-chevron-color: {{ upsell_chevron_color }};
-              --ppu-dot-active: {{ upsell_dot_active_color }};
-              --ppu-dot-inactive: {{ upsell_dot_inactive_color }};
-              --ppu-meta-gap: {{ upsell_meta_gap }}px;
-              --ppu-heading-size: {{ upsell_heading_size }}px;
-              --ppu-heading-weight: {{ upsell_heading_weight }};
-              --ppu-heading-letter-spacing: {{ upsell_heading_letter_spacing }}px;
-              --ppu-title-size: {{ upsell_title_size }}px;
-              --ppu-title-color: {{ upsell_title_color }};
-              --ppu-title-weight: {{ upsell_title_weight }};
-              --ppu-price-size: {{ upsell_price_size }}px;
-              --ppu-price-color: {{ upsell_price_color }};
-              --ppu-price-weight: {{ upsell_price_weight }};
-              --ppu-variant-size: {{ upsell_variant_size }}px;
-              --ppu-variant-color: {{ upsell_variant_text_color }};
-              --ppu-variant-bg: {{ upsell_variant_bg_color }};
-              --ppu-variant-border: {{ upsell_variant_border_color }};
-              --ppu-button-size: {{ upsell_button_size }}px;
-              --ppu-button-color: {{ upsell_button_text_color }};
-              --ppu-button-bg: {{ upsell_button_bg_color }};
-              --ppu-button-border: {{ upsell_button_border_color }};
-              --ppu-button-weight: {{ upsell_button_weight }};
-            "
-          >
-            <div class="ppu-upsell__header" style="color: {{ upsell_heading_color }};">{{ upsell_heading_text }}</div>
-            <div class="ppu-upsell__viewport">
+        {%- assign upsell_slides_desktop = block.settings.free_shipping_upsell_slides_desktop | default: 1.1 | plus: 0 -%}
+        {%- assign upsell_slides_mobile = block.settings.free_shipping_upsell_slides_mobile | default: 1 | plus: 0 -%}
+        {%- if upsell_slides_desktop < 1 -%}{%- assign upsell_slides_desktop = 1 -%}{%- endif -%}
+        {%- if upsell_slides_mobile < 1 -%}{%- assign upsell_slides_mobile = 1 -%}{%- endif -%}
+        {%- if rendered_upsell == 1 -%}
+          {%- assign upsell_slides_desktop = 1 -%}
+          {%- assign upsell_slides_mobile = 1 -%}
+        {%- endif -%}
+        <div
+          class="ppu-upsell{% unless upsell_show_image %} ppu-upsell--hide-image{% endunless %}{% if rendered_upsell == 0 %} ppu-upsell--empty{% endif %}"
+          style="
+            --ppu-image-size: {{ upsell_image_size }}px;
+            --ppu-image-width: {{ upsell_image_width }}px;
+            --ppu-image-height: {{ upsell_image_height }}px;
+            --ppu-image-width-md: {{ upsell_image_width_md }}px;
+            --ppu-image-height-md: {{ upsell_image_height_md }}px;
+            --ppu-block-border: {{ upsell_block_border_color }};
+            --ppu-item-bg: {{ upsell_item_bg_color }};
+            --ppu-item-border: {{ upsell_item_border_color }};
+            --ppu-chevron-color: {{ upsell_chevron_color }};
+            --ppu-dot-active: {{ upsell_dot_active_color }};
+            --ppu-dot-inactive: {{ upsell_dot_inactive_color }};
+            --ppu-meta-gap: {{ upsell_meta_gap }}px;
+            --ppu-heading-size: {{ upsell_heading_size }}px;
+            --ppu-heading-weight: {{ upsell_heading_weight }};
+            --ppu-heading-letter-spacing: {{ upsell_heading_letter_spacing }}px;
+            --ppu-title-size: {{ upsell_title_size }}px;
+            --ppu-title-color: {{ upsell_title_color }};
+            --ppu-title-weight: {{ upsell_title_weight }};
+            --ppu-price-size: {{ upsell_price_size }}px;
+            --ppu-price-color: {{ upsell_price_color }};
+            --ppu-price-weight: {{ upsell_price_weight }};
+            --ppu-variant-size: {{ upsell_variant_size }}px;
+            --ppu-variant-color: {{ upsell_variant_text_color }};
+            --ppu-variant-bg: {{ upsell_variant_bg_color }};
+            --ppu-variant-border: {{ upsell_variant_border_color }};
+            --ppu-button-size: {{ upsell_button_size }}px;
+            --ppu-button-color: {{ upsell_button_text_color }};
+            --ppu-button-bg: {{ upsell_button_bg_color }};
+            --ppu-button-border: {{ upsell_button_border_color }};
+            --ppu-button-weight: {{ upsell_button_weight }};
+          "
+        >
+          <div class="ppu-upsell__header" style="color: {{ upsell_heading_color }};">{{ upsell_heading_text }}</div>
+          <div class="ppu-upsell__viewport">
+            {%- if rendered_upsell > 0 -%}
               <div
                 class="ppu-upsell__slider"
                 role="list"
@@ -243,24 +243,27 @@
                   </div>
                 {%- endif -%}
               {%- endif -%}
-            </div>
-            {%- if rendered_upsell > 1 -%}
-              <div class="ppu-upsell__dots" aria-hidden="true">
-                {%- for i in (1..rendered_upsell) -%}
-                  <button
-                    type="button"
-                    class="ppu-upsell__dot{% if forloop.first %} is-active{% endif %}"
-                    data-index="{{ i }}"
-                    aria-label="Go to upsell {{ i }}"
-                  ></button>
-                {%- endfor -%}
+            {%- else -%}
+              <div class="ppu-upsell__empty" role="status" aria-live="polite">
+                <span class="ppu-upsell__empty-icon" aria-hidden="true">+</span>
+                <span class="ppu-upsell__empty-text">{{ upsell_empty_text }}</span>
               </div>
             {%- endif -%}
           </div>
-        {%- endif -%}
-      {%- endif -%}
-
-{%- if upsell_products != blank -%}
+          {%- if rendered_upsell > 1 -%}
+            <div class="ppu-upsell__dots" aria-hidden="true">
+              {%- for i in (1..rendered_upsell) -%}
+                <button
+                  type="button"
+                  class="ppu-upsell__dot{% if forloop.first %} is-active{% endif %}"
+                  data-index="{{ i }}"
+                  aria-label="Go to upsell {{ i }}"
+                ></button>
+              {%- endfor -%}
+            </div>
+          {%- endif -%}
+        </div>
+      
 <style>
     .ppu-upsell {
       margin-top: 10px;
@@ -397,6 +400,40 @@
 
     .ppu-upsell__meta--full {
       max-width: 100%;
+    }
+
+    .ppu-upsell__empty {
+      min-height: 88px;
+      border: 1px dashed var(--ppu-item-border, #e2e8f0);
+      border-radius: 10px;
+      background: var(--ppu-item-bg, #f8fafc);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 18px;
+      color: var(--ppu-price-color, #64748b);
+      font-size: var(--ppu-price-size, 12px);
+      font-weight: 600;
+      text-align: center;
+      box-sizing: border-box;
+    }
+
+    .ppu-upsell__empty-icon {
+      width: 22px;
+      height: 22px;
+      border-radius: 999px;
+      border: 1px solid currentColor;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 14px;
+      line-height: 1;
+    }
+
+    .ppu-upsell__empty-text {
+      line-height: 1.3;
     }
 
     .ppu-upsell__variant {
@@ -1537,7 +1574,6 @@
       }
     })();
   </script>
-{%- endif -%}
 
 
 

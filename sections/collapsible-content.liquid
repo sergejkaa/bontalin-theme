@@ -7,6 +7,11 @@
     padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
   }
 
+  .section-{{ section.id }}-padding .icon {
+    fill: {{ section.settings.icon_fill_color }};
+    color: {{ section.settings.icon_text_color }};
+  }
+
   @media screen and (min-width: 750px) {
     .section-{{ section.id }}-padding {
       padding-top: {{ section.settings.padding_top }}px;
@@ -215,6 +220,18 @@
       "id": "open_first_collapsible_row",
       "default": false,
       "label": "t:sections.collapsible_content.settings.open_first_collapsible_row.label"
+    },
+    {
+      "type": "color",
+      "id": "icon_fill_color",
+      "label": "Icon fill color",
+      "default": "#669cd6"
+    },
+    {
+      "type": "color",
+      "id": "icon_text_color",
+      "label": "Icon color",
+      "default": "#669cd6"
     },
     {
       "type": "header",

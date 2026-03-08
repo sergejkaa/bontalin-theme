@@ -33,6 +33,10 @@
     assign hide_mobile_slider = true
   endif
 
+  if section.settings.mobile_thumbnails == 'hide' and hide_mobile_slider != true
+    assign show_mobile_hide_dots = true
+  endif
+
   if section.settings.media_size == 'large'
     assign media_width = 0.65
   elsif section.settings.media_size == 'medium'
@@ -41,6 +45,167 @@
     assign media_width = 0.45
   endif
 -%}
+
+{%- if show_mobile_hide_dots -%}
+  {%- style -%}
+    #MediaGallery-{{ section.id }} .product-gallery__mobile-dots {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.8rem;
+      margin-bottom: 11px;
+    }
+
+    #MediaGallery-{{ section.id }} .product-gallery__mobile-dot {
+      width: 0.6rem;
+      height: 0.6rem;
+      padding: 0;
+      border: 0;
+      border-radius: 999px;
+      background: {{ section.settings.mobile_hide_dots_color }};
+      opacity: 0.35;
+      cursor: pointer;
+      transition: width 0.2s ease, opacity 0.2s ease;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    #MediaGallery-{{ section.id }} .product-gallery__mobile-dot.is-active {
+      width: 1.8rem;
+      opacity: 1;
+    }
+
+    @media screen and (max-width: 749px) {
+      #MediaGallery-{{ section.id }} .product-gallery__slider-buttons--mobile-dots {
+        justify-content: center;
+      }
+
+      #MediaGallery-{{ section.id }} .product-gallery__slider-buttons--mobile-dots > .slider-button,
+      #MediaGallery-{{ section.id }} .product-gallery__slider-buttons--mobile-dots > .slider-counter {
+        display: none;
+      }
+    }
+
+    @media screen and (min-width: 750px) {
+      #MediaGallery-{{ section.id }} .product-gallery__mobile-dots {
+        display: none;
+      }
+    }
+  {%- endstyle -%}
+{%- endif -%}
+
+{%- if section.settings.gallery_layout contains 'thumbnail' -%}
+  {%- liquid
+    assign gallery_side_arrows_desktop_enabled = true
+    if section.settings.gallery_side_arrows_desktop == false
+      assign gallery_side_arrows_desktop_enabled = false
+    endif
+
+    assign gallery_side_arrows_mobile_enabled = true
+    if section.settings.gallery_side_arrows_mobile == false
+      assign gallery_side_arrows_mobile_enabled = false
+    endif
+
+    assign gallery_side_arrows_button_size = section.settings.gallery_side_arrows_button_size | default: 44
+    assign gallery_side_arrows_icon_size = section.settings.gallery_side_arrows_icon_size | default: 12
+    assign gallery_side_arrows_offset = section.settings.gallery_side_arrows_offset | default: 10
+    assign gallery_side_arrows_icon_color = section.settings.gallery_side_arrows_icon_color | default: '#1F2937'
+    assign gallery_side_arrows_bg_color = section.settings.gallery_side_arrows_bg_color | default: '#FFFFFF'
+    assign gallery_side_arrows_border_color = section.settings.gallery_side_arrows_border_color | default: '#D1D5DB'
+    assign gallery_side_arrows_shadow_color = section.settings.gallery_side_arrows_shadow_color | default: '#000000'
+    assign gallery_side_arrows_shadow_opacity = section.settings.gallery_side_arrows_shadow_opacity | default: 0.1
+    assign gallery_side_arrows_shadow_x = section.settings.gallery_side_arrows_shadow_x | default: 0
+    assign gallery_side_arrows_shadow_y = section.settings.gallery_side_arrows_shadow_y | default: 8
+    assign gallery_side_arrows_shadow_blur = section.settings.gallery_side_arrows_shadow_blur | default: 20
+    assign gallery_side_arrows_shadow_spread = section.settings.gallery_side_arrows_shadow_spread | default: 0
+  -%}
+  {%- style -%}
+    #GalleryViewer-{{ section.id }} {
+      position: relative;
+    }
+
+    #GalleryViewer-{{ section.id }} .slider-buttons {
+      align-items: center;
+      justify-content: center;
+    }
+
+    #GalleryViewer-{{ section.id }} .slider-buttons .slider-counter {
+      display: none;
+    }
+
+    #GalleryViewer-{{ section.id }} .slider-buttons .slider-button {
+      width: {{ gallery_side_arrows_button_size }}px;
+      height: {{ gallery_side_arrows_button_size }}px;
+      min-width: {{ gallery_side_arrows_button_size }}px;
+      border-radius: 999px;
+      border: 1px solid {{ gallery_side_arrows_border_color }};
+      background: {{ gallery_side_arrows_bg_color }};
+      color: {{ gallery_side_arrows_icon_color }};
+      box-shadow:
+        {{ gallery_side_arrows_shadow_x }}px
+        {{ gallery_side_arrows_shadow_y }}px
+        {{ gallery_side_arrows_shadow_blur }}px
+        {{ gallery_side_arrows_shadow_spread }}px
+        rgba(
+          {{ gallery_side_arrows_shadow_color | color_extract: 'red' }},
+          {{ gallery_side_arrows_shadow_color | color_extract: 'green' }},
+          {{ gallery_side_arrows_shadow_color | color_extract: 'blue' }},
+          {{ gallery_side_arrows_shadow_opacity }}
+        );
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    #GalleryViewer-{{ section.id }} .slider-buttons .slider-button .icon {
+      height: {{ gallery_side_arrows_icon_size }}px;
+    }
+
+    #GalleryViewer-{{ section.id }} .slider-buttons .slider-button:hover {
+      transform: translateY(-50%) scale(1.04);
+    }
+
+    #GalleryViewer-{{ section.id }} .slider-buttons .slider-button[disabled] {
+      opacity: 1;
+      cursor: pointer;
+    }
+
+    #GalleryViewer-{{ section.id }} .slider-buttons .slider-button[disabled] .icon {
+      color: {{ gallery_side_arrows_icon_color }};
+      opacity: 1;
+    }
+
+    #GalleryViewer-{{ section.id }} .slider-buttons .slider-button--prev,
+    #GalleryViewer-{{ section.id }} .slider-buttons .slider-button--next {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 4;
+    }
+
+    #GalleryViewer-{{ section.id }} .slider-buttons .slider-button--prev {
+      left: {{ gallery_side_arrows_offset }}px;
+    }
+
+    #GalleryViewer-{{ section.id }} .slider-buttons .slider-button--next {
+      right: {{ gallery_side_arrows_offset }}px;
+    }
+
+    @media screen and (max-width: 749px) {
+      #GalleryViewer-{{ section.id }} .slider-buttons {
+        display: {% if gallery_side_arrows_mobile_enabled %}flex{% else %}none{% endif %} !important;
+      }
+
+      #GalleryViewer-{{ section.id }} .product-gallery__slider-buttons--mobile-dots .slider-button {
+        display: {% if gallery_side_arrows_mobile_enabled %}flex{% else %}none{% endif %} !important;
+      }
+    }
+
+    @media screen and (min-width: 750px) {
+      #GalleryViewer-{{ section.id }} .slider-buttons {
+        display: {% if gallery_side_arrows_desktop_enabled %}flex{% else %}none{% endif %} !important;
+      }
+    }
+  {%- endstyle -%}
+{%- endif -%}
 
 <media-gallery
   id="MediaGallery-{{ section.id }}"
@@ -125,7 +290,7 @@
         {%- endunless -%}
       {%- endfor -%}
     </ul>
-    <div class="slider-buttons quick-add-hidden{% if hide_mobile_slider %} small-hide{% endif %}">
+    <div class="slider-buttons quick-add-hidden{% if hide_mobile_slider %} small-hide{% endif %}{% if show_mobile_hide_dots %} product-gallery__slider-buttons--mobile-dots{% endif %}">
       <button
         type="button"
         class="slider-button slider-button--prev"
@@ -142,6 +307,28 @@
         <span class="visually-hidden">{{ 'general.slider.of' | t }}</span>
         <span class="slider-counter--total">{{ media_count }}</span>
       </div>
+      {%- if show_mobile_hide_dots -%}
+        <div
+          class="product-gallery__mobile-dots"
+          data-product-gallery-mobile-dots
+          aria-label="Slider pagination"
+        >
+          {%- for media in (1..media_count) -%}
+            <button
+              type="button"
+              class="product-gallery__mobile-dot{% if forloop.first %} is-active{% endif %}"
+              data-product-gallery-dot
+              data-index="{{ forloop.index0 }}"
+              aria-label="Go to media {{ forloop.index }}"
+              {% if forloop.first %}
+                aria-current="true"
+              {% else %}
+                aria-current="false"
+              {% endif %}
+            ></button>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
       <button
         type="button"
         class="slider-button slider-button--next"
@@ -330,3 +517,191 @@
     </slider-component>
   {%- endif -%}
 </media-gallery>
+{%- if section.settings.gallery_layout contains 'thumbnail' -%}
+  <script>
+    (() => {
+      const sectionId = '{{ section.id }}';
+      const desktopEnabled = {% if section.settings.gallery_side_arrows_desktop == false %}false{% else %}true{% endif %};
+      const mobileEnabled = {% if section.settings.gallery_side_arrows_mobile == false %}false{% else %}true{% endif %};
+
+      const isDesktop = () => window.matchMedia('(min-width: 750px)').matches;
+
+      const getVisibleThumbItems = (galleryRoot) => {
+        const thumbsList =
+          galleryRoot.querySelector(`#Slider-Thumbnails-${sectionId}`) ||
+          galleryRoot.querySelector('[id^="Slider-Thumbnails-"]') ||
+          galleryRoot.querySelector('.thumbnail-list');
+        if (!thumbsList) return [];
+
+        return Array.from(thumbsList.querySelectorAll('.thumbnail-list__item')).filter((item) => {
+          if (item.classList.contains('thumbnail-list_item--variant')) return false;
+          return !!item.querySelector('button.thumbnail, button');
+        });
+      };
+
+      const getCurrentThumbIndex = (galleryRoot, thumbItems) => {
+        const currentByAria = thumbItems.findIndex((item) => {
+          const button = item.querySelector('button.thumbnail, button');
+          return button && button.getAttribute('aria-current') === 'true';
+        });
+        if (currentByAria >= 0) return currentByAria;
+
+        const activeSlide = galleryRoot.querySelector('.product__media-list .product__media-item.is-active');
+        const activeMediaId = activeSlide ? activeSlide.getAttribute('data-media-id') : null;
+        if (!activeMediaId) return 0;
+
+        const currentByTarget = thumbItems.findIndex((item) => item.getAttribute('data-target') === activeMediaId);
+        return currentByTarget >= 0 ? currentByTarget : 0;
+      };
+
+      const removeHideClasses = (node) => {
+        if (!node) return;
+        node.classList.remove('hidden', 'small-hide', 'medium-hide', 'large-up-hide');
+        node.removeAttribute('hidden');
+      };
+
+      const bindSideArrows = (root) => {
+        const galleryRoot = root.querySelector(`#MediaGallery-${sectionId}`);
+        if (!galleryRoot) return;
+
+        const viewer = galleryRoot.querySelector(`#GalleryViewer-${sectionId}`);
+        if (!viewer || viewer.dataset.desktopSideArrowsBound === 'true') return;
+
+        const controls = viewer.querySelector('.slider-buttons');
+        const prevButton = viewer.querySelector('.slider-buttons .slider-button--prev');
+        const nextButton = viewer.querySelector('.slider-buttons .slider-button--next');
+        if (!controls || !prevButton || !nextButton) return;
+
+        const syncControlsVisibility = () => {
+          const shouldShow = isDesktop() ? desktopEnabled : mobileEnabled;
+          if (shouldShow) {
+            removeHideClasses(controls);
+            removeHideClasses(prevButton);
+            removeHideClasses(nextButton);
+          }
+          controls.style.display = shouldShow ? 'flex' : 'none';
+        };
+
+        const goToRelativeThumb = (step) => {
+          if (!isDesktop() || !desktopEnabled) return;
+
+          prevButton.removeAttribute('disabled');
+          nextButton.removeAttribute('disabled');
+
+          const thumbItems = getVisibleThumbItems(galleryRoot);
+          if (thumbItems.length < 2) return;
+
+          const currentIndex = getCurrentThumbIndex(galleryRoot, thumbItems);
+          let targetIndex = currentIndex + step;
+          if (targetIndex < 0) targetIndex = thumbItems.length - 1;
+          if (targetIndex >= thumbItems.length) targetIndex = 0;
+
+          const targetButton = thumbItems[targetIndex].querySelector('button.thumbnail, button');
+          if (targetButton) targetButton.click();
+        };
+
+        prevButton.addEventListener('click', (event) => {
+          if (!isDesktop()) return;
+          event.preventDefault();
+          event.stopPropagation();
+          goToRelativeThumb(-1);
+        });
+
+        nextButton.addEventListener('click', (event) => {
+          if (!isDesktop()) return;
+          event.preventDefault();
+          event.stopPropagation();
+          goToRelativeThumb(1);
+        });
+
+        syncControlsVisibility();
+        window.addEventListener('resize', syncControlsVisibility);
+        viewer.dataset.desktopSideArrowsBound = 'true';
+      };
+
+      bindSideArrows(document);
+      document.addEventListener('DOMContentLoaded', () => bindSideArrows(document));
+      document.addEventListener('shopify:section:load', (event) => bindSideArrows(event.target));
+    })();
+  </script>
+{%- endif -%}
+{%- if show_mobile_hide_dots -%}
+  <script>
+    (() => {
+      const initGalleryDots = (gallery) => {
+        if (!gallery || gallery.dataset.mobileDotsReady === 'true') return;
+
+        const slider = gallery.querySelector('[id^="Slider-Gallery-"]');
+        const currentPage = gallery.querySelector('.slider-counter--current');
+        const dots = Array.from(gallery.querySelectorAll('[data-product-gallery-dot]'));
+
+        if (!slider || !currentPage || !dots.length) return;
+
+        gallery.dataset.mobileDotsReady = 'true';
+
+        const setActiveDot = (index) => {
+          dots.forEach((dot, dotIndex) => {
+            const isActive = dotIndex === index;
+            dot.classList.toggle('is-active', isActive);
+            dot.setAttribute('aria-current', isActive ? 'true' : 'false');
+          });
+        };
+
+        const syncDots = () => {
+          const currentIndex = Math.max(
+            0,
+            Math.min(dots.length - 1, (parseInt(currentPage.textContent, 10) || 1) - 1)
+          );
+          setActiveDot(currentIndex);
+        };
+
+        dots.forEach((dot, index) => {
+          dot.addEventListener('click', () => {
+            const targetSlide = slider.children[index];
+            if (!targetSlide) return;
+
+            slider.scrollTo({
+              left: targetSlide.offsetLeft,
+              behavior: 'smooth',
+            });
+
+            setActiveDot(index);
+          });
+        });
+
+        new MutationObserver(syncDots).observe(currentPage, {
+          childList: true,
+          characterData: true,
+          subtree: true,
+        });
+
+        syncDots();
+      };
+
+      if (!window.lsProductGalleryMobileDots) {
+        window.lsProductGalleryMobileDots = {
+          init() {
+            document.querySelectorAll('[data-product-gallery-mobile-dots]').forEach((dotsContainer) => {
+              initGalleryDots(dotsContainer.closest('media-gallery'));
+            });
+          },
+        };
+
+        const runInit = () => window.lsProductGalleryMobileDots.init();
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', runInit, { once: true });
+        } else {
+          runInit();
+        }
+
+        new MutationObserver(runInit).observe(document.documentElement, {
+          childList: true,
+          subtree: true,
+        });
+      } else {
+        window.lsProductGalleryMobileDots.init();
+      }
+    })();
+  </script>
+{%- endif -%}

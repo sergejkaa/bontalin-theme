@@ -53,11 +53,6 @@
     assign show_mobile_slider = true
   endif
 
-  assign show_mobile_dots = false
-  if show_mobile_slider
-    assign show_mobile_dots = true
-  endif
-
   assign max_columns_to_show = columns_mobile_int
   if columns_desktop_int > columns_mobile_int
     assign max_columns_to_show = columns_desktop_int
@@ -68,54 +63,6 @@
     assign show_desktop_slider = true
   endif
 -%}
-
-{%- if show_mobile_dots -%}
-  {%- style -%}
-    #collection-{{ section.id }} .featured-collection__mobile-dots {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.8rem;
-      margin-bottom: 11px;
-    }
-
-    #collection-{{ section.id }} .featured-collection__mobile-dot {
-      width: 0.6rem;
-      height: 0.6rem;
-      padding: 0;
-      border: 0;
-      border-radius: 999px;
-      background: {{ section.settings.mobile_carousel_dots_color }};
-      opacity: 0.35;
-      cursor: pointer;
-      transition: width 0.2s ease, opacity 0.2s ease;
-      -webkit-appearance: none;
-      appearance: none;
-    }
-
-    #collection-{{ section.id }} .featured-collection__mobile-dot.is-active {
-      width: 1.8rem;
-      opacity: 1;
-    }
-
-    @media screen and (max-width: 749px) {
-      #collection-{{ section.id }} .featured-collection__slider-buttons--mobile-dots {
-        justify-content: center;
-      }
-
-      #collection-{{ section.id }} .featured-collection__slider-buttons--mobile-dots > .slider-button,
-      #collection-{{ section.id }} .featured-collection__slider-buttons--mobile-dots > .slider-counter {
-        display: none;
-      }
-    }
-
-    @media screen and (min-width: 750px) {
-      #collection-{{ section.id }} .featured-collection__mobile-dots {
-        display: none;
-      }
-    }
-  {%- endstyle -%}
-{%- endif -%}
 
 <div
   class="color-{{ section.settings.color_scheme }} isolate gradient"
@@ -217,7 +164,7 @@
         {%- endif -%}
       </ul>
       {%- if show_mobile_slider or show_desktop_slider -%}
-        <div class="slider-buttons{% if show_mobile_dots %} featured-collection__slider-buttons--mobile-dots{% endif %}">
+        <div class="slider-buttons">
           <button
             type="button"
             class="slider-button slider-button--prev"
@@ -235,13 +182,6 @@
             <span class="visually-hidden">{{ 'general.slider.of' | t }}</span>
             <span class="slider-counter--total">{{ products_to_display }}</span>
           </div>
-          {%- if show_mobile_dots -%}
-            <div
-              class="featured-collection__mobile-dots"
-              data-featured-collection-mobile-dots
-              aria-label="Slider pagination"
-            ></div>
-          {%- endif -%}
           <button
             type="button"
             class="slider-button slider-button--next"
@@ -261,7 +201,7 @@
       <div class="center collection__view-all{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
         <a
           href="{{ section.settings.collection.url }}"
-          class="{% if section.settings.view_all_style == 'link' %}link underlined-link{% elsif section.settings.view_all_style == 'solid' %}button{% else %}button button--secondary{% endif %}"
+          class="custom-button-secondary"
           aria-label="{{ 'sections.featured_collection.view_all_label' | t: collection_name: section.settings.collection.title | escape }}"
         >
           {{ 'sections.featured_collection.view_all' | t }}
@@ -273,131 +213,6 @@
     {%- endif -%}
   </div>
 </div>
-
-{%- if show_mobile_dots -%}
-  <script>
-    (() => {
-      const initFeaturedCollectionDots = (dotsContainer) => {
-        if (!dotsContainer || dotsContainer.dataset.dotsReady === 'true') return;
-
-        const sliderComponent = dotsContainer.closest('slider-component');
-        const slider = sliderComponent && sliderComponent.querySelector('[id^="Slider-"]');
-        const currentPage = sliderComponent && sliderComponent.querySelector('.slider-counter--current');
-        const totalPages = sliderComponent && sliderComponent.querySelector('.slider-counter--total');
-        const prevButton = sliderComponent && sliderComponent.querySelector('.slider-button--prev');
-        const nextButton = sliderComponent && sliderComponent.querySelector('.slider-button--next');
-
-        if (!sliderComponent || !slider || !currentPage || !totalPages) return;
-
-        dotsContainer.dataset.dotsReady = 'true';
-
-        let dots = [];
-
-        const setActiveDot = (index) => {
-          dots.forEach((dot, dotIndex) => {
-            const isActive = dotIndex === index;
-            dot.classList.toggle('is-active', isActive);
-            dot.setAttribute('aria-current', isActive ? 'true' : 'false');
-          });
-        };
-
-        const goToPage = (pageIndex) => {
-          if (Array.isArray(sliderComponent.pageStart) && sliderComponent.pageStart.length > pageIndex) {
-            slider.scrollTo({
-              left: sliderComponent.pageStart[pageIndex],
-              behavior: 'smooth',
-            });
-            setActiveDot(pageIndex);
-            return;
-          }
-
-          const currentIndex = (parseInt(currentPage.textContent, 10) || 1) - 1;
-          const delta = pageIndex - currentIndex;
-          const button = delta > 0 ? nextButton : prevButton;
-
-          if (!button || delta === 0) {
-            setActiveDot(pageIndex);
-            return;
-          }
-
-          Array.from({ length: Math.abs(delta) }).forEach((_, step) => {
-            window.setTimeout(() => button.click(), step * 180);
-          });
-        };
-
-        const buildDots = () => {
-          const total = Math.max(1, parseInt(totalPages.textContent, 10) || 1);
-
-          if (dots.length === total) return;
-
-          dotsContainer.innerHTML = '';
-          dots = [];
-
-          for (let index = 0; index < total; index += 1) {
-            const dot = document.createElement('button');
-            dot.type = 'button';
-            dot.className = 'featured-collection__mobile-dot';
-            dot.setAttribute('aria-label', `Go to slide ${index + 1}`);
-            dot.setAttribute('aria-current', 'false');
-            dot.addEventListener('click', () => goToPage(index));
-            dotsContainer.appendChild(dot);
-            dots.push(dot);
-          }
-        };
-
-        const syncDots = () => {
-          buildDots();
-
-          const currentIndex = Math.max(
-            0,
-            Math.min(dots.length - 1, (parseInt(currentPage.textContent, 10) || 1) - 1)
-          );
-
-          setActiveDot(currentIndex);
-        };
-
-        new MutationObserver(syncDots).observe(currentPage, {
-          childList: true,
-          characterData: true,
-          subtree: true,
-        });
-
-        new MutationObserver(syncDots).observe(totalPages, {
-          childList: true,
-          characterData: true,
-          subtree: true,
-        });
-
-        syncDots();
-      };
-
-      if (!window.lsFeaturedCollectionDots) {
-        window.lsFeaturedCollectionDots = {
-          init() {
-            document.querySelectorAll('[data-featured-collection-mobile-dots]').forEach((dotsContainer) => {
-              initFeaturedCollectionDots(dotsContainer);
-            });
-          },
-        };
-
-        const runInit = () => window.lsFeaturedCollectionDots.init();
-
-        if (document.readyState === 'loading') {
-          document.addEventListener('DOMContentLoaded', runInit, { once: true });
-        } else {
-          runInit();
-        }
-
-        new MutationObserver(runInit).observe(document.documentElement, {
-          childList: true,
-          subtree: true,
-        });
-      } else {
-        window.lsFeaturedCollectionDots.init();
-      }
-    })();
-  </script>
-{%- endif -%}
 
 {% schema %}
 {
@@ -678,13 +493,7 @@
       "id": "swipe_on_mobile",
       "default": false,
       "label": "t:sections.featured-collection.settings.swipe_on_mobile.label"
-    },
-    {
-      "type": "color",
-      "id": "mobile_carousel_dots_color",
-      "default": "#8FA4A3",
-      "label": "Mobile carousel dots color"
-    },
+    },          
     {
       "type": "header",
       "content": "t:sections.all.padding.section_padding_heading"

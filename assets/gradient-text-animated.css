@@ -1,9 +1,9 @@
-.gradient-text-animated {
+﻿.gradient-text-animated {
   background: linear-gradient(
     120deg,
-    var(--gradient-text-color-1,rgb(66, 146, 12)),
-    var(--gradient-text-color-2,rgb(56, 0, 109)),
-    var(--gradient-text-color-3,rgb(131, 68, 4))
+    var(--gradient-text-color-1, #f0963c),
+    var(--gradient-text-color-2, #2477ca),
+    var(--gradient-text-color-3, #f38b23)
   );
   background-size: 200% 200%;
   -webkit-background-clip: text;

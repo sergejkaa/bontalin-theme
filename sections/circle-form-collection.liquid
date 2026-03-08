@@ -16,7 +16,7 @@
   "
 >
   <div
-    class="circle-menu__inner {% if section.settings.full_width %}circle-menu__inner--full{% else %}page-width{% endif %}"
+    class="circle-menu__inner {% if section.settings.full_width %}circle-menu__inner--full{% endif %}{% if section.settings.enable_page_width or section.settings.full_width == false %} page-width{% endif %}"
     style="max-width: {{ section.settings.max_width | default: 1180 }}px;"
   >
     {%- if section.settings.heading != blank or section.settings.subheading != blank -%}
@@ -44,7 +44,8 @@
           --cm-gap-mobile: {{ section.settings.gap_mobile }}px;
           --cm-border: {{ section.settings.border_width }}px;
           --cm-border-color: {{ section.settings.border_color }};
-          --cm-label-size: {{ section.settings.label_size }};
+          --cm-label-size-desktop: {{ section.settings.label_size_desktop | default: 16 }}px;
+          --cm-label-size-mobile: {{ section.settings.label_size_mobile | default: 16 }}px;
           --cm-label-weight: {{ section.settings.label_weight }};
           --cm-label-color: {{ section.settings.label_color }};
           --cm-inner-gap: {{ section.settings.item_gap }}px;
@@ -223,7 +224,7 @@
   }
 
   #circle-menu-{{ section.id }} .circle-menu__label {
-    font-size: var(--cm-label-size);
+    font-size: var(--cm-label-size-desktop);
     font-weight: var(--cm-label-weight);
     color: var(--cm-label-color);
     line-height: 1.35;
@@ -248,19 +249,21 @@
   #circle-menu-{{ section.id }} .circle-menu__mobile-dot {
     width: var(--cm-mobile-dots-size, 8px);
     height: var(--cm-mobile-dots-size, 8px);
-    border-radius: 50%;
+    border-radius: 999px;
     border: 0;
     padding: 0;
     margin: 0;
     background: var(--cm-mobile-dots-color, #FFFFFF);
     opacity: 0.35;
     cursor: pointer;
-    transition: opacity 0.2s ease, transform 0.2s ease;
+    transition: width 0.2s ease, opacity 0.2s ease;
+    -webkit-appearance: none;
+    appearance: none;
   }
 
   #circle-menu-{{ section.id }} .circle-menu__mobile-dot.is-active {
+    width: calc(var(--cm-mobile-dots-size, 8px) * 3);
     opacity: 1;
-    transform: scale(1.12);
   }
 
   #circle-menu-{{ section.id }} .circle-menu__mobile-dot:focus-visible {
@@ -273,7 +276,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 10px;
+      gap: 0.8rem;
       margin-top: 12px;
     }
 
@@ -309,6 +312,12 @@
 
     #circle-menu-{{ section.id }} .circle-menu__label {
       max-width: 14ch;
+    }
+  }
+
+  @media (max-width: 749px) {
+    #circle-menu-{{ section.id }} .circle-menu__label {
+      font-size: var(--cm-label-size-mobile);
     }
   }
 
@@ -450,6 +459,7 @@
     },
 
     { "type": "checkbox", "id": "full_width", "label": "Edge-to-edge background", "default": false },
+    { "type": "checkbox", "id": "enable_page_width", "label": "Page width", "default": false },
     { "type": "range", "id": "max_width", "label": "Content max width (px)", "min": 780, "max": 1600, "step": 20, "default": 1180 },
     { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "background-1" },
     { "type": "color", "id": "background", "label": "Background", "default": "#FFFFFF" },
@@ -477,12 +487,8 @@
       "default": "cover"
     },
 
-    { "type": "select", "id": "label_size", "label": "Label size", "options": [
-      { "value": "0.95rem", "label": "Small" },
-      { "value": "1rem", "label": "Base" },
-      { "value": "1.1rem", "label": "Medium" },
-      { "value": "1.25rem", "label": "Large" }
-    ], "default": "1rem" },
+    { "type": "range", "id": "label_size_desktop", "label": "Label size desktop (px)", "min": 10, "max": 40, "step": 1, "default": 16 },
+    { "type": "range", "id": "label_size_mobile", "label": "Label size mobile (px)", "min": 10, "max": 40, "step": 1, "default": 16 },
     { "type": "select", "id": "label_weight", "label": "Label weight", "options": [
       { "value": "400", "label": "Normal" },
       { "value": "500", "label": "Medium" },

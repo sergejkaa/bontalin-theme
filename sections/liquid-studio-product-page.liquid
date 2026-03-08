@@ -53,6 +53,95 @@
       border: {{ section.settings.variant_checked_border_width }}px solid {{ section.settings.variant_checked_border_color }} !important;
       box-shadow: none !important;
     }
+
+    .section-{{ section.id }}-padding .thumbnail img {
+      object-position: center {{ section.settings.thumbnails_vertical_position }}%;
+    }
+
+    #GalleryViewer-{{ section.id }} {
+      position: relative;
+    }
+
+    #GalleryViewer-{{ section.id }} > .slider-buttons {
+      align-items: center;
+      justify-content: center;
+    }
+
+    #GalleryViewer-{{ section.id }} > .slider-buttons .slider-counter {
+      display: none;
+    }
+
+    #GalleryViewer-{{ section.id }} > .slider-buttons .slider-button {
+      width: {{ section.settings.gallery_side_arrows_button_size }}px;
+      height: {{ section.settings.gallery_side_arrows_button_size }}px;
+      min-width: {{ section.settings.gallery_side_arrows_button_size }}px;
+      border-radius: 999px;
+      border: 1px solid {{ section.settings.gallery_side_arrows_border_color }};
+      background: {{ section.settings.gallery_side_arrows_bg_color }};
+      color: {{ section.settings.gallery_side_arrows_icon_color }};
+      box-shadow:
+        {{ section.settings.gallery_side_arrows_shadow_x }}px
+        {{ section.settings.gallery_side_arrows_shadow_y }}px
+        {{ section.settings.gallery_side_arrows_shadow_blur }}px
+        {{ section.settings.gallery_side_arrows_shadow_spread }}px
+        rgba(
+          {{ section.settings.gallery_side_arrows_shadow_color | color_extract: 'red' }},
+          {{ section.settings.gallery_side_arrows_shadow_color | color_extract: 'green' }},
+          {{ section.settings.gallery_side_arrows_shadow_color | color_extract: 'blue' }},
+          {{ section.settings.gallery_side_arrows_shadow_opacity }}
+        );
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    #GalleryViewer-{{ section.id }} > .slider-buttons .slider-button .icon {
+      height: {{ section.settings.gallery_side_arrows_icon_size }}px;
+    }
+
+    #GalleryViewer-{{ section.id }} > .slider-buttons .slider-button:hover {
+      transform: translateY(-50%) scale(1.04);
+    }
+
+    #GalleryViewer-{{ section.id }} > .slider-buttons .slider-button[disabled] {
+      opacity: 1;
+      cursor: pointer;
+    }
+
+    #GalleryViewer-{{ section.id }} > .slider-buttons .slider-button[disabled] .icon {
+      color: {{ section.settings.gallery_side_arrows_icon_color }};
+      opacity: 1;
+    }
+
+    #GalleryViewer-{{ section.id }} > .slider-buttons .slider-button--prev,
+    #GalleryViewer-{{ section.id }} > .slider-buttons .slider-button--next {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 4;
+    }
+
+    #GalleryViewer-{{ section.id }} > .slider-buttons .slider-button--prev {
+      left: {{ section.settings.gallery_side_arrows_offset }}px;
+    }
+
+    #GalleryViewer-{{ section.id }} > .slider-buttons .slider-button--next {
+      right: {{ section.settings.gallery_side_arrows_offset }}px;
+    }
+
+    @media screen and (max-width: 749px) {
+      #GalleryViewer-{{ section.id }} > .slider-buttons {
+        display: {% if section.settings.gallery_side_arrows_mobile %}flex{% else %}none{% endif %} !important;
+      }
+
+      #GalleryViewer-{{ section.id }} > .product-gallery__slider-buttons--mobile-dots > .slider-button {
+        display: {% if section.settings.gallery_side_arrows_mobile %}flex{% else %}none{% endif %} !important;
+      }
+    }
+
+    @media screen and (min-width: 750px) {
+      #GalleryViewer-{{ section.id }} > .slider-buttons {
+        display: {% if section.settings.gallery_side_arrows_desktop %}flex{% else %}none{% endif %} !important;
+      }
+    }
   {%- endstyle -%}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
   <script src="{{ 'product-info.js' | asset_url }}" defer="defer"></script>
@@ -506,6 +595,8 @@
 
               {%- when 'variant_picker' -%}
                 {% render 'product-variant-picker', product: product, block: block, product_form_id: product_form_id %}
+              {%- when 'size_chart' -%}
+                {% render 'size-chart-snippet', section: section, block: block %}
               {%- when 'buy_buttons' -%}
                 {%- render 'custom-buy-buttons',
                   block: block,
@@ -754,6 +845,116 @@
       </script>
       <script src="{{ 'product-model.js' | asset_url }}" defer></script>
     {%- endif -%}
+
+    <script>
+      (() => {
+        const sectionId = '{{ section.id }}';
+        const galleryLayout = '{{ section.settings.gallery_layout }}';
+        const desktopEnabled = {{ section.settings.gallery_side_arrows_desktop | json }};
+        const mobileEnabled = {{ section.settings.gallery_side_arrows_mobile | json }};
+        const supportsSideArrows = galleryLayout === 'thumbnail' || galleryLayout === 'thumbnail_slider';
+        if (!supportsSideArrows) return;
+
+        const isDesktop = () => window.matchMedia('(min-width: 750px)').matches;
+
+        const getVisibleThumbItems = (galleryRoot) => {
+          const thumbsList =
+            galleryRoot.querySelector(`#Slider-Thumbnails-${sectionId}`) ||
+            galleryRoot.querySelector('[id^="Slider-Thumbnails-"]') ||
+            galleryRoot.querySelector('.thumbnail-list');
+          if (!thumbsList) return [];
+
+          return Array.from(thumbsList.querySelectorAll('.thumbnail-list__item')).filter((item) => {
+            if (item.classList.contains('thumbnail-list_item--variant')) return false;
+            return !!item.querySelector('button.thumbnail, button');
+          });
+        };
+
+        const getCurrentThumbIndex = (galleryRoot, thumbItems) => {
+          const currentByAria = thumbItems.findIndex((item) => {
+            const button = item.querySelector('button.thumbnail, button');
+            return button && button.getAttribute('aria-current') === 'true';
+          });
+          if (currentByAria >= 0) return currentByAria;
+
+          const activeSlide = galleryRoot.querySelector('.product__media-list .product__media-item.is-active');
+          const activeMediaId = activeSlide ? activeSlide.getAttribute('data-media-id') : null;
+          if (!activeMediaId) return 0;
+
+          const currentByTarget = thumbItems.findIndex((item) => item.getAttribute('data-target') === activeMediaId);
+          return currentByTarget >= 0 ? currentByTarget : 0;
+        };
+
+        const removeHideClasses = (node) => {
+          if (!node) return;
+          node.classList.remove('hidden', 'small-hide', 'medium-hide', 'large-up-hide');
+          node.removeAttribute('hidden');
+        };
+
+        const bindSideArrows = (root) => {
+          const galleryRoot = root.querySelector(`#MediaGallery-${sectionId}`);
+          if (!galleryRoot) return;
+
+          const viewer = galleryRoot.querySelector(`#GalleryViewer-${sectionId}`);
+          if (!viewer || viewer.dataset.desktopSideArrowsBound === 'true') return;
+
+          const controls = viewer.querySelector('.slider-buttons');
+          const prevButton = viewer.querySelector('.slider-buttons .slider-button--prev');
+          const nextButton = viewer.querySelector('.slider-buttons .slider-button--next');
+          if (!controls || !prevButton || !nextButton) return;
+
+          const syncControlsVisibility = () => {
+            const shouldShow = isDesktop() ? desktopEnabled : mobileEnabled;
+            if (shouldShow) {
+              removeHideClasses(controls);
+              removeHideClasses(prevButton);
+              removeHideClasses(nextButton);
+            }
+            controls.style.display = shouldShow ? 'flex' : 'none';
+          };
+
+          const goToRelativeThumb = (step) => {
+            if (!isDesktop() || !desktopEnabled) return;
+
+            prevButton.removeAttribute('disabled');
+            nextButton.removeAttribute('disabled');
+
+            const thumbItems = getVisibleThumbItems(galleryRoot);
+            if (thumbItems.length < 2) return;
+
+            const currentIndex = getCurrentThumbIndex(galleryRoot, thumbItems);
+            let targetIndex = currentIndex + step;
+            if (targetIndex < 0) targetIndex = thumbItems.length - 1;
+            if (targetIndex >= thumbItems.length) targetIndex = 0;
+
+            const targetButton = thumbItems[targetIndex].querySelector('button.thumbnail, button');
+            if (targetButton) targetButton.click();
+          };
+
+          prevButton.addEventListener('click', (event) => {
+            if (!isDesktop()) return;
+            event.preventDefault();
+            event.stopPropagation();
+            goToRelativeThumb(-1);
+          });
+
+          nextButton.addEventListener('click', (event) => {
+            if (!isDesktop()) return;
+            event.preventDefault();
+            event.stopPropagation();
+            goToRelativeThumb(1);
+          });
+
+          syncControlsVisibility();
+          window.addEventListener('resize', syncControlsVisibility);
+          viewer.dataset.desktopSideArrowsBound = 'true';
+        };
+
+        bindSideArrows(document);
+        document.addEventListener('DOMContentLoaded', () => bindSideArrows(document));
+        document.addEventListener('shopify:section:load', (event) => bindSideArrows(event.target));
+      })();
+    </script>
 
     {%- liquid
       if product.selected_or_first_available_variant.featured_media
@@ -1729,6 +1930,187 @@
           "id": "page",
           "type": "page",
           "label": "t:sections.main-product.blocks.popup.settings.page.label"
+        }
+      ]
+    },
+    {
+      "type": "size_chart",
+      "name": "Size chart",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "select",
+          "id": "size_chart_mode",
+          "label": "Content mode",
+          "default": "image",
+          "options": [
+            {
+              "value": "image",
+              "label": "Image upload"
+            },
+            {
+              "value": "manual",
+              "label": "Manual table"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "size_chart_trigger_style",
+          "label": "Trigger style",
+          "default": "link",
+          "options": [
+            {
+              "value": "link",
+              "label": "Link"
+            },
+            {
+              "value": "button",
+              "label": "Button"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "size_chart_trigger_text",
+          "label": "Trigger text",
+          "default": "Size chart"
+        },
+        {
+          "type": "text",
+          "id": "size_chart_heading",
+          "label": "Modal heading",
+          "default": "Find your best fit"
+        },
+        {
+          "type": "richtext",
+          "id": "size_chart_description",
+          "label": "Description",
+          "default": "<p>Use the chart below to choose the size that fits you best.</p>"
+        },
+        {
+          "type": "image_picker",
+          "id": "size_chart_image",
+          "label": "Size chart image",
+          "info": "Used when Content mode is Image upload."
+        },
+        {
+          "type": "textarea",
+          "id": "size_chart_table_headers",
+          "label": "Table headers",
+          "default": "Size|Bust|Waist|Hips",
+          "info": "Used when Content mode is Manual table. Separate columns with |"
+        },
+        {
+          "type": "textarea",
+          "id": "size_chart_table_rows",
+          "label": "Table rows",
+          "default": "XS|32-33|24-25|34-35\nS|34-35|26-27|36-37\nM|36-37|28-29|38-39\nL|38-40|30-32|40-42",
+          "info": "Add one row per line. Separate columns with |"
+        },
+        {
+          "type": "richtext",
+          "id": "size_chart_footer",
+          "label": "Footer text",
+          "default": "<p>If you are between sizes, choose the larger size for a more relaxed fit.</p>"
+        },
+        {
+          "type": "range",
+          "id": "size_chart_modal_width",
+          "label": "Modal width",
+          "min": 420,
+          "max": 1200,
+          "step": 20,
+          "unit": "px",
+          "default": 860
+        },
+        {
+          "type": "header",
+          "content": "Colors"
+        },
+        {
+          "type": "color",
+          "id": "size_chart_trigger_text_color",
+          "label": "Trigger text color",
+          "default": "#111827"
+        },
+        {
+          "type": "color",
+          "id": "size_chart_trigger_bg_color",
+          "label": "Trigger background color",
+          "default": "#FFFFFF"
+        },
+        {
+          "type": "color",
+          "id": "size_chart_trigger_border_color",
+          "label": "Trigger border color",
+          "default": "#D1D5DB"
+        },
+        {
+          "type": "color",
+          "id": "size_chart_modal_bg_color",
+          "label": "Modal background color",
+          "default": "#FFFFFF"
+        },
+        {
+          "type": "color",
+          "id": "size_chart_modal_text_color",
+          "label": "Modal text color",
+          "default": "#1F2937"
+        },
+        {
+          "type": "color",
+          "id": "size_chart_heading_color",
+          "label": "Heading color",
+          "default": "#111827"
+        },
+        {
+          "type": "color",
+          "id": "size_chart_table_header_bg_color",
+          "label": "Table header background",
+          "default": "#111827"
+        },
+        {
+          "type": "color",
+          "id": "size_chart_table_header_text_color",
+          "label": "Table header text",
+          "default": "#FFFFFF"
+        },
+        {
+          "type": "color",
+          "id": "size_chart_table_row_bg_color",
+          "label": "Table row background",
+          "default": "#FFFFFF"
+        },
+        {
+          "type": "color",
+          "id": "size_chart_table_alt_row_bg_color",
+          "label": "Alternate row background",
+          "default": "#F8FAFC"
+        },
+        {
+          "type": "color",
+          "id": "size_chart_table_text_color",
+          "label": "Table text color",
+          "default": "#1F2937"
+        },
+        {
+          "type": "color",
+          "id": "size_chart_table_border_color",
+          "label": "Table border color",
+          "default": "#E5E7EB"
+        },
+        {
+          "type": "color",
+          "id": "size_chart_close_bg_color",
+          "label": "Close button background",
+          "default": "#111827"
+        },
+        {
+          "type": "color",
+          "id": "size_chart_close_text_color",
+          "label": "Close button text",
+          "default": "#FFFFFF"
         }
       ]
     },
@@ -4031,6 +4413,146 @@
       ],
       "default": "hide",
       "label": "t:sections.main-product.settings.mobile_thumbnails.label"
+    },
+    {
+      "type": "range",
+      "id": "thumbnails_vertical_position",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "label": "Thumbnails vertical position",
+      "default": 50,
+      "info": "Moves image crop inside square thumbnails. Lower value shows more top, higher value shows more bottom."
+    },
+    {
+      "type": "header",
+      "content": "Main gallery side arrows"
+    },
+    {
+      "type": "checkbox",
+      "id": "gallery_side_arrows_desktop",
+      "default": true,
+      "label": "Show side arrows on desktop"
+    },
+    {
+      "type": "checkbox",
+      "id": "gallery_side_arrows_mobile",
+      "default": true,
+      "label": "Show side arrows on mobile"
+    },
+    {
+      "type": "range",
+      "id": "gallery_side_arrows_button_size",
+      "min": 28,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "label": "Side arrows button size",
+      "default": 44
+    },
+    {
+      "type": "range",
+      "id": "gallery_side_arrows_icon_size",
+      "min": 8,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "label": "Side arrows icon size",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "gallery_side_arrows_offset",
+      "min": 0,
+      "max": 48,
+      "step": 1,
+      "unit": "px",
+      "label": "Side arrows horizontal offset",
+      "default": 10
+    },
+    {
+      "type": "color",
+      "id": "gallery_side_arrows_icon_color",
+      "default": "#1F2937",
+      "label": "Side arrows icon color"
+    },
+    {
+      "type": "color",
+      "id": "gallery_side_arrows_bg_color",
+      "default": "#FFFFFF",
+      "label": "Side arrows background color"
+    },
+    {
+      "type": "color",
+      "id": "gallery_side_arrows_border_color",
+      "default": "#D1D5DB",
+      "label": "Side arrows border color"
+    },
+    {
+      "type": "header",
+      "content": "Side arrows shadow"
+    },
+    {
+      "type": "color",
+      "id": "gallery_side_arrows_shadow_color",
+      "default": "#000000",
+      "label": "Side arrows shadow color"
+    },
+    {
+      "type": "range",
+      "id": "gallery_side_arrows_shadow_opacity",
+      "min": 0,
+      "max": 1,
+      "step": 0.1,
+      "label": "Side arrows shadow opacity",
+      "default": 0.1
+    },
+    {
+      "type": "range",
+      "id": "gallery_side_arrows_shadow_x",
+      "min": -30,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "label": "Side arrows shadow X",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "gallery_side_arrows_shadow_y",
+      "min": -30,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "label": "Side arrows shadow Y",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "gallery_side_arrows_shadow_blur",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "label": "Side arrows shadow blur",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "gallery_side_arrows_shadow_spread",
+      "min": -20,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Side arrows shadow spread",
+      "default": 0
+    },
+    {
+      "type": "color",
+      "id": "mobile_hide_dots_color",
+      "default": "#8FA4A3",
+      "label": "Hide thumbnails dots color"
     },
     {
       "type": "select",
