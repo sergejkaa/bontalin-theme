@@ -197,6 +197,7 @@
         "quick_add": "none",
         "columns_mobile": "2",
         "swipe_on_mobile": true,
+        "mobile_carousel_dots_color": "#8fa4a3",
         "padding_top": 12,
         "padding_bottom": 12
       }
@@ -329,6 +330,7 @@
         "show_view_all": false,
         "columns_mobile": "1",
         "swipe_on_mobile": true,
+        "mobile_carousel_dots_color": "#8fa4a3",
         "padding_top": 36,
         "padding_bottom": 52
       }
@@ -511,7 +513,7 @@
       "name": "💜How we compare",
       "settings": {
         "heading_text": "How We Compare",
-        "heading_color": "#1b4a3d",
+        "heading_color": "#4b4b4b",
         "heading_size": 42,
         "heading_spacing": 58,
         "heading_weight": "700",
@@ -532,15 +534,15 @@
         "feature_size": 18,
         "feature_size_mobile": 13,
         "feature_weight": "500",
-        "row_divider_color": "#C6E0E8",
+        "row_divider_color": "#c6e0e8",
         "row_padding": 18,
         "row_padding_mobile": 14,
-        "primary_column_bg": "#E2F4F7",
+        "primary_column_bg": "#e2f4f7",
         "primary_column_radius": 18,
-        "primary_check_color": "#4A9A2C",
-        "primary_cross_color": "#F05577",
-        "secondary_check_color": "#4A9A2C",
-        "secondary_cross_color": "#F05577",
+        "primary_check_color": "#4a9a2c",
+        "primary_cross_color": "#f05577",
+        "secondary_check_color": "#4a9a2c",
+        "secondary_cross_color": "#f05577",
         "primary_text_color": "#123643",
         "secondary_text_color": "#123643",
         "icon_size": 32,
@@ -837,6 +839,7 @@
         "show_image": true,
         "show_date": false,
         "show_author": false,
+        "mobile_dots_color": "#8fa4a3",
         "color_scheme": "scheme-4",
         "padding_top": 36,
         "padding_bottom": 36
