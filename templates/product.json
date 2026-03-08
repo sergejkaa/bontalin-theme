@@ -423,7 +423,7 @@
     "related-products": {
       "type": "related-products",
       "custom_css": [
-        ".card__heading {font-size: 15px; color: #1b4a3d;}"
+        ".card__heading {font-size: 15px;}"
       ],
       "settings": {
         "heading": "You may also like",
