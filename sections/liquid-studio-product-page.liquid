@@ -972,7 +972,7 @@
 
 {% schema %}
 {
-  "name": "t:sections.main-product.name",
+  "name": "💜 t:sections.main-product.name",
   "tag": "section",
   "class": "section",
   "blocks": [
@@ -981,7 +981,7 @@
     },
     {
       "type": "text",
-      "name": "t:sections.main-product.blocks.text.name",
+      "name": "💜 t:sections.main-product.blocks.text.name",
       "settings": [
         {
           "type": "inline_richtext",
@@ -1013,142 +1013,698 @@
     },
     {
       "type": "title",
-      "name": "t:sections.main-product.blocks.title.name",
+      "name": "💜 t:sections.main-product.blocks.title.name",
       "limit": 1
     },
     {
       "type": "price",
-      "name": "t:sections.main-product.blocks.price.name",
+      "name": "💜 t:sections.main-product.blocks.price.name",
       "limit": 1
     },
     {
       "type": "rating_badge",
-      "name": "💜Animated rating badge",
+      "name": "💜 💜Animated rating badge",
       "limit": 1,
       "settings": [
-        { "type": "header", "content": "Content" },
-        { "type": "text", "id": "badge_prefix", "label": "Prefix text", "default": "Rated" },
-        { "type": "text", "id": "rating_value", "label": "Rating value", "default": "4.8" },
-        { "type": "text", "id": "badge_connector", "label": "Connector text", "default": "by" },
-        { "type": "text", "id": "customers_count", "label": "Customers count", "default": "10,000+" },
-        { "type": "text", "id": "customers_label", "label": "Customers label", "default": "Happy Customers" },
-
-        { "type": "header", "content": "Colors" },
-        { "type": "color", "id": "animation_color", "label": "Animation accent color (fallback)", "default": "#E79BE4" },
-        { "type": "color", "id": "animation_color_1", "label": "Animation color 1", "default": "#E79BE4" },
-        { "type": "range", "id": "animation_color_1_opacity", "label": "Animation color 1 opacity", "min": 0, "max": 1, "step": 0.1, "default": 0.3 },
-        { "type": "color", "id": "animation_color_2", "label": "Animation color 2", "default": "#E79BE4" },
-        { "type": "range", "id": "animation_color_2_opacity", "label": "Animation color 2 opacity", "min": 0, "max": 1, "step": 0.1, "default": 0.2 },
-        { "type": "color", "id": "text_color", "label": "Text color", "default": "#FFFFFF" },
-        { "type": "color", "id": "star_color", "label": "Star color", "default": "#FFC300" },
-        { "type": "color", "id": "glass_color", "label": "Glass base color", "default": "#FFFFFF" },
-        { "type": "color", "id": "ring_color", "label": "Badge border (ring)", "default": "#FFFFFF" },
-        { "type": "color", "id": "avatar_ring_color", "label": "Avatar ring color", "default": "#FFFFFF" },
-        { "type": "color", "id": "shadow_color", "label": "Shadow color", "default": "#000000" },
-        { "type": "range", "id": "shadow_opacity", "label": "Shadow strength (normal)", "min": 0, "max": 1, "step": 0.1, "default": 0.3 },
-        { "type": "range", "id": "hover_shadow_opacity", "label": "Shadow strength (hover)", "min": 0, "max": 1, "step": 0.1, "default": 0.4 },
-        { "type": "range", "id": "animation_speed", "label": "Animation speed (seconds)", "min": 2, "max": 20, "step": 0.5, "default": 8, "unit": "s" },
-        { "type": "header", "content": "Highlight values" },
-        { "type": "color", "id": "rating_value_color", "label": "Rating value color", "default": "#FFFFFF" },
-        { "type": "select", "id": "rating_value_weight", "label": "Rating value weight", "default": "500", "options": [ { "value": "400", "label": "400" }, { "value": "500", "label": "500" }, { "value": "600", "label": "600" }, { "value": "700", "label": "700" } ] },
-        { "type": "color", "id": "customers_count_color", "label": "Customers count color", "default": "#FFFFFF" },
-        { "type": "select", "id": "customers_count_weight", "label": "Customers count weight", "default": "500", "options": [ { "value": "400", "label": "400" }, { "value": "500", "label": "500" }, { "value": "600", "label": "600" }, { "value": "700", "label": "700" } ] },
-
-        { "type": "header", "content": "Avatars" },
-        { "type": "image_picker", "id": "avatar_1", "label": "Avatar 1" },
-        { "type": "text", "id": "avatar_1_alt", "label": "Avatar 1 alt text", "default": "Customer photo 1" },
-        { "type": "image_picker", "id": "avatar_2", "label": "Avatar 2" },
-        { "type": "text", "id": "avatar_2_alt", "label": "Avatar 2 alt text", "default": "Customer photo 2" },
-        { "type": "image_picker", "id": "avatar_3", "label": "Avatar 3" },
-        { "type": "text", "id": "avatar_3_alt", "label": "Avatar 3 alt text", "default": "Customer photo 3" },
-        { "type": "image_picker", "id": "avatar_4", "label": "Avatar 4" },
-        { "type": "text", "id": "avatar_4_alt", "label": "Avatar 4 alt text", "default": "Customer photo 4" },
-        { "type": "checkbox", "id": "use_default_avatars", "label": "Use built-in default avatars", "default": true, "info": "When on, empty avatar slots show the theme’s .webp defaults (1.webp, 6.webp, 7.webp, 8.webp)." },
-
-        { "type": "header", "content": "Responsive sizing" },
-        { "type": "range", "id": "font_size_desktop", "label": "Font size desktop (px)", "min": 10, "max": 24, "step": 0.5, "default": 14.5 },
-        { "type": "range", "id": "font_size_tablet", "label": "Font size tablet (px)", "min": 10, "max": 22, "step": 0.5, "default": 13.5 },
-        { "type": "range", "id": "font_size_mobile", "label": "Font size mobile (px)", "min": 9, "max": 20, "step": 0.5, "default": 12 },
-        { "type": "range", "id": "font_size_xs", "label": "Font size extra-small (px)", "min": 8, "max": 18, "step": 0.5, "default": 11 },
-        { "type": "select", "id": "font_weight_text", "label": "Body text weight", "options": [ { "value": "300", "label": "300" }, { "value": "400", "label": "400" }, { "value": "500", "label": "500" }, { "value": "600", "label": "600" }, { "value": "700", "label": "700" } ], "default": "400" },
-
-        { "type": "range", "id": "badge_height_desktop", "label": "Badge height desktop (px)", "min": 26, "max": 64, "step": 1, "default": 36 },
-        { "type": "range", "id": "badge_height_tablet", "label": "Badge height tablet (px)", "min": 24, "max": 56, "step": 1, "default": 34 },
-        { "type": "range", "id": "badge_height_mobile", "label": "Badge height mobile (px)", "min": 20, "max": 52, "step": 1, "default": 30 },
-
-        { "type": "range", "id": "padding_horizontal_desktop", "label": "Horizontal padding desktop (px)", "min": 8, "max": 28, "step": 1, "default": 16 },
-        { "type": "range", "id": "padding_horizontal_tablet", "label": "Horizontal padding tablet (px)", "min": 8, "max": 26, "step": 1, "default": 14 },
-        { "type": "range", "id": "padding_horizontal_mobile", "label": "Horizontal padding mobile (px)", "min": 6, "max": 24, "step": 1, "default": 12 },
-
-        { "type": "range", "id": "gap_desktop", "label": "Gap desktop (px)", "min": 4, "max": 18, "step": 0.5, "default": 10 },
-        { "type": "range", "id": "gap_tablet", "label": "Gap tablet (px)", "min": 4, "max": 16, "step": 0.5, "default": 9 },
-        { "type": "range", "id": "gap_mobile", "label": "Gap mobile (px)", "min": 2, "max": 14, "step": 0.5, "default": 8 },
-
-        { "type": "range", "id": "avatar_size_desktop", "label": "Avatar size desktop (px)", "min": 18, "max": 48, "step": 1, "default": 26 },
-        { "type": "range", "id": "avatar_size_tablet", "label": "Avatar size tablet (px)", "min": 16, "max": 44, "step": 1, "default": 24 },
-        { "type": "range", "id": "avatar_size_mobile", "label": "Avatar size mobile (px)", "min": 14, "max": 40, "step": 1, "default": 22 },
-
-        { "type": "header", "content": "Breakpoints & visibility" },
-        { "type": "text", "id": "xs_min_manual", "label": "XS min width (px)", "default": "0" },
-        { "type": "text", "id": "xs_max_manual", "label": "XS max width (px)", "default": "415" },
-        { "type": "text", "id": "mobile_min_manual", "label": "Mobile min width (px)", "default": "420" },
-        { "type": "text", "id": "mobile_max_manual", "label": "Mobile max width (px)", "default": "740" },
-        { "type": "text", "id": "tablet_min_manual", "label": "Tablet min width (px)", "default": "760" },
-        { "type": "text", "id": "tablet_max_manual", "label": "Tablet max width (px)", "default": "1180" },
-        { "type": "text", "id": "desktop_min_manual", "label": "Desktop min width (px)", "default": "1280" },
-        { "type": "checkbox", "id": "hide_avatars_mobile", "label": "Hide avatars on mobile", "default": false },
-        { "type": "checkbox", "id": "hide_avatars_tablet", "label": "Hide avatars on tablet", "default": false },
-        { "type": "checkbox", "id": "hide_avatars_xs", "label": "Hide avatars on extra-small screens", "default": true },
-        { "type": "checkbox", "id": "hide_avatars_desktop", "label": "Hide avatars on desktop", "default": false },
-        { "type": "checkbox", "id": "hide_star_xs", "label": "Hide star icon on extra-small screens", "default": false }
+        {
+          "type": "header",
+          "content": "Content"
+        },
+        {
+          "type": "text",
+          "id": "badge_prefix",
+          "label": "Prefix text",
+          "default": "Rated"
+        },
+        {
+          "type": "text",
+          "id": "rating_value",
+          "label": "Rating value",
+          "default": "4.8"
+        },
+        {
+          "type": "text",
+          "id": "badge_connector",
+          "label": "Connector text",
+          "default": "by"
+        },
+        {
+          "type": "text",
+          "id": "customers_count",
+          "label": "Customers count",
+          "default": "10,000+"
+        },
+        {
+          "type": "text",
+          "id": "customers_label",
+          "label": "Customers label",
+          "default": "Happy Customers"
+        },
+        {
+          "type": "header",
+          "content": "Colors"
+        },
+        {
+          "type": "color",
+          "id": "animation_color",
+          "label": "Animation accent color (fallback)",
+          "default": "#E79BE4"
+        },
+        {
+          "type": "color",
+          "id": "animation_color_1",
+          "label": "Animation color 1",
+          "default": "#E79BE4"
+        },
+        {
+          "type": "range",
+          "id": "animation_color_1_opacity",
+          "label": "Animation color 1 opacity",
+          "min": 0,
+          "max": 1,
+          "step": 0.1,
+          "default": 0.3
+        },
+        {
+          "type": "color",
+          "id": "animation_color_2",
+          "label": "Animation color 2",
+          "default": "#E79BE4"
+        },
+        {
+          "type": "range",
+          "id": "animation_color_2_opacity",
+          "label": "Animation color 2 opacity",
+          "min": 0,
+          "max": 1,
+          "step": 0.1,
+          "default": 0.2
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Text color",
+          "default": "#FFFFFF"
+        },
+        {
+          "type": "color",
+          "id": "star_color",
+          "label": "Star color",
+          "default": "#FFC300"
+        },
+        {
+          "type": "color",
+          "id": "glass_color",
+          "label": "Glass base color",
+          "default": "#FFFFFF"
+        },
+        {
+          "type": "color",
+          "id": "ring_color",
+          "label": "Badge border (ring)",
+          "default": "#FFFFFF"
+        },
+        {
+          "type": "color",
+          "id": "avatar_ring_color",
+          "label": "Avatar ring color",
+          "default": "#FFFFFF"
+        },
+        {
+          "type": "color",
+          "id": "shadow_color",
+          "label": "Shadow color",
+          "default": "#000000"
+        },
+        {
+          "type": "range",
+          "id": "shadow_opacity",
+          "label": "Shadow strength (normal)",
+          "min": 0,
+          "max": 1,
+          "step": 0.1,
+          "default": 0.3
+        },
+        {
+          "type": "range",
+          "id": "hover_shadow_opacity",
+          "label": "Shadow strength (hover)",
+          "min": 0,
+          "max": 1,
+          "step": 0.1,
+          "default": 0.4
+        },
+        {
+          "type": "range",
+          "id": "animation_speed",
+          "label": "Animation speed (seconds)",
+          "min": 2,
+          "max": 20,
+          "step": 0.5,
+          "default": 8,
+          "unit": "s"
+        },
+        {
+          "type": "header",
+          "content": "Highlight values"
+        },
+        {
+          "type": "color",
+          "id": "rating_value_color",
+          "label": "Rating value color",
+          "default": "#FFFFFF"
+        },
+        {
+          "type": "select",
+          "id": "rating_value_weight",
+          "label": "Rating value weight",
+          "default": "500",
+          "options": [
+            {
+              "value": "400",
+              "label": "400"
+            },
+            {
+              "value": "500",
+              "label": "500"
+            },
+            {
+              "value": "600",
+              "label": "600"
+            },
+            {
+              "value": "700",
+              "label": "700"
+            }
+          ]
+        },
+        {
+          "type": "color",
+          "id": "customers_count_color",
+          "label": "Customers count color",
+          "default": "#FFFFFF"
+        },
+        {
+          "type": "select",
+          "id": "customers_count_weight",
+          "label": "Customers count weight",
+          "default": "500",
+          "options": [
+            {
+              "value": "400",
+              "label": "400"
+            },
+            {
+              "value": "500",
+              "label": "500"
+            },
+            {
+              "value": "600",
+              "label": "600"
+            },
+            {
+              "value": "700",
+              "label": "700"
+            }
+          ]
+        },
+        {
+          "type": "header",
+          "content": "Avatars"
+        },
+        {
+          "type": "image_picker",
+          "id": "avatar_1",
+          "label": "Avatar 1"
+        },
+        {
+          "type": "text",
+          "id": "avatar_1_alt",
+          "label": "Avatar 1 alt text",
+          "default": "Customer photo 1"
+        },
+        {
+          "type": "image_picker",
+          "id": "avatar_2",
+          "label": "Avatar 2"
+        },
+        {
+          "type": "text",
+          "id": "avatar_2_alt",
+          "label": "Avatar 2 alt text",
+          "default": "Customer photo 2"
+        },
+        {
+          "type": "image_picker",
+          "id": "avatar_3",
+          "label": "Avatar 3"
+        },
+        {
+          "type": "text",
+          "id": "avatar_3_alt",
+          "label": "Avatar 3 alt text",
+          "default": "Customer photo 3"
+        },
+        {
+          "type": "image_picker",
+          "id": "avatar_4",
+          "label": "Avatar 4"
+        },
+        {
+          "type": "text",
+          "id": "avatar_4_alt",
+          "label": "Avatar 4 alt text",
+          "default": "Customer photo 4"
+        },
+        {
+          "type": "checkbox",
+          "id": "use_default_avatars",
+          "label": "Use built-in default avatars",
+          "default": true,
+          "info": "When on, empty avatar slots show the theme’s .webp defaults (1.webp, 6.webp, 7.webp, 8.webp)."
+        },
+        {
+          "type": "header",
+          "content": "Responsive sizing"
+        },
+        {
+          "type": "range",
+          "id": "font_size_desktop",
+          "label": "Font size desktop (px)",
+          "min": 10,
+          "max": 24,
+          "step": 0.5,
+          "default": 14.5
+        },
+        {
+          "type": "range",
+          "id": "font_size_tablet",
+          "label": "Font size tablet (px)",
+          "min": 10,
+          "max": 22,
+          "step": 0.5,
+          "default": 13.5
+        },
+        {
+          "type": "range",
+          "id": "font_size_mobile",
+          "label": "Font size mobile (px)",
+          "min": 9,
+          "max": 20,
+          "step": 0.5,
+          "default": 12
+        },
+        {
+          "type": "range",
+          "id": "font_size_xs",
+          "label": "Font size extra-small (px)",
+          "min": 8,
+          "max": 18,
+          "step": 0.5,
+          "default": 11
+        },
+        {
+          "type": "select",
+          "id": "font_weight_text",
+          "label": "Body text weight",
+          "options": [
+            {
+              "value": "300",
+              "label": "300"
+            },
+            {
+              "value": "400",
+              "label": "400"
+            },
+            {
+              "value": "500",
+              "label": "500"
+            },
+            {
+              "value": "600",
+              "label": "600"
+            },
+            {
+              "value": "700",
+              "label": "700"
+            }
+          ],
+          "default": "400"
+        },
+        {
+          "type": "range",
+          "id": "badge_height_desktop",
+          "label": "Badge height desktop (px)",
+          "min": 26,
+          "max": 64,
+          "step": 1,
+          "default": 36
+        },
+        {
+          "type": "range",
+          "id": "badge_height_tablet",
+          "label": "Badge height tablet (px)",
+          "min": 24,
+          "max": 56,
+          "step": 1,
+          "default": 34
+        },
+        {
+          "type": "range",
+          "id": "badge_height_mobile",
+          "label": "Badge height mobile (px)",
+          "min": 20,
+          "max": 52,
+          "step": 1,
+          "default": 30
+        },
+        {
+          "type": "range",
+          "id": "padding_horizontal_desktop",
+          "label": "Horizontal padding desktop (px)",
+          "min": 8,
+          "max": 28,
+          "step": 1,
+          "default": 16
+        },
+        {
+          "type": "range",
+          "id": "padding_horizontal_tablet",
+          "label": "Horizontal padding tablet (px)",
+          "min": 8,
+          "max": 26,
+          "step": 1,
+          "default": 14
+        },
+        {
+          "type": "range",
+          "id": "padding_horizontal_mobile",
+          "label": "Horizontal padding mobile (px)",
+          "min": 6,
+          "max": 24,
+          "step": 1,
+          "default": 12
+        },
+        {
+          "type": "range",
+          "id": "gap_desktop",
+          "label": "Gap desktop (px)",
+          "min": 4,
+          "max": 18,
+          "step": 0.5,
+          "default": 10
+        },
+        {
+          "type": "range",
+          "id": "gap_tablet",
+          "label": "Gap tablet (px)",
+          "min": 4,
+          "max": 16,
+          "step": 0.5,
+          "default": 9
+        },
+        {
+          "type": "range",
+          "id": "gap_mobile",
+          "label": "Gap mobile (px)",
+          "min": 2,
+          "max": 14,
+          "step": 0.5,
+          "default": 8
+        },
+        {
+          "type": "range",
+          "id": "avatar_size_desktop",
+          "label": "Avatar size desktop (px)",
+          "min": 18,
+          "max": 48,
+          "step": 1,
+          "default": 26
+        },
+        {
+          "type": "range",
+          "id": "avatar_size_tablet",
+          "label": "Avatar size tablet (px)",
+          "min": 16,
+          "max": 44,
+          "step": 1,
+          "default": 24
+        },
+        {
+          "type": "range",
+          "id": "avatar_size_mobile",
+          "label": "Avatar size mobile (px)",
+          "min": 14,
+          "max": 40,
+          "step": 1,
+          "default": 22
+        },
+        {
+          "type": "header",
+          "content": "Breakpoints & visibility"
+        },
+        {
+          "type": "text",
+          "id": "xs_min_manual",
+          "label": "XS min width (px)",
+          "default": "0"
+        },
+        {
+          "type": "text",
+          "id": "xs_max_manual",
+          "label": "XS max width (px)",
+          "default": "415"
+        },
+        {
+          "type": "text",
+          "id": "mobile_min_manual",
+          "label": "Mobile min width (px)",
+          "default": "420"
+        },
+        {
+          "type": "text",
+          "id": "mobile_max_manual",
+          "label": "Mobile max width (px)",
+          "default": "740"
+        },
+        {
+          "type": "text",
+          "id": "tablet_min_manual",
+          "label": "Tablet min width (px)",
+          "default": "760"
+        },
+        {
+          "type": "text",
+          "id": "tablet_max_manual",
+          "label": "Tablet max width (px)",
+          "default": "1180"
+        },
+        {
+          "type": "text",
+          "id": "desktop_min_manual",
+          "label": "Desktop min width (px)",
+          "default": "1280"
+        },
+        {
+          "type": "checkbox",
+          "id": "hide_avatars_mobile",
+          "label": "Hide avatars on mobile",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hide_avatars_tablet",
+          "label": "Hide avatars on tablet",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hide_avatars_xs",
+          "label": "Hide avatars on extra-small screens",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "hide_avatars_desktop",
+          "label": "Hide avatars on desktop",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "hide_star_xs",
+          "label": "Hide star icon on extra-small screens",
+          "default": false
+        }
       ]
     },
     {
-    "type": "est_delivery_simple",
-    "name": "Estimated delivery",
-    "limit": 1,
-    "settings": [
-      { "type": "header", "content": "Offsets (days)" },
-
-    { "type": "range", "id": "dispatch_min", "label": "Dispatch: min days from today", "min": 0, "max": 14, "step": 1, "default": 0 },
-    { "type": "range", "id": "dispatch_max", "label": "Dispatch: max days from today", "min": 0, "max": 14, "step": 1, "default": 0 },
-
-    { "type": "range", "id": "delivery_min", "label": "Delivery: min days AFTER dispatch", "min": 1, "max": 45, "step": 1, "default": 5 },
-    { "type": "range", "id": "delivery_max", "label": "Delivery: max days AFTER dispatch", "min": 1, "max": 60, "step": 1, "default": 6 },
-
-    { "type": "header", "content": "Display" },
-    { "type": "text",   "id": "heading_text",  "label": "Heading", "default": "ESTIMATED DELIVERY" },
-
-    { "type": "color",  "id": "bg_color",        "label": "Card background",          "default": "#EEEFE0" },
-    { "type": "color",  "id": "border_color",    "label": "Card border",               "default": "#819A91" },
-    { "type": "select", "id": "border_style",    "label": "Card border style", "default": "solid",
-      "options": [ { "value": "solid", "label": "Solid" }, { "value": "dashed", "label": "Dashed" } ]
+      "type": "est_delivery_simple",
+      "name": "💜 Estimated delivery",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "header",
+          "content": "Offsets (days)"
+        },
+        {
+          "type": "range",
+          "id": "dispatch_min",
+          "label": "Dispatch: min days from today",
+          "min": 0,
+          "max": 14,
+          "step": 1,
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "dispatch_max",
+          "label": "Dispatch: max days from today",
+          "min": 0,
+          "max": 14,
+          "step": 1,
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "delivery_min",
+          "label": "Delivery: min days AFTER dispatch",
+          "min": 1,
+          "max": 45,
+          "step": 1,
+          "default": 5
+        },
+        {
+          "type": "range",
+          "id": "delivery_max",
+          "label": "Delivery: max days AFTER dispatch",
+          "min": 1,
+          "max": 60,
+          "step": 1,
+          "default": 6
+        },
+        {
+          "type": "header",
+          "content": "Display"
+        },
+        {
+          "type": "text",
+          "id": "heading_text",
+          "label": "Heading",
+          "default": "ESTIMATED DELIVERY"
+        },
+        {
+          "type": "color",
+          "id": "bg_color",
+          "label": "Card background",
+          "default": "#EEEFE0"
+        },
+        {
+          "type": "color",
+          "id": "border_color",
+          "label": "Card border",
+          "default": "#819A91"
+        },
+        {
+          "type": "select",
+          "id": "border_style",
+          "label": "Card border style",
+          "default": "solid",
+          "options": [
+            {
+              "value": "solid",
+              "label": "Solid"
+            },
+            {
+              "value": "dashed",
+              "label": "Dashed"
+            }
+          ]
+        },
+        {
+          "type": "color",
+          "id": "title_color",
+          "label": "Title color (ESTIMATED DELIVERY)",
+          "default": "#26322B"
+        },
+        {
+          "type": "color",
+          "id": "summary_color",
+          "label": "Summary date color (e.g., Oct 16–17)",
+          "default": "#8AA092"
+        },
+        {
+          "type": "color",
+          "id": "label_color",
+          "label": "Step labels color",
+          "default": "#26322B"
+        },
+        {
+          "type": "color",
+          "id": "date_color",
+          "label": "Step dates color",
+          "default": "#8AA092"
+        },
+        {
+          "type": "color",
+          "id": "ring_color",
+          "label": "Icon ring (inactive)",
+          "default": "#9BB1A7"
+        },
+        {
+          "type": "color",
+          "id": "connector_color",
+          "label": "Connector lines (inactive)",
+          "default": "#9BB1A7"
+        },
+        {
+          "type": "select",
+          "id": "connector_style",
+          "label": "Connector style",
+          "default": "solid",
+          "options": [
+            {
+              "value": "solid",
+              "label": "Solid"
+            },
+            {
+              "value": "dashed",
+              "label": "Dashed"
+            }
+          ]
+        },
+        {
+          "type": "color",
+          "id": "accent_color",
+          "label": "Accent / animation (active step)",
+          "default": "#A7C1A8"
+        },
+        {
+          "type": "header",
+          "content": "Step labels"
+        },
+        {
+          "type": "text",
+          "id": "label_order",
+          "label": "Step 1 label",
+          "default": "Order placed (Today)"
+        },
+        {
+          "type": "text",
+          "id": "label_dispatched",
+          "label": "Step 2 label",
+          "default": "Dispatched"
+        },
+        {
+          "type": "text",
+          "id": "label_delivered",
+          "label": "Step 3 label",
+          "default": "Delivered to You"
+        }
+      ]
     },
-
-    { "type": "color",  "id": "title_color",     "label": "Title color (ESTIMATED DELIVERY)", "default": "#26322B" },
-    { "type": "color",  "id": "summary_color",   "label": "Summary date color (e.g., Oct 16–17)", "default": "#8AA092" },
-    { "type": "color",  "id": "label_color",     "label": "Step labels color",         "default": "#26322B" },
-    { "type": "color",  "id": "date_color",      "label": "Step dates color",          "default": "#8AA092" },
-
-    { "type": "color",  "id": "ring_color",      "label": "Icon ring (inactive)",      "default": "#9BB1A7" },
-    { "type": "color",  "id": "connector_color", "label": "Connector lines (inactive)","default": "#9BB1A7" },
-    { "type": "select", "id": "connector_style", "label": "Connector style", "default": "solid",
-      "options": [ { "value": "solid", "label": "Solid" }, { "value": "dashed", "label": "Dashed" } ]
-    },
-
-    { "type": "color",  "id": "accent_color",    "label": "Accent / animation (active step)", "default": "#A7C1A8" },
-
-    { "type": "header", "content": "Step labels" },
-    { "type": "text",   "id": "label_order",      "label": "Step 1 label", "default": "Order placed (Today)" },
-    { "type": "text",   "id": "label_dispatched", "label": "Step 2 label", "default": "Dispatched" },
-    { "type": "text",   "id": "label_delivered",  "label": "Step 3 label", "default": "Delivered to You" }
-  ]
-},
-
-    
     {
       "type": "sku",
-      "name": "t:sections.main-product.blocks.sku.name",
+      "name": "💜 t:sections.main-product.blocks.sku.name",
       "limit": 1,
       "settings": [
         {
@@ -1173,10 +1729,9 @@
         }
       ]
     },
-    
     {
       "type": "inventory",
-      "name": "t:sections.main-product.blocks.inventory.name",
+      "name": "💜 t:sections.main-product.blocks.inventory.name",
       "limit": 1,
       "settings": [
         {
@@ -1218,12 +1773,12 @@
     },
     {
       "type": "quantity_selector",
-      "name": "t:sections.main-product.blocks.quantity_selector.name",
+      "name": "💜 t:sections.main-product.blocks.quantity_selector.name",
       "limit": 1
     },
     {
       "type": "variant_picker",
-      "name": "t:sections.main-product.blocks.variant_picker.name",
+      "name": "💜 t:sections.main-product.blocks.variant_picker.name",
       "limit": 1,
       "settings": [
         {
@@ -1267,7 +1822,7 @@
     },
     {
       "type": "buy_buttons",
-      "name": "t:sections.main-product.blocks.buy_buttons.name",
+      "name": "💜 t:sections.main-product.blocks.buy_buttons.name",
       "limit": 1,
       "settings": [
         {
@@ -1288,12 +1843,12 @@
     },
     {
       "type": "description",
-      "name": "t:sections.main-product.blocks.description.name",
+      "name": "💜 t:sections.main-product.blocks.description.name",
       "limit": 1
     },
     {
       "type": "share",
-      "name": "t:sections.main-product.blocks.share.name",
+      "name": "💜 t:sections.main-product.blocks.share.name",
       "limit": 1,
       "settings": [
         {
@@ -1306,7 +1861,7 @@
     },
     {
       "type": "custom_liquid",
-      "name": "t:sections.custom-liquid.name",
+      "name": "💜 t:sections.custom-liquid.name",
       "settings": [
         {
           "type": "liquid",
@@ -1318,7 +1873,7 @@
     },
     {
       "type": "upsell_snippet",
-      "name": "Upsell slider",
+      "name": "💜 Upsell slider",
       "limit": 1,
       "settings": [
         {
@@ -1712,7 +2267,7 @@
     },
     {
       "type": "collapsible_tab",
-      "name": "t:sections.main-product.blocks.collapsible_tab.name",
+      "name": "💜 t:sections.main-product.blocks.collapsible_tab.name",
       "settings": [
         {
           "type": "text",
@@ -1918,7 +2473,7 @@
     },
     {
       "type": "popup",
-      "name": "t:sections.main-product.blocks.popup.name",
+      "name": "💜 t:sections.main-product.blocks.popup.name",
       "settings": [
         {
           "type": "text",
@@ -1935,7 +2490,7 @@
     },
     {
       "type": "size_chart",
-      "name": "Size chart",
+      "name": "💜 Size chart",
       "limit": 1,
       "settings": [
         {
@@ -2116,7 +2671,7 @@
     },
     {
       "type": "rating",
-      "name": "t:sections.main-product.blocks.rating.name",
+      "name": "💜 t:sections.main-product.blocks.rating.name",
       "limit": 1,
       "settings": [
         {
@@ -2127,7 +2682,7 @@
     },
     {
       "type": "complementary",
-      "name": "t:sections.main-product.blocks.complementary_products.name",
+      "name": "💜 t:sections.main-product.blocks.complementary_products.name",
       "limit": 1,
       "settings": [
         {
@@ -2399,7 +2954,7 @@
     },
     {
       "type": "feature-cards",
-      "name": "Feature cards (icons)",
+      "name": "💜 Feature cards (icons)",
       "settings": [
         {
           "type": "header",
@@ -3689,7 +4244,7 @@
     },
     {
       "type": "icon-with-text",
-      "name": "t:sections.main-product.blocks.icon_with_text.name",
+      "name": "💜 t:sections.main-product.blocks.icon_with_text.name",
       "settings": [
         {
           "type": "select",

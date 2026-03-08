@@ -1,78 +1,245 @@
 {% schema %}
 {
-  "name": "Looping Marquee Products",
+  "name": "💜 Looping Marquee Products",
   "settings": [
-    { "type": "text", "id": "marquee_heading", "label": "Heading", "default": "BESTSELLERS" },
+    {
+      "type": "text",
+      "id": "marquee_heading",
+      "label": "Heading",
+      "default": "BESTSELLERS"
+    },
     {
       "type": "select",
       "id": "heading_size_class",
       "label": "Heading size (Shopify classes)",
       "options": [
-        { "value": "h2",   "label": "Small (h2)" },
-        { "value": "h1",   "label": "Medium (h1)" },
-        { "value": "h0",   "label": "Large (h0)" },
-        { "value": "hxl",  "label": "Extra Large (hxl)" },
-        { "value": "hxxl", "label": "Extra Extra Large (hxxl)" }
+        {
+          "value": "h2",
+          "label": "Small (h2)"
+        },
+        {
+          "value": "h1",
+          "label": "Medium (h1)"
+        },
+        {
+          "value": "h0",
+          "label": "Large (h0)"
+        },
+        {
+          "value": "hxl",
+          "label": "Extra Large (hxl)"
+        },
+        {
+          "value": "hxxl",
+          "label": "Extra Extra Large (hxxl)"
+        }
       ],
       "default": "h1"
     },
-
-    { "type": "checkbox", "id": "use_page_width", "label": "Constrain to page width (track)", "default": true },
-
-    { "type": "select", "id": "image_ratio", "label": "Image ratio", "options": [
-      { "value": "1-1", "label": "1 : 1 (square)" },
-      { "value": "3-4", "label": "3 : 4" },
-      { "value": "2-3", "label": "2 : 3 (taller)" },
-      { "value": "9-16", "label": "9 : 16 (very tall)" }
-    ], "default": "2-3" },
-
-    { "type": "range", "id": "focus_y", "label": "Vertical focus (top↔bottom %)", "min": 0, "max": 100, "step": 1, "default": 12 },
-
-    { "type": "color", "id": "product_title_color", "label": "Product Title Color", "default": "#4E4E4E" },
-
-    { "type": "select", "id": "title_size", "label": "Product Title Size", "options": [
-      { "value": "1rem",   "label": "Small" },
-      { "value": "1.18rem","label": "Medium" },
-      { "value": "1.4rem", "label": "Large" },
-      { "value": "1.6rem", "label": "X-Large" },
-      { "value": "1.85rem","label": "XX-Large" }
-    ], "default": "1.18rem" },
-
-    { "type": "select", "id": "price_size", "label": "Price Size", "options": [
-      { "value": "1rem",   "label": "Small" },
-      { "value": "1.18rem","label": "Medium" },
-      { "value": "1.4rem", "label": "Large" },
-      { "value": "1.6rem", "label": "X-Large" },
-      { "value": "1.85rem","label": "XX-Large" }
-    ], "default": "1.18rem" },
-
-    { "type": "select", "id": "price_weight", "label": "Price Weight", "options": [
-      { "value": "400", "label": "Normal" },
-      { "value": "700", "label": "Bold" }
-    ], "default": "700" },
-
-    { "type": "color", "id": "price_color", "label": "Price Color", "default": "#A8C6E5" },
-
-    { "type": "range", "id": "padding_top", "label": "Top Padding (px)", "min": 0, "max": 120, "step": 4, "default": 32 },
-    { "type": "range", "id": "padding_bottom", "label": "Bottom Padding (px)", "min": 0, "max": 120, "step": 4, "default": 32 },
-
-    { "type": "range", "id": "marquee_speed", "label": "Scroll Speed (seconds per 1000px)", "min": 8, "max": 60, "step": 1, "default": 25 },
-    { "type": "color_scheme", "id": "color_scheme", "label": "Color Scheme", "default": "background-1" },
-    { "type": "range", "id": "item_gap", "label": "Gap Between Products (px)", "min": 0, "max": 60, "step": 2, "default": 28 },
-
-    { "type": "checkbox", "id": "hide_title", "label": "Hide Product Title", "default": false },
-    { "type": "checkbox", "id": "hide_price", "label": "Hide Product Price", "default": true }
+    {
+      "type": "checkbox",
+      "id": "use_page_width",
+      "label": "Constrain to page width (track)",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "Image ratio",
+      "options": [
+        {
+          "value": "1-1",
+          "label": "1 : 1 (square)"
+        },
+        {
+          "value": "3-4",
+          "label": "3 : 4"
+        },
+        {
+          "value": "2-3",
+          "label": "2 : 3 (taller)"
+        },
+        {
+          "value": "9-16",
+          "label": "9 : 16 (very tall)"
+        }
+      ],
+      "default": "2-3"
+    },
+    {
+      "type": "range",
+      "id": "focus_y",
+      "label": "Vertical focus (top↔bottom %)",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 12
+    },
+    {
+      "type": "color",
+      "id": "product_title_color",
+      "label": "Product Title Color",
+      "default": "#4E4E4E"
+    },
+    {
+      "type": "select",
+      "id": "title_size",
+      "label": "Product Title Size",
+      "options": [
+        {
+          "value": "1rem",
+          "label": "Small"
+        },
+        {
+          "value": "1.18rem",
+          "label": "Medium"
+        },
+        {
+          "value": "1.4rem",
+          "label": "Large"
+        },
+        {
+          "value": "1.6rem",
+          "label": "X-Large"
+        },
+        {
+          "value": "1.85rem",
+          "label": "XX-Large"
+        }
+      ],
+      "default": "1.18rem"
+    },
+    {
+      "type": "select",
+      "id": "price_size",
+      "label": "Price Size",
+      "options": [
+        {
+          "value": "1rem",
+          "label": "Small"
+        },
+        {
+          "value": "1.18rem",
+          "label": "Medium"
+        },
+        {
+          "value": "1.4rem",
+          "label": "Large"
+        },
+        {
+          "value": "1.6rem",
+          "label": "X-Large"
+        },
+        {
+          "value": "1.85rem",
+          "label": "XX-Large"
+        }
+      ],
+      "default": "1.18rem"
+    },
+    {
+      "type": "select",
+      "id": "price_weight",
+      "label": "Price Weight",
+      "options": [
+        {
+          "value": "400",
+          "label": "Normal"
+        },
+        {
+          "value": "700",
+          "label": "Bold"
+        }
+      ],
+      "default": "700"
+    },
+    {
+      "type": "color",
+      "id": "price_color",
+      "label": "Price Color",
+      "default": "#A8C6E5"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top Padding (px)",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom Padding (px)",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "marquee_speed",
+      "label": "Scroll Speed (seconds per 1000px)",
+      "min": 8,
+      "max": 60,
+      "step": 1,
+      "default": 25
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color Scheme",
+      "default": "background-1"
+    },
+    {
+      "type": "range",
+      "id": "item_gap",
+      "label": "Gap Between Products (px)",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "default": 28
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_title",
+      "label": "Hide Product Title",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_price",
+      "label": "Hide Product Price",
+      "default": true
+    }
   ],
   "blocks": [
-    { "type": "product", "name": "Product", "settings": [ { "type": "product", "id": "product", "label": "Select product" } ] }
+    {
+      "type": "product",
+      "name": "💜 Product",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Select product"
+        }
+      ]
+    }
   ],
   "presets": [
     {
-      "name": "Looping Marquee Products",
+      "name": "💜 Looping Marquee Products",
       "blocks": [
-        { "type": "product" },
-        { "type": "product" },
-        { "type": "product" }
+        {
+          "type": "product"
+        },
+        {
+          "type": "product"
+        },
+        {
+          "type": "product"
+        }
       ]
     }
   ]
