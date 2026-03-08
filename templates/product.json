@@ -727,6 +727,78 @@
         "padding_bottom": 36
       }
     },
+    "ugc_video_slider_fQDUwJ": {
+      "type": "ugc-video-slider",
+      "blocks": {
+        "video_acNcDe": {
+          "type": "video",
+          "settings": {
+            "eyebrow": "",
+            "title": "",
+            "caption": "",
+            "video_url": "",
+            "orientation": "vertical",
+            "loop_video": true
+          }
+        },
+        "video_63nzMR": {
+          "type": "video",
+          "settings": {
+            "eyebrow": "",
+            "title": "",
+            "caption": "",
+            "video_url": "",
+            "orientation": "vertical",
+            "loop_video": true
+          }
+        },
+        "video_jyhEUA": {
+          "type": "video",
+          "settings": {
+            "eyebrow": "",
+            "title": "",
+            "caption": "",
+            "video_url": "",
+            "orientation": "vertical",
+            "loop_video": true
+          }
+        }
+      },
+      "block_order": [
+        "video_acNcDe",
+        "video_63nzMR",
+        "video_jyhEUA"
+      ],
+      "name": "💜 UGC video slider",
+      "settings": {
+        "heading": "UGC video slider",
+        "heading_size": "h1",
+        "subheading": "Real people. Real reviews.",
+        "enable_page_width": true,
+        "background": "#f7f7f7",
+        "text_color": "#4b4b4b",
+        "accent_color": "#111111",
+        "align_mode": "start",
+        "slides_desktop": 1,
+        "slides_mobile": 1,
+        "slide_gap": 16,
+        "show_nav": true,
+        "show_dots": false,
+        "show_nav_mobile": false,
+        "loop": true,
+        "draggable": true,
+        "autoplay": false,
+        "autoplay_speed": 5,
+        "pause_on_hover": false,
+        "show_controls": false,
+        "border_radius": 12,
+        "shadow": false,
+        "slide_max_width_desktop": 260,
+        "slide_max_width_mobile": 220,
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
+    },
     "how_we_compare_GBMJcy": {
       "type": "how-we-compare",
       "blocks": {
@@ -928,6 +1000,7 @@
     "collection_list_36fqLH",
     "logo_ticker_iYWCDQ",
     "collapsible_content_e8aGix",
+    "ugc_video_slider_fQDUwJ",
     "how_we_compare_GBMJcy",
     "looping_products_JCDJiH",
     "contact_form_tWjLiJ"
