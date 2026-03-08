@@ -16,8 +16,6 @@
   --button-bg: {{ section.settings.button_background }};
   --button-bg-hover: {{ section.settings.button_background_hover }};
   --button-text: {{ section.settings.button_text_color }};
-  --heading-size: {{ section.settings.heading_size }}px;
-  --heading-size-mobile: {{ section.settings.heading_size_mobile }}px;
   --heading-letter-spacing: {{ section.settings.heading_letter_spacing }}px;
   --item-title-letter-spacing: {{ section.settings.item_heading_letter_spacing }}px;
   --right-title-letter-spacing: {{ section.settings.right_heading_letter_spacing }}px;
@@ -47,7 +45,7 @@
     {% endif %}
   >
     {% if section.settings.heading != blank %}
-      <h2 class="what-inside__heading">{{ section.settings.heading }}</h2>
+      <h2 class="what-inside__heading {{ section.settings.heading_size | default: 'h2' }}">{{ section.settings.heading }}</h2>
     {% endif %}
 
     <div class="what-inside__content">
@@ -128,7 +126,6 @@
   }
 
   #{{ section_id }} .what-inside__heading {
-    font-size: var(--heading-size);
     color: var(--heading-color);
     margin: 0 0 32px;
     font-weight: 700;
@@ -359,7 +356,6 @@
     #{{ section_id }} .what-inside__heading {
       margin-bottom: 24px;
       text-align: center;
-      font-size: var(--heading-size-mobile);
     }
 
     #{{ section_id }} .what-inside__item {
@@ -482,24 +478,17 @@
       "default": "#ffffff"
     },
     {
-      "type": "range",
+      "type": "select",
       "id": "heading_size",
-      "min": 18,
-      "max": 64,
-      "step": 1,
-      "unit": "px",
       "label": "Heading size",
-      "default": 34
-    },
-    {
-      "type": "range",
-      "id": "heading_size_mobile",
-      "min": 14,
-      "max": 48,
-      "step": 1,
-      "unit": "px",
-      "label": "Heading size (mobile)",
-      "default": 28
+      "default": "h2",
+      "options": [
+        { "value": "h2", "label": "Small" },
+        { "value": "h1", "label": "Medium" },
+        { "value": "h3", "label": "Large" },
+        { "value": "h4", "label": "Extra large" },
+        { "value": "h5", "label": "Extra extra large" }
+      ]
     },
     {
       "type": "range",
@@ -857,7 +846,7 @@
   "max_blocks": 12,
   "presets": [
     {
-      "name": "💜 💜What inside section",
+      "name": "💜 What inside section",
       "category": "Content",
       "blocks": [
         {
