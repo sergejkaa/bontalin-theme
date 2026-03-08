@@ -107,7 +107,9 @@
     endif
 
     assign gallery_side_arrows_button_size = section.settings.gallery_side_arrows_button_size | default: 44
+    assign gallery_side_arrows_button_size_mobile = section.settings.gallery_side_arrows_button_size_mobile | default: 36
     assign gallery_side_arrows_icon_size = section.settings.gallery_side_arrows_icon_size | default: 12
+    assign gallery_side_arrows_icon_size_mobile = section.settings.gallery_side_arrows_icon_size_mobile | default: 10
     assign gallery_side_arrows_offset = section.settings.gallery_side_arrows_offset | default: 10
     assign gallery_side_arrows_icon_color = section.settings.gallery_side_arrows_icon_color | default: '#1F2937'
     assign gallery_side_arrows_bg_color = section.settings.gallery_side_arrows_bg_color | default: '#FFFFFF'
@@ -196,6 +198,16 @@
 
       #GalleryViewer-{{ section.id }} .product-gallery__slider-buttons--mobile-dots .slider-button {
         display: {% if gallery_side_arrows_mobile_enabled %}flex{% else %}none{% endif %} !important;
+      }
+
+      #GalleryViewer-{{ section.id }} .slider-buttons .slider-button {
+        width: {{ gallery_side_arrows_button_size_mobile }}px;
+        height: {{ gallery_side_arrows_button_size_mobile }}px;
+        min-width: {{ gallery_side_arrows_button_size_mobile }}px;
+      }
+
+      #GalleryViewer-{{ section.id }} .slider-buttons .slider-button .icon {
+        height: {{ gallery_side_arrows_icon_size_mobile }}px;
       }
     }
 
