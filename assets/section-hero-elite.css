@@ -13,14 +13,10 @@
 }
 
 /* ─── HEIGHT ─── */
-.hero-elite--height-fullscreen { min-height: 100svh; min-height: 100vh; }
-.hero-elite--height-large      { min-height: 85vh; }
-.hero-elite--height-medium     { min-height: 65vh; }
-.hero-elite--height-small      { min-height: 50vh; }
-.hero-elite--height-custom     { min-height: var(--hero-height-mobile, 500px); }
+.hero-elite { min-height: var(--hero-height-mobile, 70vh); }
 
 @media screen and (min-width: 750px) {
-  .hero-elite--height-custom { min-height: var(--hero-height-desktop, 760px); }
+  .hero-elite { min-height: var(--hero-height-desktop, 85vh); }
 }
 
 /* ─── MEDIA LAYER ─── */

@@ -31,19 +31,14 @@
     --hero-content-padding: {{ section.settings.content_padding }}px;
     --hero-content-max-width: {{ section.settings.content_max_width }}px;
     --hero-anim-duration: {{ section.settings.animation_duration }}ms;
+    --hero-height-mobile: {{ section.settings.height_mobile }}vh;
+    --hero-height-desktop: {{ section.settings.height_desktop }}vh;
   }
-  {%- if section.settings.height == 'custom' -%}
-    #HeroElite-{{ section.id }} {
-      --hero-height-mobile: {{ section.settings.custom_height_mobile }}px;
-      --hero-height-desktop: {{ section.settings.custom_height_desktop }}px;
-    }
-  {%- endif -%}
 {%- endstyle -%}
 
 <section
   id="HeroElite-{{ section.id }}"
   class="hero-elite
-    hero-elite--height-{{ section.settings.height }}
     hero-elite--pos-{{ section.settings.content_position }}
     hero-elite--mobile-pos-{{ section.settings.mobile_content_position }}
     hero-elite--align-{{ section.settings.content_alignment }}
@@ -445,37 +440,24 @@
       "content": "📐 Height"
     },
     {
-      "type": "select",
-      "id": "height",
-      "label": "Section height",
-      "options": [
-        { "value": "fullscreen", "label": "Full screen (100vh)" },
-        { "value": "large",      "label": "Large (85vh)" },
-        { "value": "medium",     "label": "Medium (65vh)" },
-        { "value": "small",      "label": "Small (50vh)" },
-        { "value": "custom",     "label": "Custom (set below)" }
-      ],
-      "default": "large"
+      "type": "range",
+      "id": "height_desktop",
+      "min": 20,
+      "max": 100,
+      "step": 5,
+      "unit": "vh",
+      "label": "Height — desktop",
+      "default": 85
     },
     {
       "type": "range",
-      "id": "custom_height_desktop",
-      "min": 300,
-      "max": 1200,
-      "step": 20,
-      "unit": "px",
-      "label": "Custom height — desktop",
-      "default": 760
-    },
-    {
-      "type": "range",
-      "id": "custom_height_mobile",
-      "min": 200,
-      "max": 900,
-      "step": 20,
-      "unit": "px",
-      "label": "Custom height — mobile",
-      "default": 520
+      "id": "height_mobile",
+      "min": 20,
+      "max": 100,
+      "step": 5,
+      "unit": "vh",
+      "label": "Height — mobile",
+      "default": 70
     },
     {
       "type": "header",
