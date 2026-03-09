@@ -70,7 +70,7 @@
         "custom_height_desktop": 760,
         "custom_height_mobile": 520,
         "content_position": "middle-center",
-        "content_alignment": "center",
+        "content_alignment": "left",
         "content_padding": 48,
         "content_max_width": 760,
         "show_text_box": false,
