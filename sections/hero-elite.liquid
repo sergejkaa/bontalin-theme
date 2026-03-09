@@ -1,0 +1,732 @@
+{{ 'section-hero-elite.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign has_desktop_video = false
+  assign has_mobile_video   = false
+  assign has_desktop_image  = false
+  assign has_mobile_image   = false
+  if section.settings.video_url_desktop != blank
+    assign has_desktop_video = true
+  endif
+  if section.settings.video_url_mobile != blank
+    assign has_mobile_video = true
+  endif
+  if section.settings.image_desktop != blank
+    assign has_desktop_image = true
+  endif
+  if section.settings.image_mobile != blank
+    assign has_mobile_image = true
+  endif
+  assign has_separate_mobile = false
+  if has_mobile_image or has_mobile_video
+    assign has_separate_mobile = true
+  endif
+-%}
+
+{%- style -%}
+  #HeroElite-{{ section.id }} {
+    --hero-overlay-color: {{ section.settings.overlay_color }};
+    --hero-overlay-opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }};
+    --hero-content-padding: {{ section.settings.content_padding }}px;
+    --hero-content-max-width: {{ section.settings.content_max_width }}px;
+    --hero-anim-duration: {{ section.settings.animation_duration }}ms;
+  }
+  {%- if section.settings.height == 'custom' -%}
+    #HeroElite-{{ section.id }} {
+      --hero-height-mobile: {{ section.settings.custom_height_mobile }}px;
+      --hero-height-desktop: {{ section.settings.custom_height_desktop }}px;
+    }
+  {%- endif -%}
+{%- endstyle -%}
+
+<section
+  id="HeroElite-{{ section.id }}"
+  class="hero-elite
+    hero-elite--height-{{ section.settings.height }}
+    hero-elite--pos-{{ section.settings.content_position }}
+    hero-elite--align-{{ section.settings.content_alignment }}
+    hero-elite--mobile-align-{{ section.settings.mobile_content_alignment }}
+    hero-elite--anim-{{ section.settings.animation_style }}
+    {% if section.settings.show_text_box %} hero-elite--has-box{% endif %}
+    {% if section.settings.rounded_bottom %} hero-elite--rounded-bottom{% endif %}
+    {% if section.settings.show_text_below_on_mobile %} hero-elite--mobile-text-below{% endif %}
+    {% if has_separate_mobile == false %} hero-elite--no-separate-mobile{% endif %}"
+  aria-label="{{ section.settings.accessibility_info | default: shop.name | escape }}"
+>
+
+  {%- comment -%} ── MEDIA LAYER ── {%- endcomment -%}
+  <div class="hero-elite__media-wrap">
+
+    {%- comment -%} Desktop media {%- endcomment -%}
+    <div class="hero-elite__media hero-elite__media--desktop hero-elite__media--behavior-{{ section.settings.image_behavior }}">
+      {%- if has_desktop_video -%}
+        <video
+          class="hero-elite__video"
+          src="{{ section.settings.video_url_desktop }}"
+          {% if section.settings.video_autoplay %}autoplay{% endif %}
+          {% if section.settings.video_loop %}loop{% endif %}
+          muted
+          playsinline
+          {% if has_desktop_image %}poster="{{ section.settings.image_desktop | image_url: width: 1920 }}"{% endif %}
+        ></video>
+      {%- elsif has_desktop_image -%}
+        {{
+          section.settings.image_desktop
+          | image_url: width: 3840
+          | image_tag:
+            class: 'hero-elite__img',
+            loading: 'eager',
+            fetchpriority: 'high',
+            sizes: '100vw',
+            widths: '375, 550, 750, 1100, 1500, 1780, 2000, 3000, 3840'
+        }}
+      {%- else -%}
+        {{ 'hero-apparel-1' | placeholder_svg_tag: 'placeholder-svg hero-elite__placeholder' }}
+      {%- endif -%}
+    </div>
+
+    {%- comment -%} Mobile media (only rendered if set separately) {%- endcomment -%}
+    {%- if has_separate_mobile -%}
+      <div class="hero-elite__media hero-elite__media--mobile hero-elite__media--behavior-{{ section.settings.image_behavior }}">
+        {%- if has_mobile_video -%}
+          <video
+            class="hero-elite__video"
+            src="{{ section.settings.video_url_mobile }}"
+            {% if section.settings.video_autoplay %}autoplay{% endif %}
+            {% if section.settings.video_loop %}loop{% endif %}
+            muted
+            playsinline
+            {% if has_mobile_image %}poster="{{ section.settings.image_mobile | image_url: width: 750 }}"{% endif %}
+          ></video>
+        {%- else -%}
+          {{
+            section.settings.image_mobile
+            | image_url: width: 1100
+            | image_tag:
+              class: 'hero-elite__img',
+              loading: 'eager',
+              fetchpriority: 'high',
+              sizes: '100vw',
+              widths: '375, 550, 750, 1100'
+          }}
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    {%- comment -%} Overlay {%- endcomment -%}
+    <div class="hero-elite__overlay{% if section.settings.overlay_gradient != 'none' %} hero-elite__overlay--{{ section.settings.overlay_gradient }}{% endif %}"></div>
+
+  </div>
+
+  {%- comment -%} ── CONTENT LAYER ── {%- endcomment -%}
+  <div class="hero-elite__content-outer page-width">
+    <div class="hero-elite__content-box color-{{ section.settings.color_scheme }} gradient">
+
+      {%- for block in section.blocks -%}
+        {%- liquid
+          assign delay = forloop.index | times: 0.14 | plus: 0.05
+          assign delay_s = delay | append: 's'
+        -%}
+
+        {%- case block.type -%}
+
+          {%- when 'eyebrow' -%}
+            <p
+              class="hero-elite__eyebrow hero-elite__anim"
+              style="animation-delay: {{ delay_s }}"
+              {{ block.shopify_attributes }}
+            >
+              {{- block.settings.text -}}
+            </p>
+
+          {%- when 'heading' -%}
+            <{{ block.settings.heading_tag }}
+              class="hero-elite__heading hero-elite__anim {{ block.settings.heading_size }} inline-richtext"
+              style="animation-delay: {{ delay_s }}"
+              {{ block.shopify_attributes }}
+            >
+              {{ block.settings.heading }}
+            </{{ block.settings.heading_tag }}>
+
+          {%- when 'subheading' -%}
+            <p
+              class="hero-elite__subheading hero-elite__anim subtitle"
+              style="animation-delay: {{ delay_s }}"
+              {{ block.shopify_attributes }}
+            >
+              {{- block.settings.text -}}
+            </p>
+
+          {%- when 'text' -%}
+            <div
+              class="hero-elite__text hero-elite__anim rte {{ block.settings.text_style }}"
+              style="animation-delay: {{ delay_s }}"
+              {{ block.shopify_attributes }}
+            >
+              {{ block.settings.text }}
+            </div>
+
+          {%- when 'buttons' -%}
+            <div
+              class="hero-elite__buttons hero-elite__anim{% if block.settings.button_label_1 != blank and block.settings.button_label_2 != blank %} hero-elite__buttons--double{% endif %}"
+              style="animation-delay: {{ delay_s }}"
+              {{ block.shopify_attributes }}
+            >
+              {%- if block.settings.button_label_1 != blank -%}
+                <a
+                  {% if block.settings.button_link_1 == blank %}
+                    role="link" aria-disabled="true"
+                  {% else %}
+                    href="{{ block.settings.button_link_1 }}"
+                  {% endif %}
+                  class="button{% if block.settings.button_style_secondary_1 %} button--secondary{% else %} button--primary{% endif %}"
+                >
+                  {{- block.settings.button_label_1 | escape -}}
+                </a>
+              {%- endif -%}
+              {%- if block.settings.button_label_2 != blank -%}
+                <a
+                  {% if block.settings.button_link_2 == blank %}
+                    role="link" aria-disabled="true"
+                  {% else %}
+                    href="{{ block.settings.button_link_2 }}"
+                  {% endif %}
+                  class="button{% if block.settings.button_style_secondary_2 %} button--secondary{% else %} button--primary{% endif %}"
+                >
+                  {{- block.settings.button_label_2 | escape -}}
+                </a>
+              {%- endif -%}
+            </div>
+
+          {%- when 'divider' -%}
+            <div
+              class="hero-elite__divider hero-elite__anim"
+              style="animation-delay: {{ delay_s }}"
+              {{ block.shopify_attributes }}
+            >
+              <span class="hero-elite__divider-line"></span>
+              {%- if block.settings.text != blank -%}
+                <span class="hero-elite__divider-text">{{ block.settings.text }}</span>
+                <span class="hero-elite__divider-line"></span>
+              {%- endif -%}
+            </div>
+
+          {%- when 'scroll_indicator' -%}
+            <div
+              class="hero-elite__scroll hero-elite__anim"
+              style="animation-delay: {{ delay_s }}"
+              {{ block.shopify_attributes }}
+            >
+              <button
+                class="hero-elite__scroll-btn"
+                onclick="window.scrollBy({ top: window.innerHeight * 0.8, behavior: 'smooth' })"
+                aria-label="Scroll down"
+                type="button"
+              >
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <path d="M10 4v12M4 10l6 6 6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+            </div>
+
+        {%- endcase -%}
+      {%- endfor -%}
+
+    </div>
+  </div>
+
+</section>
+
+<script>
+  (function () {
+    var hero = document.getElementById('HeroElite-{{ section.id }}');
+    if (!hero) return;
+
+    // Trigger entrance animations
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () {
+        hero.classList.add('hero-elite--loaded');
+      });
+    });
+
+    // Autoplay videos (handles browser restrictions)
+    hero.querySelectorAll('.hero-elite__video').forEach(function (v) {
+      v.play().catch(function () {});
+    });
+
+    {%- if section.settings.image_behavior == 'parallax' -%}
+    // Parallax scroll effect
+    var mediaEls = hero.querySelectorAll('.hero-elite__media--behavior-parallax .hero-elite__img, .hero-elite__media--behavior-parallax .hero-elite__video');
+    if (mediaEls.length && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      function onScroll() {
+        var rect = hero.getBoundingClientRect();
+        var visible = rect.top < window.innerHeight && rect.bottom > 0;
+        if (!visible) return;
+        var progress = (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
+        var offset = (progress - 0.5) * 80;
+        mediaEls.forEach(function (el) {
+          el.style.transform = 'translateY(' + offset + 'px) scale(1.12)';
+        });
+      }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+    }
+    {%- endif -%}
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Hero Elite",
+  "tag": "section",
+  "class": "section hero-elite-section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "📸 Desktop Media"
+    },
+    {
+      "type": "paragraph",
+      "content": "Recommended image: 2560×1440px (16:9) or wider. Use JPG/WebP for best performance."
+    },
+    {
+      "type": "image_picker",
+      "id": "image_desktop",
+      "label": "Desktop image"
+    },
+    {
+      "type": "text",
+      "id": "video_url_desktop",
+      "label": "Desktop video URL (.mp4)",
+      "info": "Recommended: 1920×1080px, H.264, under 10 MB. Video takes priority over image."
+    },
+    {
+      "type": "header",
+      "content": "📱 Mobile Media"
+    },
+    {
+      "type": "paragraph",
+      "content": "Recommended image: 750×1334px (portrait 9:16). If blank, desktop media is used on all screens."
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "Mobile image"
+    },
+    {
+      "type": "text",
+      "id": "video_url_mobile",
+      "label": "Mobile video URL (.mp4)",
+      "info": "Recommended: 750×1334px portrait. If blank, desktop video is used."
+    },
+    {
+      "type": "header",
+      "content": "🎬 Video Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "video_autoplay",
+      "label": "Autoplay video",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "video_loop",
+      "label": "Loop video",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "✨ Image Behavior"
+    },
+    {
+      "type": "select",
+      "id": "image_behavior",
+      "label": "Image effect",
+      "options": [
+        { "value": "none",     "label": "None" },
+        { "value": "zoom-in",  "label": "Slow zoom on load" },
+        { "value": "ambient",  "label": "Ambient float" },
+        { "value": "parallax", "label": "Parallax scroll" },
+        { "value": "fixed",    "label": "Fixed background" }
+      ],
+      "default": "zoom-in"
+    },
+    {
+      "type": "header",
+      "content": "🎨 Overlay"
+    },
+    {
+      "type": "color",
+      "id": "overlay_color",
+      "label": "Overlay color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "min": 0,
+      "max": 90,
+      "step": 5,
+      "unit": "%",
+      "label": "Overlay opacity",
+      "default": 35
+    },
+    {
+      "type": "select",
+      "id": "overlay_gradient",
+      "label": "Overlay shape",
+      "options": [
+        { "value": "none",    "label": "Solid — uniform" },
+        { "value": "bottom",  "label": "Gradient — darker at bottom" },
+        { "value": "top",     "label": "Gradient — darker at top" },
+        { "value": "center",  "label": "Gradient — vignette edges" },
+        { "value": "left",    "label": "Gradient — darker on left" },
+        { "value": "right",   "label": "Gradient — darker on right" }
+      ],
+      "default": "bottom"
+    },
+    {
+      "type": "header",
+      "content": "📐 Height"
+    },
+    {
+      "type": "select",
+      "id": "height",
+      "label": "Section height",
+      "options": [
+        { "value": "fullscreen", "label": "Full screen (100vh)" },
+        { "value": "large",      "label": "Large (85vh)" },
+        { "value": "medium",     "label": "Medium (65vh)" },
+        { "value": "small",      "label": "Small (50vh)" },
+        { "value": "custom",     "label": "Custom (set below)" }
+      ],
+      "default": "large"
+    },
+    {
+      "type": "range",
+      "id": "custom_height_desktop",
+      "min": 300,
+      "max": 1200,
+      "step": 20,
+      "unit": "px",
+      "label": "Custom height — desktop",
+      "default": 760
+    },
+    {
+      "type": "range",
+      "id": "custom_height_mobile",
+      "min": 200,
+      "max": 900,
+      "step": 20,
+      "unit": "px",
+      "label": "Custom height — mobile",
+      "default": 520
+    },
+    {
+      "type": "header",
+      "content": "📍 Content Position"
+    },
+    {
+      "type": "select",
+      "id": "content_position",
+      "label": "Position on desktop",
+      "options": [
+        { "value": "top-left",      "label": "Top — left" },
+        { "value": "top-center",    "label": "Top — center" },
+        { "value": "top-right",     "label": "Top — right" },
+        { "value": "middle-left",   "label": "Middle — left" },
+        { "value": "middle-center", "label": "Middle — center" },
+        { "value": "middle-right",  "label": "Middle — right" },
+        { "value": "bottom-left",   "label": "Bottom — left" },
+        { "value": "bottom-center", "label": "Bottom — center" },
+        { "value": "bottom-right",  "label": "Bottom — right" }
+      ],
+      "default": "middle-center"
+    },
+    {
+      "type": "select",
+      "id": "content_alignment",
+      "label": "Text alignment — desktop",
+      "options": [
+        { "value": "left",   "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right",  "label": "Right" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "range",
+      "id": "content_padding",
+      "min": 16,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "label": "Content inset from edges",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "content_max_width",
+      "min": 320,
+      "max": 1200,
+      "step": 40,
+      "unit": "px",
+      "label": "Content max width",
+      "default": 760
+    },
+    {
+      "type": "header",
+      "content": "🎨 Color Scheme"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_text_box",
+      "label": "Show background box behind text",
+      "default": false
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "📱 Mobile"
+    },
+    {
+      "type": "select",
+      "id": "mobile_content_alignment",
+      "label": "Text alignment — mobile",
+      "options": [
+        { "value": "left",   "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right",  "label": "Right" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_text_below_on_mobile",
+      "label": "Show text below image on mobile",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "🎞 Animations"
+    },
+    {
+      "type": "select",
+      "id": "animation_style",
+      "label": "Content entrance animation",
+      "options": [
+        { "value": "fade-up",    "label": "Fade up (elegant)" },
+        { "value": "fade-in",    "label": "Fade in (subtle)" },
+        { "value": "fade-left",  "label": "Slide from right" },
+        { "value": "fade-right", "label": "Slide from left" },
+        { "value": "zoom-in",    "label": "Zoom in" }
+      ],
+      "default": "fade-up"
+    },
+    {
+      "type": "range",
+      "id": "animation_duration",
+      "min": 400,
+      "max": 1600,
+      "step": 100,
+      "unit": "ms",
+      "label": "Animation speed",
+      "default": 900
+    },
+    {
+      "type": "header",
+      "content": "⚙️ Layout"
+    },
+    {
+      "type": "checkbox",
+      "id": "rounded_bottom",
+      "label": "Rounded bottom corners",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "accessibility_info",
+      "label": "Accessibility label",
+      "default": "Hero section"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "eyebrow",
+      "name": "Eyebrow label",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "New Collection"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "name": "Heading",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "heading",
+          "label": "Heading text",
+          "default": "Elegant by Nature"
+        },
+        {
+          "type": "select",
+          "id": "heading_size",
+          "label": "Heading size",
+          "options": [
+            { "value": "h2",   "label": "Small" },
+            { "value": "h1",   "label": "Medium" },
+            { "value": "h0",   "label": "Large" },
+            { "value": "hxl",  "label": "Extra large" },
+            { "value": "hxxl", "label": "2XL — display" }
+          ],
+          "default": "hxl"
+        },
+        {
+          "type": "select",
+          "id": "heading_tag",
+          "label": "HTML tag (SEO)",
+          "options": [
+            { "value": "h1", "label": "H1 — main page heading" },
+            { "value": "h2", "label": "H2" },
+            { "value": "p",  "label": "Paragraph" }
+          ],
+          "default": "h1"
+        }
+      ]
+    },
+    {
+      "type": "subheading",
+      "name": "Subheading",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "text",
+          "label": "Subheading text",
+          "default": "Discover the new season"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "Body text",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>Crafted with care for those who appreciate the finer details.</p>"
+        },
+        {
+          "type": "select",
+          "id": "text_style",
+          "label": "Text style",
+          "options": [
+            { "value": "body",                        "label": "Body" },
+            { "value": "subtitle",                    "label": "Subtitle" },
+            { "value": "caption-with-letter-spacing", "label": "Caption" }
+          ],
+          "default": "body"
+        }
+      ]
+    },
+    {
+      "type": "divider",
+      "name": "Divider line",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Optional centre text",
+          "info": "Leave blank for a plain line"
+        }
+      ]
+    },
+    {
+      "type": "buttons",
+      "name": "Buttons",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "header",
+          "content": "Button 1"
+        },
+        {
+          "type": "text",
+          "id": "button_label_1",
+          "label": "Label",
+          "default": "Shop Now"
+        },
+        {
+          "type": "url",
+          "id": "button_link_1",
+          "label": "Link"
+        },
+        {
+          "type": "checkbox",
+          "id": "button_style_secondary_1",
+          "label": "Secondary style",
+          "default": false
+        },
+        {
+          "type": "header",
+          "content": "Button 2"
+        },
+        {
+          "type": "text",
+          "id": "button_label_2",
+          "label": "Label",
+          "default": "Explore"
+        },
+        {
+          "type": "url",
+          "id": "button_link_2",
+          "label": "Link"
+        },
+        {
+          "type": "checkbox",
+          "id": "button_style_secondary_2",
+          "label": "Secondary style",
+          "default": true
+        }
+      ]
+    },
+    {
+      "type": "scroll_indicator",
+      "name": "Scroll indicator",
+      "limit": 1,
+      "settings": []
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero Elite",
+      "blocks": [
+        { "type": "eyebrow" },
+        { "type": "heading" },
+        { "type": "subheading" },
+        { "type": "buttons" },
+        { "type": "scroll_indicator" }
+      ]
+    }
+  ]
+}
+{% endschema %}
