@@ -394,11 +394,12 @@
 .hero-elite__scroll-anchor {
   position: absolute;
   bottom: 2.8rem;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 0;
+  right: 0;
   z-index: 3;
   display: flex;
   justify-content: center;
+  pointer-events: none;
 }
 
 .hero-elite__scroll-btn {
@@ -411,17 +412,31 @@
   border-radius: 50%;
   background: transparent;
   cursor: pointer;
+  pointer-events: auto;
   transition: opacity 0.3s ease, transform 0.3s ease;
   animation: hero-scroll-pulse 2.8s ease-in-out infinite;
 }
 .hero-elite__scroll-btn:hover {
   opacity: 1 !important;
-  transform: translateX(-50%) translateY(5px);
+  transform: translateY(5px);
   animation: none;
 }
 @keyframes hero-scroll-pulse {
   0%, 100% { transform: translateX(0) translateY(0); }
   50%       { transform: translateX(0) translateY(9px); }
+}
+
+/* ─── RATING BADGE WRAPPER ─── */
+.hero-elite__rating-wrap {
+  display: flex;
+}
+.hero-elite--align-center .hero-elite__rating-wrap { justify-content: center; }
+.hero-elite--align-right  .hero-elite__rating-wrap { justify-content: flex-end; }
+
+@media screen and (max-width: 749px) {
+  .hero-elite--mobile-align-center .hero-elite__rating-wrap { justify-content: center; }
+  .hero-elite--mobile-align-left   .hero-elite__rating-wrap { justify-content: flex-start; }
+  .hero-elite--mobile-align-right  .hero-elite__rating-wrap { justify-content: flex-end; }
 }
 
 /* ─── ENTRANCE ANIMATIONS ─── */
