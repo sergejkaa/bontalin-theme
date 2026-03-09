@@ -304,6 +304,7 @@
     <div class="video-banner__content">
       <div class="video-banner__content-inner{% if section.settings.content_surface %} is-surfaced{% endif %}">
         {%- for block in section.blocks -%}
+          {%- assign block_delay = forloop.index0 | times: 130 -%}
           {%- case block.type -%}
             {%- when 'heading' -%}
               {%- assign tag = block.settings.heading_tag -%}
@@ -348,16 +349,16 @@
               {%- if heading_custom_family != blank -%}
                 {%- assign heading_font_family = heading_custom_family -%}
               {%- endif -%}
-              <{{ tag }} class="video-banner__heading heading--{{ block.settings.heading_size }}" style="margin-top: {{ block.settings.margin_top | default: 0 }}px; margin-bottom: {{ block.settings.margin_bottom | default: 0 }}px; letter-spacing: {{ block.settings.letter_spacing | default: 0 }}px; font-weight: {{ block.settings.heading_font_weight | default: '700' }} !important;{% if heading_font_family != blank %} font-family: '{{ heading_font_family }}', {{ heading_font_fallback }} !important;{% endif %}" data-aos="fade-up" data-aos-delay="0" {{ block.shopify_attributes }}>
+              <{{ tag }} class="video-banner__heading heading--{{ block.settings.heading_size }}" style="margin-top: {{ block.settings.margin_top | default: 0 }}px; margin-bottom: {{ block.settings.margin_bottom | default: 0 }}px; letter-spacing: {{ block.settings.letter_spacing | default: 0 }}px; font-weight: {{ block.settings.heading_font_weight | default: '700' }} !important;{% if heading_font_family != blank %} font-family: '{{ heading_font_family }}', {{ heading_font_fallback }} !important;{% endif %}" data-aos="fade-up" data-aos-delay="{{ block_delay }}" {{ block.shopify_attributes }}>
                 {{ block.settings.heading | escape }}
               </{{ tag }}>
             {%- when 'text' -%}
-              <div class="video-banner__text text--{{ block.settings.text_size }}" style="margin-top: {{ block.settings.margin_top | default: 0 }}px; margin-bottom: {{ block.settings.margin_bottom | default: 0 }}px; letter-spacing: {{ block.settings.letter_spacing | default: 0 }}px;" data-aos="fade-up" data-aos-delay="200" {{ block.shopify_attributes }}>
+              <div class="video-banner__text text--{{ block.settings.text_size }}" style="margin-top: {{ block.settings.margin_top | default: 0 }}px; margin-bottom: {{ block.settings.margin_bottom | default: 0 }}px; letter-spacing: {{ block.settings.letter_spacing | default: 0 }}px;" data-aos="fade-up" data-aos-delay="{{ block_delay }}" {{ block.shopify_attributes }}>
                 {{ block.settings.text }}
               </div>
             {%- when 'button' -%}
               {%- if block.settings.button_label != blank -%}
-                <div class="video-banner__actions" style="margin-top: {{ block.settings.margin_top | default: 0 }}px; margin-bottom: {{ block.settings.margin_bottom | default: 0 }}px;" data-aos="fade-up" data-aos-delay="400" {{ block.shopify_attributes }}>
+                <div class="video-banner__actions" style="margin-top: {{ block.settings.margin_top | default: 0 }}px; margin-bottom: {{ block.settings.margin_bottom | default: 0 }}px;" data-aos="fade-up" data-aos-delay="{{ block_delay }}" {{ block.shopify_attributes }}>
                   <a
                     class="video-banner__button btn--{{ block.settings.button_style }}{% if block.settings.button_outline %} is-ghost{% endif %}{% if block.settings.button_full %} is-full{% endif %}"
                     href="{{ block.settings.button_link | default: '#' }}"
@@ -370,7 +371,7 @@
                 </div>
               {%- endif -%}
             {%- when 'rating_badge' -%}
-              <div class="video-banner__badge-wrap" style="margin-top: {{ block.settings.margin_top | default: 0 }}px; margin-bottom: {{ block.settings.margin_bottom | default: 0 }}px;" data-aos="fade-up" data-aos-delay="600">
+              <div class="video-banner__badge-wrap" style="margin-top: {{ block.settings.margin_top | default: 0 }}px; margin-bottom: {{ block.settings.margin_bottom | default: 0 }}px;" data-aos="fade-up" data-aos-delay="{{ block_delay }}">
                 {%- render 'glass-rating-badge', block: block -%}
               </div>
           {%- endcase -%}
@@ -378,13 +379,46 @@
       </div>
     </div>
 
-    <div class="video-banner__scroll-hint" aria-hidden="true">
-      <div class="video-banner__scroll-mouse">
-        <span class="video-banner__scroll-dot"></span>
-      </div>
-    </div>
   </div>
 </section>
+
+<div class="video-banner__scroll-hint vb-scroll-hint--{{ section.id }}" aria-hidden="true">
+  <div class="video-banner__scroll-mouse">
+    <span class="video-banner__scroll-dot"></span>
+  </div>
+</div>
+
+<script>
+  (function () {
+    var hint = document.querySelector('.vb-scroll-hint--{{ section.id }}');
+    var section = document.querySelector('#shopify-section-{{ section.id }}');
+    if (!hint || !section) return;
+
+    // Pin it to viewport bottom-center
+    hint.style.cssText = [
+      'position:fixed',
+      'bottom:28px',
+      'left:50%',
+      'transform:translateX(-50%)',
+      'z-index:9999',
+      'pointer-events:none',
+      'opacity:0',
+      'transition:opacity 0.5s ease'
+    ].join(';');
+
+    function update() {
+      var rect = section.getBoundingClientRect();
+      var visible = rect.top < window.innerHeight * 0.5 && rect.bottom > window.innerHeight * 0.5;
+      hint.style.opacity = visible ? '0.5' : '0';
+    }
+
+    // Delay initial show so page paint settles
+    setTimeout(function () {
+      update();
+      window.addEventListener('scroll', update, { passive: true });
+    }, 1200);
+  })();
+</script>
 
 {%- style -%}
   .video-banner {
@@ -402,6 +436,7 @@
     overflow: hidden;
     border-radius: var(--vb-section-radius);
     min-height: var(--vb-height-mobile);
+    max-height: 100svh;
     aspect-ratio: var(--vb-aspect-mobile);
     isolation: isolate;
   }
@@ -742,20 +777,13 @@
   }
 
   /* ================================================
-     SCROLL INDICATOR
+     SCROLL INDICATOR (positioned fixed via JS)
   ================================================ */
   .video-banner__scroll-hint {
-    position: absolute;
-    bottom: 26px;
-    left: 50%;
-    transform: translateX(-50%);
     display: flex;
     flex-direction: column;
     align-items: center;
-    z-index: 3;
-    opacity: 0.5;
     pointer-events: none;
-    animation: vb-scroll-fade 1.4s ease 1.4s both;
   }
 
   .video-banner__scroll-mouse {
@@ -781,11 +809,6 @@
     75%  { opacity: 0; transform: translateY(10px); }
     76%  { opacity: 0; transform: translateY(0); }
     100% { opacity: 0.4; transform: translateY(0); }
-  }
-
-  @keyframes vb-scroll-fade {
-    from { opacity: 0; transform: translateX(-50%) translateY(8px); }
-    to   { opacity: 0.5; transform: translateX(-50%) translateY(0); }
   }
 
   /* ================================================
@@ -814,8 +837,6 @@
     }
 
     .video-banner__button.is-full { width: min(92%, 340px); max-width: 100%; }
-
-    .video-banner__scroll-hint { display: none; }
   }
 
   @media (min-width: 900px) {
@@ -985,7 +1006,7 @@
       "type": "select",
       "id": "aspect_mobile",
       "label": "Aspect ratio (mobile)",
-      "default": "9/16",
+      "default": "4/5",
       "options": [
         {
           "value": "9/16",
