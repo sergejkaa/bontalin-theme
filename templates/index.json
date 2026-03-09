@@ -9,6 +9,79 @@
  */
 {
   "sections": {
+    "hero_elite_YMVm86": {
+      "type": "hero-elite",
+      "blocks": {
+        "eyebrow_Qntce4": {
+          "type": "eyebrow",
+          "settings": {
+            "text": "New Collection"
+          }
+        },
+        "heading_4N3Rcj": {
+          "type": "heading",
+          "settings": {
+            "heading": "Elegant by Nature",
+            "heading_size": "hxl",
+            "heading_tag": "h1"
+          }
+        },
+        "subheading_NWb4tP": {
+          "type": "subheading",
+          "settings": {
+            "text": "Discover the new season"
+          }
+        },
+        "buttons_iixVk9": {
+          "type": "buttons",
+          "settings": {
+            "button_label_1": "Shop Now",
+            "button_link_1": "",
+            "button_style_secondary_1": false,
+            "button_label_2": "Explore",
+            "button_link_2": "",
+            "button_style_secondary_2": true
+          }
+        },
+        "scroll_indicator_aXzLBx": {
+          "type": "scroll_indicator",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "eyebrow_Qntce4",
+        "heading_4N3Rcj",
+        "subheading_NWb4tP",
+        "buttons_iixVk9",
+        "scroll_indicator_aXzLBx"
+      ],
+      "name": "Hero Elite",
+      "settings": {
+        "video_url_desktop": "",
+        "video_url_mobile": "",
+        "video_autoplay": true,
+        "video_loop": true,
+        "image_behavior": "zoom-in",
+        "overlay_color": "#000000",
+        "overlay_opacity": 35,
+        "overlay_gradient": "bottom",
+        "height": "large",
+        "custom_height_desktop": 760,
+        "custom_height_mobile": 520,
+        "content_position": "middle-center",
+        "content_alignment": "center",
+        "content_padding": 48,
+        "content_max_width": 760,
+        "show_text_box": false,
+        "color_scheme": "",
+        "mobile_content_alignment": "center",
+        "show_text_below_on_mobile": false,
+        "animation_style": "fade-up",
+        "animation_duration": 900,
+        "rounded_bottom": false,
+        "accessibility_info": "Hero section"
+      }
+    },
     "hero_section_8geJeB": {
       "type": "Hero-section",
       "blocks": {
@@ -47,23 +120,23 @@
             "customers_label": "Happy Customers",
             "margin_top": 0,
             "margin_bottom": 0,
-            "animation_color": "#669CD6",
-            "animation_color_1": "#669CD6",
+            "animation_color": "#669cd6",
+            "animation_color_1": "#669cd6",
             "animation_color_1_opacity": 0.3,
-            "animation_color_2": "#669CD6",
+            "animation_color_2": "#669cd6",
             "animation_color_2_opacity": 0.2,
-            "text_color": "#FFFFFF",
-            "star_color": "#FFC300",
-            "glass_color": "#FFFFFF",
-            "ring_color": "#FFFFFF",
-            "avatar_ring_color": "#FFFFFF",
+            "text_color": "#ffffff",
+            "star_color": "#ffc300",
+            "glass_color": "#ffffff",
+            "ring_color": "#ffffff",
+            "avatar_ring_color": "#ffffff",
             "shadow_color": "#000000",
             "shadow_opacity": 0.3,
             "hover_shadow_opacity": 0.4,
             "animation_speed": 8,
-            "rating_value_color": "#FFFFFF",
+            "rating_value_color": "#ffffff",
             "rating_value_weight": "500",
-            "customers_count_color": "#FFFFFF",
+            "customers_count_color": "#ffffff",
             "customers_count_weight": "500",
             "avatar_1_alt": "Customer photo 1",
             "avatar_2_alt": "Customer photo 2",
@@ -126,6 +199,7 @@
       "name": "💜 Hero Section",
       "settings": {
         "color_scheme": "",
+        "external_video": "",
         "video_priority": "auto",
         "iframe_title": "Video banner",
         "autoplay": true,
@@ -162,12 +236,12 @@
         "content_surface_radius": 20,
         "overlay_color": "#0a0a0a",
         "overlay_opacity": 35,
-        "button_color": "#669CD6",
-        "button_color_2": "#669CD6",
-        "button_border_color": "#669CD6",
-        "button_hover_color": "#669CD6",
-        "button_hover_color_2": "#669CD6",
-        "button_glow_color": "#669CD6",
+        "button_color": "#669cd6",
+        "button_color_2": "#669cd6",
+        "button_border_color": "#669cd6",
+        "button_hover_color": "#669cd6",
+        "button_hover_color_2": "#669cd6",
+        "button_glow_color": "#669cd6",
         "button_glow_strength": 50,
         "button_text_color": "#ffffff",
         "button_text_hover_color": "#ffffff",
@@ -203,23 +277,23 @@
             "customers_label": "Happy Customers",
             "margin_top": 0,
             "margin_bottom": 0,
-            "animation_color": "#669CD6",
-            "animation_color_1": "#669CD6",
+            "animation_color": "#669cd6",
+            "animation_color_1": "#669cd6",
             "animation_color_1_opacity": 0.3,
-            "animation_color_2": "#669CD6",
+            "animation_color_2": "#669cd6",
             "animation_color_2_opacity": 0.2,
-            "text_color": "#FFFFFF",
-            "star_color": "#FFC300",
-            "glass_color": "#FFFFFF",
-            "ring_color": "#FFFFFF",
-            "avatar_ring_color": "#FFFFFF",
+            "text_color": "#ffffff",
+            "star_color": "#ffc300",
+            "glass_color": "#ffffff",
+            "ring_color": "#ffffff",
+            "avatar_ring_color": "#ffffff",
             "shadow_color": "#000000",
             "shadow_opacity": 0.3,
             "hover_shadow_opacity": 0.4,
             "animation_speed": 8,
-            "rating_value_color": "#FFFFFF",
+            "rating_value_color": "#ffffff",
             "rating_value_weight": "500",
-            "customers_count_color": "#FFFFFF",
+            "customers_count_color": "#ffffff",
             "customers_count_weight": "500",
             "avatar_1_alt": "Customer photo 1",
             "avatar_2_alt": "Customer photo 2",
@@ -292,6 +366,7 @@
       "name": "💜 Hero Section",
       "settings": {
         "color_scheme": "",
+        "external_video": "",
         "video_priority": "auto",
         "iframe_title": "Video banner",
         "autoplay": true,
@@ -328,12 +403,12 @@
         "content_surface_radius": 20,
         "overlay_color": "#0a0a0a",
         "overlay_opacity": 35,
-        "button_color": "#669CD6",
-        "button_color_2": "#669CD6",
-        "button_border_color": "#669CD6",
-        "button_hover_color": "#669CD6",
-        "button_hover_color_2": "#669CD6",
-        "button_glow_color": "#669CD6",
+        "button_color": "#669cd6",
+        "button_color_2": "#669cd6",
+        "button_border_color": "#669cd6",
+        "button_hover_color": "#669cd6",
+        "button_hover_color_2": "#669cd6",
+        "button_glow_color": "#669cd6",
         "button_glow_strength": 50,
         "button_text_color": "#ffffff",
         "button_text_hover_color": "#ffffff",
@@ -1335,6 +1410,7 @@
     }
   },
   "order": [
+    "hero_elite_YMVm86",
     "hero_section_8geJeB",
     "hero_section_EFLmEF",
     "slideshow_custom_UqM993",
