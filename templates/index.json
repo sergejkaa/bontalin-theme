@@ -79,7 +79,7 @@
         "show_text_below_on_mobile": false,
         "animation_style": "fade-up",
         "animation_duration": 800,
-        "rounded_bottom": true,
+        "rounded_bottom": false,
         "accessibility_info": "Hero section"
       }
     },
