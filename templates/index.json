@@ -73,7 +73,7 @@
         "content_alignment": "center",
         "content_padding": 48,
         "content_max_width": 760,
-        "show_text_box": true,
+        "show_text_box": false,
         "color_scheme": "scheme-2",
         "mobile_content_alignment": "center",
         "show_text_below_on_mobile": false,
