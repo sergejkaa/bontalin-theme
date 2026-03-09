@@ -15,21 +15,24 @@
         "eyebrow_Qntce4": {
           "type": "eyebrow",
           "settings": {
-            "text": "New Collection"
+            "text": "New Collection",
+            "text_color": ""
           }
         },
         "heading_4N3Rcj": {
           "type": "heading",
           "settings": {
             "heading": "Elegant by Nature",
-            "heading_size": "h0",
-            "heading_tag": "h1"
+            "heading_size": "h1",
+            "heading_tag": "h1",
+            "text_color": "#ffffff"
           }
         },
         "subheading_NWb4tP": {
           "type": "subheading",
           "settings": {
-            "text": "Discover the new season"
+            "text": "Discover the new season",
+            "text_color": ""
           }
         },
         "buttons_iixVk9": {
