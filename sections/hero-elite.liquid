@@ -1,26 +1,27 @@
 {{ 'section-hero-elite.css' | asset_url | stylesheet_tag }}
 
 {%- liquid
-  assign has_desktop_video = false
-  assign has_mobile_video   = false
   assign has_desktop_image  = false
   assign has_mobile_image   = false
-  if section.settings.video_url_desktop != blank
-    assign has_desktop_video = true
-  endif
-  if section.settings.video_url_mobile != blank
-    assign has_mobile_video = true
-  endif
+
   if section.settings.image_desktop != blank
     assign has_desktop_image = true
   endif
   if section.settings.image_mobile != blank
     assign has_mobile_image = true
   endif
+
   assign has_separate_mobile = false
-  if has_mobile_image or has_mobile_video
+  if has_mobile_image or section.settings.video_mobile != blank or section.settings.video_url_mobile != blank
     assign has_separate_mobile = true
   endif
+
+  assign scroll_block = nil
+  for block in section.blocks
+    if block.type == 'scroll_indicator'
+      assign scroll_block = block
+    endif
+  endfor
 -%}
 
 {%- style -%}
@@ -44,6 +45,7 @@
   class="hero-elite
     hero-elite--height-{{ section.settings.height }}
     hero-elite--pos-{{ section.settings.content_position }}
+    hero-elite--mobile-pos-{{ section.settings.mobile_content_position }}
     hero-elite--align-{{ section.settings.content_alignment }}
     hero-elite--mobile-align-{{ section.settings.mobile_content_alignment }}
     hero-elite--anim-{{ section.settings.animation_style }}
@@ -59,7 +61,17 @@
 
     {%- comment -%} Desktop media {%- endcomment -%}
     <div class="hero-elite__media hero-elite__media--desktop hero-elite__media--behavior-{{ section.settings.image_behavior }}">
-      {%- if has_desktop_video -%}
+      {%- if section.settings.video_desktop != blank -%}
+        {{
+          section.settings.video_desktop
+          | video_tag:
+            autoplay: section.settings.video_autoplay,
+            loop: section.settings.video_loop,
+            muted: true,
+            playsinline: true,
+            class: 'hero-elite__video'
+        }}
+      {%- elsif section.settings.video_url_desktop != blank -%}
         <video
           class="hero-elite__video"
           src="{{ section.settings.video_url_desktop }}"
@@ -88,7 +100,17 @@
     {%- comment -%} Mobile media (only rendered if set separately) {%- endcomment -%}
     {%- if has_separate_mobile -%}
       <div class="hero-elite__media hero-elite__media--mobile hero-elite__media--behavior-{{ section.settings.image_behavior }}">
-        {%- if has_mobile_video -%}
+        {%- if section.settings.video_mobile != blank -%}
+          {{
+            section.settings.video_mobile
+            | video_tag:
+              autoplay: section.settings.video_autoplay,
+              loop: section.settings.video_loop,
+              muted: true,
+              playsinline: true,
+              class: 'hero-elite__video'
+          }}
+        {%- elsif section.settings.video_url_mobile != blank -%}
           <video
             class="hero-elite__video"
             src="{{ section.settings.video_url_mobile }}"
@@ -98,7 +120,7 @@
             playsinline
             {% if has_mobile_image %}poster="{{ section.settings.image_mobile | image_url: width: 750 }}"{% endif %}
           ></video>
-        {%- else -%}
+        {%- elsif has_mobile_image -%}
           {{
             section.settings.image_mobile
             | image_url: width: 1100
@@ -123,6 +145,7 @@
     <div class="hero-elite__content-box color-{{ section.settings.color_scheme }} gradient">
 
       {%- for block in section.blocks -%}
+        {%- if block.type == 'scroll_indicator' -%}{%- continue -%}{%- endif -%}
         {%- liquid
           assign delay = forloop.index | times: 0.14 | plus: 0.05
           assign delay_s = delay | append: 's'
@@ -167,6 +190,14 @@
             </div>
 
           {%- when 'buttons' -%}
+            {%- liquid
+              assign btn1_style = block.settings.button_style_1
+              assign btn2_style = block.settings.button_style_2
+              assign btn1_bg    = block.settings.button_color_bg_1
+              assign btn1_text  = block.settings.button_color_text_1
+              assign btn2_bg    = block.settings.button_color_bg_2
+              assign btn2_text  = block.settings.button_color_text_2
+            -%}
             <div
               class="hero-elite__buttons hero-elite__anim{% if block.settings.button_label_1 != blank and block.settings.button_label_2 != blank %} hero-elite__buttons--double{% endif %}"
               style="animation-delay: {{ delay_s }}"
@@ -179,9 +210,10 @@
                   {% else %}
                     href="{{ block.settings.button_link_1 }}"
                   {% endif %}
-                  class="button{% if block.settings.button_style_secondary_1 %} button--secondary{% else %} button--primary{% endif %}"
+                  class="hero-btn hero-btn--{{ btn1_style }}"
+                  style="--hbtn-bg: {{ btn1_bg }}; --hbtn-text: {{ btn1_text }};"
                 >
-                  {{- block.settings.button_label_1 | escape -}}
+                  <span>{{- block.settings.button_label_1 | escape -}}</span>
                 </a>
               {%- endif -%}
               {%- if block.settings.button_label_2 != blank -%}
@@ -191,9 +223,10 @@
                   {% else %}
                     href="{{ block.settings.button_link_2 }}"
                   {% endif %}
-                  class="button{% if block.settings.button_style_secondary_2 %} button--secondary{% else %} button--primary{% endif %}"
+                  class="hero-btn hero-btn--{{ btn2_style }}"
+                  style="--hbtn-bg: {{ btn2_bg }}; --hbtn-text: {{ btn2_text }};"
                 >
-                  {{- block.settings.button_label_2 | escape -}}
+                  <span>{{- block.settings.button_label_2 | escape -}}</span>
                 </a>
               {%- endif -%}
             </div>
@@ -211,29 +244,37 @@
               {%- endif -%}
             </div>
 
-          {%- when 'scroll_indicator' -%}
-            <div
-              class="hero-elite__scroll hero-elite__anim"
-              style="animation-delay: {{ delay_s }}"
-              {{ block.shopify_attributes }}
-            >
-              <button
-                class="hero-elite__scroll-btn"
-                onclick="window.scrollBy({ top: window.innerHeight * 0.8, behavior: 'smooth' })"
-                aria-label="Scroll down"
-                type="button"
-              >
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                  <path d="M10 4v12M4 10l6 6 6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </button>
-            </div>
-
         {%- endcase -%}
       {%- endfor -%}
 
     </div>
   </div>
+
+  {%- comment -%} ── SCROLL INDICATOR — fixed bottom center, separate from content ── {%- endcomment -%}
+  {%- if scroll_block != nil -%}
+    {%- liquid
+      assign sc_delay = section.blocks.size | times: 0.14 | plus: 0.4
+      assign sc_delay_s = sc_delay | append: 's'
+      assign arrow_color = scroll_block.settings.arrow_color | default: '#ffffff'
+    -%}
+    <div
+      class="hero-elite__scroll-anchor hero-elite__anim"
+      style="animation-delay: {{ sc_delay_s }}"
+      {{ scroll_block.shopify_attributes }}
+    >
+      <button
+        class="hero-elite__scroll-btn"
+        style="color: {{ arrow_color }}; border-color: {{ arrow_color }};"
+        onclick="window.scrollBy({ top: window.innerHeight * 0.85, behavior: 'smooth' })"
+        aria-label="Scroll down"
+        type="button"
+      >
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M11 3v16M3.5 11.5l7.5 7.5 7.5-7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+  {%- endif -%}
 
 </section>
 
@@ -242,34 +283,35 @@
     var hero = document.getElementById('HeroElite-{{ section.id }}');
     if (!hero) return;
 
-    // Trigger entrance animations
+    // Trigger entrance animations on next paint
     requestAnimationFrame(function () {
       requestAnimationFrame(function () {
         hero.classList.add('hero-elite--loaded');
       });
     });
 
-    // Autoplay videos (handles browser restrictions)
-    hero.querySelectorAll('.hero-elite__video').forEach(function (v) {
+    // Ensure autoplay on URL-based videos (upload videos handle themselves)
+    hero.querySelectorAll('video.hero-elite__video').forEach(function (v) {
       v.play().catch(function () {});
     });
 
     {%- if section.settings.image_behavior == 'parallax' -%}
-    // Parallax scroll effect
-    var mediaEls = hero.querySelectorAll('.hero-elite__media--behavior-parallax .hero-elite__img, .hero-elite__media--behavior-parallax .hero-elite__video');
+    // Parallax scroll
+    var mediaEls = hero.querySelectorAll(
+      '.hero-elite__media--behavior-parallax .hero-elite__img, .hero-elite__media--behavior-parallax .hero-elite__video'
+    );
     if (mediaEls.length && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      function onScroll() {
+      function heroParallax() {
         var rect = hero.getBoundingClientRect();
-        var visible = rect.top < window.innerHeight && rect.bottom > 0;
-        if (!visible) return;
+        if (rect.top >= window.innerHeight || rect.bottom <= 0) return;
         var progress = (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
         var offset = (progress - 0.5) * 80;
         mediaEls.forEach(function (el) {
           el.style.transform = 'translateY(' + offset + 'px) scale(1.12)';
         });
       }
-      window.addEventListener('scroll', onScroll, { passive: true });
-      onScroll();
+      window.addEventListener('scroll', heroParallax, { passive: true });
+      heroParallax();
     }
     {%- endif -%}
   })();
@@ -290,7 +332,7 @@
     },
     {
       "type": "paragraph",
-      "content": "Recommended image: 2560×1440px (16:9) or wider. Use JPG/WebP for best performance."
+      "content": "Recommended image: 2560×1440px (16:9). Video: 1920×1080px H.264, under 10 MB."
     },
     {
       "type": "image_picker",
@@ -298,10 +340,15 @@
       "label": "Desktop image"
     },
     {
+      "type": "video",
+      "id": "video_desktop",
+      "label": "Desktop video (upload)"
+    },
+    {
       "type": "text",
       "id": "video_url_desktop",
-      "label": "Desktop video URL (.mp4)",
-      "info": "Recommended: 1920×1080px, H.264, under 10 MB. Video takes priority over image."
+      "label": "Desktop video — external URL (.mp4)",
+      "info": "Alternative to upload. Upload takes priority if both are set."
     },
     {
       "type": "header",
@@ -309,7 +356,7 @@
     },
     {
       "type": "paragraph",
-      "content": "Recommended image: 750×1334px (portrait 9:16). If blank, desktop media is used on all screens."
+      "content": "Recommended image: 750×1334px (portrait 9:16). If blank, desktop media is used."
     },
     {
       "type": "image_picker",
@@ -317,10 +364,14 @@
       "label": "Mobile image"
     },
     {
+      "type": "video",
+      "id": "video_mobile",
+      "label": "Mobile video (upload)"
+    },
+    {
       "type": "text",
       "id": "video_url_mobile",
-      "label": "Mobile video URL (.mp4)",
-      "info": "Recommended: 750×1334px portrait. If blank, desktop video is used."
+      "label": "Mobile video — external URL (.mp4)"
     },
     {
       "type": "header",
@@ -329,23 +380,23 @@
     {
       "type": "checkbox",
       "id": "video_autoplay",
-      "label": "Autoplay video",
+      "label": "Autoplay",
       "default": true
     },
     {
       "type": "checkbox",
       "id": "video_loop",
-      "label": "Loop video",
+      "label": "Loop",
       "default": true
     },
     {
       "type": "header",
-      "content": "✨ Image Behavior"
+      "content": "✨ Image / Video Effect"
     },
     {
       "type": "select",
       "id": "image_behavior",
-      "label": "Image effect",
+      "label": "Media effect",
       "options": [
         { "value": "none",     "label": "None" },
         { "value": "zoom-in",  "label": "Slow zoom on load" },
@@ -380,12 +431,12 @@
       "id": "overlay_gradient",
       "label": "Overlay shape",
       "options": [
-        { "value": "none",    "label": "Solid — uniform" },
-        { "value": "bottom",  "label": "Gradient — darker at bottom" },
-        { "value": "top",     "label": "Gradient — darker at top" },
-        { "value": "center",  "label": "Gradient — vignette edges" },
-        { "value": "left",    "label": "Gradient — darker on left" },
-        { "value": "right",   "label": "Gradient — darker on right" }
+        { "value": "none",   "label": "Solid — uniform" },
+        { "value": "bottom", "label": "Gradient — darker at bottom" },
+        { "value": "top",    "label": "Gradient — darker at top" },
+        { "value": "center", "label": "Gradient — vignette edges" },
+        { "value": "left",   "label": "Gradient — darker on left" },
+        { "value": "right",  "label": "Gradient — darker on right" }
       ],
       "default": "bottom"
     },
@@ -428,12 +479,12 @@
     },
     {
       "type": "header",
-      "content": "📍 Content Position"
+      "content": "📍 Content Position — Desktop"
     },
     {
       "type": "select",
       "id": "content_position",
-      "label": "Position on desktop",
+      "label": "Position (desktop)",
       "options": [
         { "value": "top-left",      "label": "Top — left" },
         { "value": "top-center",    "label": "Top — center" },
@@ -450,7 +501,7 @@
     {
       "type": "select",
       "id": "content_alignment",
-      "label": "Text alignment — desktop",
+      "label": "Text alignment (desktop)",
       "options": [
         { "value": "left",   "label": "Left" },
         { "value": "center", "label": "Center" },
@@ -480,6 +531,44 @@
     },
     {
       "type": "header",
+      "content": "📱 Content Position — Mobile"
+    },
+    {
+      "type": "select",
+      "id": "mobile_content_position",
+      "label": "Position (mobile)",
+      "options": [
+        { "value": "top-left",      "label": "Top — left" },
+        { "value": "top-center",    "label": "Top — center" },
+        { "value": "top-right",     "label": "Top — right" },
+        { "value": "middle-left",   "label": "Middle — left" },
+        { "value": "middle-center", "label": "Middle — center" },
+        { "value": "middle-right",  "label": "Middle — right" },
+        { "value": "bottom-left",   "label": "Bottom — left" },
+        { "value": "bottom-center", "label": "Bottom — center" },
+        { "value": "bottom-right",  "label": "Bottom — right" }
+      ],
+      "default": "middle-center"
+    },
+    {
+      "type": "select",
+      "id": "mobile_content_alignment",
+      "label": "Text alignment (mobile)",
+      "options": [
+        { "value": "left",   "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right",  "label": "Right" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_text_below_on_mobile",
+      "label": "Show text below image on mobile",
+      "default": false
+    },
+    {
+      "type": "header",
       "content": "🎨 Color Scheme"
     },
     {
@@ -496,33 +585,12 @@
     },
     {
       "type": "header",
-      "content": "📱 Mobile"
-    },
-    {
-      "type": "select",
-      "id": "mobile_content_alignment",
-      "label": "Text alignment — mobile",
-      "options": [
-        { "value": "left",   "label": "Left" },
-        { "value": "center", "label": "Center" },
-        { "value": "right",  "label": "Right" }
-      ],
-      "default": "center"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_text_below_on_mobile",
-      "label": "Show text below image on mobile",
-      "default": false
-    },
-    {
-      "type": "header",
       "content": "🎞 Animations"
     },
     {
       "type": "select",
       "id": "animation_style",
-      "label": "Content entrance animation",
+      "label": "Content entrance",
       "options": [
         { "value": "fade-up",    "label": "Fade up (elegant)" },
         { "value": "fade-in",    "label": "Fade in (subtle)" },
@@ -602,7 +670,7 @@
           "id": "heading_tag",
           "label": "HTML tag (SEO)",
           "options": [
-            { "value": "h1", "label": "H1 — main page heading" },
+            { "value": "h1", "label": "H1 — main heading" },
             { "value": "h2", "label": "H2" },
             { "value": "p",  "label": "Paragraph" }
           ],
@@ -637,7 +705,7 @@
         {
           "type": "select",
           "id": "text_style",
-          "label": "Text style",
+          "label": "Style",
           "options": [
             { "value": "body",                        "label": "Body" },
             { "value": "subtitle",                    "label": "Subtitle" },
@@ -655,8 +723,7 @@
         {
           "type": "text",
           "id": "text",
-          "label": "Optional centre text",
-          "info": "Leave blank for a plain line"
+          "label": "Centre text (optional)"
         }
       ]
     },
@@ -681,10 +748,30 @@
           "label": "Link"
         },
         {
-          "type": "checkbox",
-          "id": "button_style_secondary_1",
-          "label": "Secondary style",
-          "default": false
+          "type": "select",
+          "id": "button_style_1",
+          "label": "Style",
+          "options": [
+            { "value": "solid",        "label": "Solid — filled" },
+            { "value": "outline",      "label": "Outline — border only" },
+            { "value": "pill-solid",   "label": "Pill — filled" },
+            { "value": "pill-outline", "label": "Pill — border only" },
+            { "value": "ghost",        "label": "Ghost — minimal uppercase" },
+            { "value": "underline",    "label": "Underline — text link" }
+          ],
+          "default": "solid"
+        },
+        {
+          "type": "color",
+          "id": "button_color_bg_1",
+          "label": "Background color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "button_color_text_1",
+          "label": "Text color",
+          "default": "#111111"
         },
         {
           "type": "header",
@@ -702,10 +789,30 @@
           "label": "Link"
         },
         {
-          "type": "checkbox",
-          "id": "button_style_secondary_2",
-          "label": "Secondary style",
-          "default": true
+          "type": "select",
+          "id": "button_style_2",
+          "label": "Style",
+          "options": [
+            { "value": "solid",        "label": "Solid — filled" },
+            { "value": "outline",      "label": "Outline — border only" },
+            { "value": "pill-solid",   "label": "Pill — filled" },
+            { "value": "pill-outline", "label": "Pill — border only" },
+            { "value": "ghost",        "label": "Ghost — minimal uppercase" },
+            { "value": "underline",    "label": "Underline — text link" }
+          ],
+          "default": "outline"
+        },
+        {
+          "type": "color",
+          "id": "button_color_bg_2",
+          "label": "Background / border color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "button_color_text_2",
+          "label": "Text color",
+          "default": "#ffffff"
         }
       ]
     },
@@ -713,7 +820,14 @@
       "type": "scroll_indicator",
       "name": "Scroll indicator",
       "limit": 1,
-      "settings": []
+      "settings": [
+        {
+          "type": "color",
+          "id": "arrow_color",
+          "label": "Arrow color",
+          "default": "#ffffff"
+        }
+      ]
     }
   ],
   "presets": [
