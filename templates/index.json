@@ -37,15 +37,21 @@
           "settings": {
             "button_label_1": "Shop Now",
             "button_link_1": "shopify://collections/all",
-            "button_style_secondary_1": false,
+            "button_style_1": "ghost",
+            "button_color_bg_1": "#ffffff",
+            "button_color_text_1": "#111111",
             "button_label_2": "Explore",
             "button_link_2": "shopify://products/lions-mane-focus-extract-powder",
-            "button_style_secondary_2": true
+            "button_style_2": "outline",
+            "button_color_bg_2": "#ffffff",
+            "button_color_text_2": "#ffffff"
           }
         },
         "scroll_indicator_aXzLBx": {
           "type": "scroll_indicator",
-          "settings": {}
+          "settings": {
+            "arrow_color": "#ffffff"
+          }
         }
       },
       "block_order": [
@@ -73,10 +79,11 @@
         "content_alignment": "left",
         "content_padding": 48,
         "content_max_width": 760,
-        "show_text_box": false,
-        "color_scheme": "scheme-4",
+        "mobile_content_position": "middle-center",
         "mobile_content_alignment": "center",
         "show_text_below_on_mobile": false,
+        "show_text_box": false,
+        "color_scheme": "scheme-4",
         "animation_style": "fade-up",
         "animation_duration": 800,
         "rounded_bottom": false,
