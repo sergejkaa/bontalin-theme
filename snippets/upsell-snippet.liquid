@@ -982,7 +982,7 @@
 
           var initialItems = getRealSlides(slider);
           if (initialItems.length > 1) {
-            var cloneCount = initialItems.length > 2 ? 2 : 1;
+            var visibleDesktop = parseFloat(slider.style.getPropertyValue('--ppu-upsell-visible-desktop')) || 1; var cloneCount = Math.max(initialItems.length > 2 ? 2 : 1, Math.ceil(visibleDesktop));
             var headFragment = document.createDocumentFragment();
             var tailFragment = document.createDocumentFragment();
             var startIndex = Math.max(initialItems.length - cloneCount, 0);
