@@ -400,10 +400,6 @@
   display: flex;
   justify-content: center;
   pointer-events: none;
-  animation: hero-scroll-pulse 4s ease-in-out infinite;
-}
-.hero-elite__scroll-anchor:has(.hero-elite__scroll-btn:hover) {
-  animation-play-state: paused;
 }
 
 .hero-elite__scroll-btn {
@@ -417,14 +413,21 @@
   background: transparent;
   cursor: pointer;
   pointer-events: auto;
-  transition: opacity 0.25s ease, background 0.25s ease;
+  transition: opacity 0.25s ease;
 }
-.hero-elite__scroll-btn:hover {
-  opacity: 0.65;
+.hero-elite__scroll-btn:hover { opacity: 0.65; }
+
+/* Arrow inside the button animates — smooth continuous loop */
+.hero-elite__scroll-btn svg {
+  animation: hero-scroll-arrow 3s ease-in-out infinite;
+  will-change: transform, opacity;
 }
-@keyframes hero-scroll-pulse {
-  0%, 100% { transform: translateY(0); }
-  50%       { transform: translateY(9px); }
+.hero-elite__scroll-anchor:has(.hero-elite__scroll-btn:hover) svg {
+  animation-play-state: paused;
+}
+@keyframes hero-scroll-arrow {
+  0%, 100% { transform: translateY(-2px); opacity: 0.5;  }
+  50%       { transform: translateY(4px);  opacity: 1;    }
 }
 
 /* ─── RATING BADGE WRAPPER ─── */
@@ -496,7 +499,7 @@
   .hero-elite__media--behavior-zoom-in .hero-elite__video {
     animation: none; transform: none; transition: none;
   }
-  .hero-elite__scroll-anchor { animation: none; }
+  .hero-elite__scroll-btn svg { animation: none; }
   .hero-btn { transition: none; }
 }
 
@@ -589,13 +592,14 @@
   display: flex;
   align-items: center;
   gap: 0.8rem;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
 }
 
 .hero-elite__stars {
   font-size: 1.8rem;
   line-height: 1;
   letter-spacing: -0.02em;
+  flex-shrink: 0;
 }
 
 .hero-elite__rating-inline-text {
@@ -612,17 +616,41 @@
 @media screen and (max-width: 749px) {
   .hero-elite__num--desktop { display: none; }
   .hero-elite__num--mobile  { display: inline; }
+
+  .hero-elite__stars { font-size: 1.4rem; }
+  .hero-elite__rating-inline-text { font-size: 14px; }
 }
 
 /* =============================================================================
-   TRUST BADGE BLOCK
+   TRUST BADGES ROW BLOCK
    ============================================================================= */
 
-.hero-elite__trust-badge {
+/* Row wrapper — column on mobile, row on desktop */
+.hero-elite__trust-row {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+@media screen and (min-width: 750px) {
+  .hero-elite__trust-row {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 2rem;
+  }
+}
+
+/* Individual badge item */
+.hero-elite__trust-item {
   display: inline-flex;
   align-items: center;
   gap: 0.6rem;
   font-size: 1.3rem;
+  white-space: nowrap;
+}
+
+@media screen and (max-width: 749px) {
+  .hero-elite__trust-item { font-size: 1.2rem; }
 }
 
 .hero-elite__trust-icon {

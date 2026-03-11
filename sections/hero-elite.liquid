@@ -902,12 +902,20 @@
     },
     {
       "type": "trust_badge",
-      "name": "Trust badge",
-      "limit": 3,
+      "name": "Trust Badges Row",
+      "limit": 1,
       "settings": [
         {
+          "type": "paragraph",
+          "content": "Desktop: 3 badges in one row. Mobile: 1 per line."
+        },
+        {
+          "type": "header",
+          "content": "Badge 1"
+        },
+        {
           "type": "select",
-          "id": "icon",
+          "id": "icon_1",
           "label": "Icon",
           "options": [
             { "value": "check",  "label": "Checkmark" },
@@ -918,23 +926,52 @@
           ],
           "default": "check"
         },
+        { "type": "text", "id": "text_1", "label": "Text", "default": "30-Day Guarantee" },
+        { "type": "text", "id": "tooltip_1", "label": "Tooltip (optional)" },
+        { "type": "color", "id": "icon_color_1", "label": "Icon color" },
         {
-          "type": "text",
-          "id": "text",
-          "label": "Text",
-          "default": "30-Day Guarantee"
+          "type": "header",
+          "content": "Badge 2"
         },
         {
-          "type": "text",
-          "id": "tooltip",
-          "label": "Tooltip text (optional)",
-          "info": "Shows an info icon with tooltip on hover."
+          "type": "select",
+          "id": "icon_2",
+          "label": "Icon",
+          "options": [
+            { "value": "check",  "label": "Checkmark" },
+            { "value": "shield", "label": "Shield" },
+            { "value": "lock",   "label": "Lock" },
+            { "value": "truck",  "label": "Truck" },
+            { "value": "leaf",   "label": "Leaf" }
+          ],
+          "default": "lock"
+        },
+        { "type": "text", "id": "text_2", "label": "Text", "default": "Secure Payment" },
+        { "type": "text", "id": "tooltip_2", "label": "Tooltip (optional)" },
+        { "type": "color", "id": "icon_color_2", "label": "Icon color" },
+        {
+          "type": "header",
+          "content": "Badge 3"
         },
         {
-          "type": "color",
-          "id": "icon_color",
-          "label": "Icon color",
-          "info": "Leave empty to inherit text color"
+          "type": "select",
+          "id": "icon_3",
+          "label": "Icon",
+          "options": [
+            { "value": "check",  "label": "Checkmark" },
+            { "value": "shield", "label": "Shield" },
+            { "value": "lock",   "label": "Lock" },
+            { "value": "truck",  "label": "Truck" },
+            { "value": "leaf",   "label": "Leaf" }
+          ],
+          "default": "truck"
+        },
+        { "type": "text", "id": "text_3", "label": "Text", "default": "Free Shipping" },
+        { "type": "text", "id": "tooltip_3", "label": "Tooltip (optional)" },
+        { "type": "color", "id": "icon_color_3", "label": "Icon color" },
+        {
+          "type": "header",
+          "content": "General"
         },
         {
           "type": "color",
