@@ -134,16 +134,16 @@
         "trust_badge_jyYEmR": {
           "type": "trust_badge",
           "settings": {
-            "icon_1": "check",
-            "text_1": "30-Day Guarantee",
+            "icon_1": "leaf",
+            "text_1": "Organic",
             "tooltip_1": "",
             "icon_color_1": "#10b981",
-            "icon_2": "lock",
+            "icon_2": "check",
             "text_2": "30-Day Guarantee",
             "tooltip_2": "",
-            "icon_color_2": "#00c6ff",
-            "icon_3": "truck",
-            "text_3": "30-Day Guarantee",
+            "icon_color_2": "#10b981",
+            "icon_3": "check",
+            "text_3": "Fast Shipping",
             "tooltip_3": "",
             "icon_color_3": "#10b981",
             "text_color": "#f7f5f0"
