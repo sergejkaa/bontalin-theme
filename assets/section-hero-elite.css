@@ -618,7 +618,7 @@
   .hero-elite__num--mobile  { display: inline; }
 
   .hero-elite__stars { font-size: 1.4rem; }
-  .hero-elite__rating-inline-text { font-size: 14px; }
+  .hero-elite__rating-inline-text { font-size: 12px; letter-spacing: -0.01em; }
 }
 
 /* =============================================================================
