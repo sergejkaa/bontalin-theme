@@ -34,14 +34,6 @@
             "text_color": ""
           }
         },
-        "inventory_nAgpdF": {
-          "type": "inventory",
-          "settings": {
-            "text_style": "uppercase",
-            "inventory_threshold": 47,
-            "show_inventory_quantity": true
-          }
-        },
         "price": {
           "type": "price",
           "settings": {}
@@ -259,7 +251,6 @@
       "block_order": [
         "title",
         "inline_rating_iifCgL",
-        "inventory_nAgpdF",
         "price",
         "feature_cards_LB4F4H",
         "variant_picker",
@@ -402,6 +393,9 @@
         "review_YAxGii",
         "review_DDr3Pn",
         "review_V8hCr3"
+      ],
+      "custom_css": [
+        ".estimonials__heading {font-weight: 700 !important;}"
       ],
       "name": "Testimonials (Jade)",
       "settings": {
