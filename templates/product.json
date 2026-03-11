@@ -12,6 +12,24 @@
     "main": {
       "type": "liquid-studio-product-page",
       "blocks": {
+        "inline_rating_iifCgL": {
+          "type": "inline_rating",
+          "settings": {
+            "rating_value": "4.8",
+            "rating_label": "stars",
+            "segment_1_number": "85,000",
+            "segment_1_label": "reviews",
+            "segment_2_number": "1,000,000+",
+            "segment_2_label": "members",
+            "segment_1_number_mobile": "85K",
+            "segment_2_number_mobile": "1M+",
+            "star_color": "#22a06b",
+            "rating_value_color": "",
+            "segment_1_color": "",
+            "segment_2_color": "",
+            "text_color": ""
+          }
+        },
         "rating_badge_RL64rM": {
           "type": "rating_badge",
           "settings": {
@@ -301,6 +319,7 @@
         }
       },
       "block_order": [
+        "inline_rating_iifCgL",
         "rating_badge_RL64rM",
         "title",
         "price",
