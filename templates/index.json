@@ -139,11 +139,11 @@
             "tooltip_1": "",
             "icon_color_1": "#10b981",
             "icon_2": "lock",
-            "text_2": "Secure Payment",
+            "text_2": "",
             "tooltip_2": "",
             "icon_color_2": "#00c6ff",
             "icon_3": "truck",
-            "text_3": "Free Shipping",
+            "text_3": "",
             "tooltip_3": "",
             "icon_color_3": "#10b981",
             "text_color": "#f7f5f0"
