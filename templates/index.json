@@ -171,7 +171,7 @@
       "settings": {
         "layout_style": "split",
         "split_image_side": "right",
-        "split_image_width": 50,
+        "split_image_width": 60,
         "split_bg_color": "#938181",
         "image_desktop": "shopify://shop_images/Frame_342.png",
         "video_url_desktop": "",
