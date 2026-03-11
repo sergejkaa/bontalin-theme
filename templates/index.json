@@ -169,7 +169,7 @@
       ],
       "name": "Hero Elite",
       "settings": {
-        "layout_style": "split",
+        "layout_style": "overlay",
         "split_image_side": "right",
         "split_image_width": 60,
         "split_bg_color": "#938181",
