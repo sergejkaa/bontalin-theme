@@ -3606,3 +3606,8 @@ details-disclosure > details {
 html, body {
   overflow-x: hidden;
 }
+
+
+h1 {
+  font-weight: 700;
+}
