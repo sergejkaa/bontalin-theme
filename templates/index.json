@@ -53,6 +53,7 @@
         },
         "rating_badge_fwLHHH": {
           "type": "rating_badge",
+          "disabled": true,
           "settings": {
             "badge_prefix": "Rated",
             "rating_value": "4.8",
