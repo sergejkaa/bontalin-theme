@@ -12,6 +12,10 @@
     "main": {
       "type": "liquid-studio-product-page",
       "blocks": {
+        "title": {
+          "type": "title",
+          "settings": {}
+        },
         "inline_rating_iifCgL": {
           "type": "inline_rating",
           "settings": {
@@ -30,9 +34,13 @@
             "text_color": ""
           }
         },
-        "title": {
-          "type": "title",
-          "settings": {}
+        "inventory_nAgpdF": {
+          "type": "inventory",
+          "settings": {
+            "text_style": "uppercase",
+            "inventory_threshold": 4,
+            "show_inventory_quantity": false
+          }
         },
         "price": {
           "type": "price",
@@ -123,14 +131,6 @@
         "quantity_selector": {
           "type": "quantity_selector",
           "settings": {}
-        },
-        "inventory_nAgpdF": {
-          "type": "inventory",
-          "settings": {
-            "text_style": "uppercase",
-            "inventory_threshold": 4,
-            "show_inventory_quantity": false
-          }
         },
         "buy_buttons": {
           "type": "buy_buttons",
@@ -257,13 +257,13 @@
         }
       },
       "block_order": [
-        "inline_rating_iifCgL",
         "title",
+        "inline_rating_iifCgL",
+        "inventory_nAgpdF",
         "price",
         "feature_cards_LB4F4H",
         "variant_picker",
         "quantity_selector",
-        "inventory_nAgpdF",
         "buy_buttons",
         "description",
         "upsell_snippet_XMJqBJ",
