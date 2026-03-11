@@ -85,18 +85,20 @@
   {%- when 'trust_badge' -%}
     <div
       class="hero-elite__trust-row hero-elite__anim"
-      style="animation-delay: {{ delay_s }}{% if block.settings.text_color != blank %}; color: {{ block.settings.text_color }}{% endif %}"
+      style="animation-delay: {{ delay_s }}{% if block.settings.text_color != blank %}; color: {{ block.settings.text_color }}{% endif %}; --trust-font-size: {{ block.settings.font_size | default: 12 }}px"
       {{ block.shopify_attributes }}
     >
       {%- for i in (1..3) -%}
         {%- liquid
-          assign text_key       = 'text_'       | append: i
-          assign icon_key       = 'icon_'       | append: i
-          assign tooltip_key    = 'tooltip_'    | append: i
-          assign icon_color_key = 'icon_color_' | append: i
-          assign item_text      = block.settings[text_key]
-          assign item_icon      = block.settings[icon_key]
-          assign item_tooltip   = block.settings[tooltip_key]
+          assign text_key        = 'text_'        | append: i
+          assign icon_key        = 'icon_'        | append: i
+          assign icon_image_key  = 'icon_image_'  | append: i
+          assign tooltip_key     = 'tooltip_'     | append: i
+          assign icon_color_key  = 'icon_color_'  | append: i
+          assign item_text       = block.settings[text_key]
+          assign item_icon       = block.settings[icon_key]
+          assign item_icon_image = block.settings[icon_image_key]
+          assign item_tooltip    = block.settings[tooltip_key]
           assign item_icon_color = block.settings[icon_color_key]
         -%}
         {%- if item_text != blank -%}
@@ -106,6 +108,9 @@
               style="{% if item_icon_color != blank %}color: {{ item_icon_color }};{% endif %}"
               aria-hidden="true"
             >
+              {%- if item_icon_image != blank -%}
+                {{- item_icon_image | image_url: width: 32 | image_tag: width: 16, height: 16, loading: 'lazy', style: 'width: 1em; height: 1em; object-fit: contain; display: block;', alt: '' -}}
+              {%- else -%}
               {%- case item_icon -%}
                 {%- when 'shield' -%}
                   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 1.5L2.5 4v4.5c0 3 2.5 5.5 5.5 6 3-.5 5.5-3 5.5-6V4L8 1.5z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
@@ -118,6 +123,7 @@
                 {%- else -%}
                   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.5 8.5l3.5 3.5 7.5-7.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
               {%- endcase -%}
+              {%- endif -%}
             </span>
             <span class="hero-elite__trust-text">{{- item_text | escape -}}</span>
             {%- if item_tooltip != blank -%}

@@ -645,12 +645,8 @@
   display: inline-flex;
   align-items: center;
   gap: 0.6rem;
-  font-size: 1.3rem;
+  font-size: var(--trust-font-size, 1.2rem);
   white-space: nowrap;
-}
-
-@media screen and (max-width: 749px) {
-  .hero-elite__trust-item { font-size: 1.2rem; }
 }
 
 .hero-elite__trust-icon {

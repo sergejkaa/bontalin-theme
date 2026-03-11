@@ -926,6 +926,7 @@
           ],
           "default": "check"
         },
+        { "type": "image_picker", "id": "icon_image_1", "label": "Custom icon image (overrides icon above)" },
         { "type": "text", "id": "text_1", "label": "Text", "default": "30-Day Guarantee" },
         { "type": "text", "id": "tooltip_1", "label": "Tooltip (optional)" },
         { "type": "color", "id": "icon_color_1", "label": "Icon color" },
@@ -946,6 +947,7 @@
           ],
           "default": "lock"
         },
+        { "type": "image_picker", "id": "icon_image_2", "label": "Custom icon image (overrides icon above)" },
         { "type": "text", "id": "text_2", "label": "Text", "default": "Secure Payment" },
         { "type": "text", "id": "tooltip_2", "label": "Tooltip (optional)" },
         { "type": "color", "id": "icon_color_2", "label": "Icon color" },
@@ -966,12 +968,23 @@
           ],
           "default": "truck"
         },
+        { "type": "image_picker", "id": "icon_image_3", "label": "Custom icon image (overrides icon above)" },
         { "type": "text", "id": "text_3", "label": "Text", "default": "Free Shipping" },
         { "type": "text", "id": "tooltip_3", "label": "Tooltip (optional)" },
         { "type": "color", "id": "icon_color_3", "label": "Icon color" },
         {
           "type": "header",
           "content": "General"
+        },
+        {
+          "type": "range",
+          "id": "font_size",
+          "label": "Font size",
+          "min": 10,
+          "max": 18,
+          "step": 0.5,
+          "default": 12,
+          "unit": "px"
         },
         {
           "type": "color",
