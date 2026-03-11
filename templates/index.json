@@ -185,7 +185,7 @@
         "overlay_opacity": 20,
         "overlay_gradient": "bottom",
         "height_desktop": 95,
-        "height_mobile": 75,
+        "height_mobile": 85,
         "content_position": "middle-left",
         "content_alignment": "left",
         "content_padding": 48,
