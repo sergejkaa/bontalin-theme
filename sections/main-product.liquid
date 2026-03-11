@@ -18,6 +18,7 @@
   {{ 'component-price.css' | asset_url | stylesheet_tag }}
   {{ 'component-slider.css' | asset_url | stylesheet_tag }}
   {{ 'component-rating.css' | asset_url | stylesheet_tag }}
+  {{ 'component-inline-rating.css' | asset_url | stylesheet_tag }}
   {{ 'component-deferred-media.css' | asset_url | stylesheet_tag }}
 
   {% unless product.has_only_default_variant %}
@@ -678,6 +679,46 @@
                 </product-recommendations>
               {%- when 'icon-with-text' -%}
                 {% render 'icon-with-text', block: block %}
+              {%- when 'inline_rating' -%}
+                <div
+                  class="inline-rating"
+                  style="{% if block.settings.text_color != blank %}color: {{ block.settings.text_color }};{% endif %}"
+                  {{ block.shopify_attributes }}
+                >
+                  <span
+                    class="inline-rating__stars"
+                    style="color: {{ block.settings.star_color | default: '#22a06b' }}"
+                    aria-label="{{ block.settings.rating_value }} out of 5 stars"
+                  >★★★★★</span>
+                  <span class="inline-rating__text">
+                    <strong style="color: {{ block.settings.rating_value_color | default: 'inherit' }}">{{ block.settings.rating_value }}</strong>
+                    {%- if block.settings.rating_label != blank %} {{ block.settings.rating_label }}{%- endif -%}
+                    {%- if block.settings.segment_1_number != blank or block.settings.segment_1_label != blank -%}
+                      <span class="inline-rating__sep" aria-hidden="true"> | </span>
+                      {%- if block.settings.segment_1_number != blank -%}
+                        {%- if block.settings.segment_1_number_mobile != blank -%}
+                          <strong class="inline-rating__num--desktop" style="color: {{ block.settings.segment_1_color | default: 'inherit' }}">{{ block.settings.segment_1_number }}</strong>
+                          <strong class="inline-rating__num--mobile" style="color: {{ block.settings.segment_1_color | default: 'inherit' }}">{{ block.settings.segment_1_number_mobile }}</strong>
+                        {%- else -%}
+                          <strong style="color: {{ block.settings.segment_1_color | default: 'inherit' }}">{{ block.settings.segment_1_number }}</strong>
+                        {%- endif -%}
+                      {%- endif -%}
+                      {%- if block.settings.segment_1_label != blank %} {{ block.settings.segment_1_label }}{%- endif -%}
+                    {%- endif -%}
+                    {%- if block.settings.segment_2_number != blank or block.settings.segment_2_label != blank -%}
+                      <span class="inline-rating__sep" aria-hidden="true"> | </span>
+                      {%- if block.settings.segment_2_number != blank -%}
+                        {%- if block.settings.segment_2_number_mobile != blank -%}
+                          <strong class="inline-rating__num--desktop" style="color: {{ block.settings.segment_2_color | default: 'inherit' }}">{{ block.settings.segment_2_number }}</strong>
+                          <strong class="inline-rating__num--mobile" style="color: {{ block.settings.segment_2_color | default: 'inherit' }}">{{ block.settings.segment_2_number_mobile }}</strong>
+                        {%- else -%}
+                          <strong style="color: {{ block.settings.segment_2_color | default: 'inherit' }}">{{ block.settings.segment_2_number }}</strong>
+                        {%- endif -%}
+                      {%- endif -%}
+                      {%- if block.settings.segment_2_label != blank %} {{ block.settings.segment_2_label }}{%- endif -%}
+                    {%- endif -%}
+                  </span>
+                </div>
             {%- endcase -%}
           {%- endfor -%}
           <a href="{{ product.url }}" class="link product__view-details animate-arrow">
@@ -1195,6 +1236,50 @@
           "type": "paragraph",
           "content": "t:sections.main-product.blocks.rating.settings.paragraph.content"
         }
+      ]
+    },
+    {
+      "type": "inline_rating",
+      "name": "Inline Rating",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "header",
+          "content": "Rating value"
+        },
+        { "type": "text", "id": "rating_value", "label": "Rating number", "default": "4.8" },
+        { "type": "text", "id": "rating_label", "label": "Rating label", "default": "stars" },
+        {
+          "type": "header",
+          "content": "Segment 1 (e.g. reviews)"
+        },
+        { "type": "text", "id": "segment_1_number", "label": "Number (bold)", "default": "85,000" },
+        { "type": "text", "id": "segment_1_label", "label": "Label", "default": "reviews" },
+        {
+          "type": "header",
+          "content": "Segment 2 (e.g. members)"
+        },
+        { "type": "text", "id": "segment_2_number", "label": "Number (bold)", "default": "1,000,000+" },
+        { "type": "text", "id": "segment_2_label", "label": "Label", "default": "members" },
+        {
+          "type": "header",
+          "content": "📱 Mobile compact numbers"
+        },
+        {
+          "type": "paragraph",
+          "content": "Shorter versions shown on mobile only. Leave empty to use full number."
+        },
+        { "type": "text", "id": "segment_1_number_mobile", "label": "Segment 1 — mobile short", "default": "85K" },
+        { "type": "text", "id": "segment_2_number_mobile", "label": "Segment 2 — mobile short", "default": "1M+" },
+        {
+          "type": "header",
+          "content": "Colors"
+        },
+        { "type": "color", "id": "star_color", "label": "Star color", "default": "#22a06b" },
+        { "type": "color", "id": "rating_value_color", "label": "Rating number color", "info": "Leave empty to inherit" },
+        { "type": "color", "id": "segment_1_color", "label": "Segment 1 number color", "info": "Leave empty to inherit" },
+        { "type": "color", "id": "segment_2_color", "label": "Segment 2 number color", "info": "Leave empty to inherit" },
+        { "type": "color", "id": "text_color", "label": "Text color", "info": "Leave empty to use color scheme" }
       ]
     },
     {
