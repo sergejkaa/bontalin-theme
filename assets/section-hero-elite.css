@@ -190,10 +190,10 @@
   max-width: var(--hero-content-max-width, 760px);
   display: flex;
   flex-direction: column;
-  gap: 1.8rem;
+  gap: var(--hero-content-gap, 24px);
   background: transparent !important;
 }
-.hero-elite--has-box .hero-elite__content-box {
+.hero-elite--layout-overlay.hero-elite--has-box .hero-elite__content-box {
   background: rgb(var(--color-background)) !important;
   padding: 3.6rem 4rem;
   border-radius: 2px;
@@ -400,6 +400,10 @@
   display: flex;
   justify-content: center;
   pointer-events: none;
+  animation: hero-scroll-pulse 2.8s ease-in-out infinite;
+}
+.hero-elite__scroll-anchor:has(.hero-elite__scroll-btn:hover) {
+  animation-play-state: paused;
 }
 
 .hero-elite__scroll-btn {
@@ -413,17 +417,14 @@
   background: transparent;
   cursor: pointer;
   pointer-events: auto;
-  transition: opacity 0.3s ease, transform 0.3s ease;
-  animation: hero-scroll-pulse 2.8s ease-in-out infinite;
+  transition: opacity 0.25s ease, background 0.25s ease;
 }
 .hero-elite__scroll-btn:hover {
-  opacity: 1 !important;
-  transform: translateY(5px);
-  animation: none;
+  opacity: 0.65;
 }
 @keyframes hero-scroll-pulse {
-  0%, 100% { transform: translateX(0) translateY(0); }
-  50%       { transform: translateX(0) translateY(9px); }
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(9px); }
 }
 
 /* ─── RATING BADGE WRAPPER ─── */
@@ -482,7 +483,7 @@
 /* ─── MOBILE GENERAL ─── */
 @media screen and (max-width: 749px) {
   .hero-elite__content-outer { padding: 2.4rem 1.6rem; }
-  .hero-elite--has-box .hero-elite__content-box { padding: 2.8rem 2.4rem; }
+  .hero-elite--layout-overlay.hero-elite--has-box .hero-elite__content-box { padding: 2.8rem 2.4rem; }
   .hero-elite__scroll-anchor { bottom: 2rem; }
 }
 
@@ -495,6 +496,147 @@
   .hero-elite__media--behavior-zoom-in .hero-elite__video {
     animation: none; transform: none; transition: none;
   }
-  .hero-elite__scroll-btn { animation: none; }
+  .hero-elite__scroll-anchor { animation: none; }
   .hero-btn { transition: none; }
 }
+
+/* =============================================================================
+   SPLIT LAYOUT
+   ============================================================================= */
+
+.hero-elite--layout-split {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  min-height: unset;
+  background: var(--hero-split-bg, transparent);
+}
+
+/* ─── Split: content panel ─── */
+.hero-elite__split-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 4rem var(--hero-content-padding, 48px);
+  width: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+/* ─── Split: image panel ─── */
+.hero-elite__split-media {
+  position: relative;
+  width: 100%;
+  height: var(--hero-height-mobile, 70vh);
+  min-height: 300px;
+  overflow: hidden;
+  order: -1; /* image on top on mobile */
+}
+
+.hero-elite__split-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+/* video in split panel */
+.hero-elite__split-media video.hero-elite__split-img {
+  position: absolute;
+}
+
+@media screen and (min-width: 750px) {
+  .hero-elite--layout-split {
+    flex-direction: row;
+    align-items: stretch;
+    min-height: var(--hero-height-desktop, 85vh);
+  }
+
+  .hero-elite__split-content {
+    flex: 1 1 auto;
+    width: auto;
+    padding: 6rem var(--hero-content-padding, 48px);
+  }
+
+  .hero-elite__split-media {
+    flex: 0 0 var(--hero-split-image-width, 45%);
+    width: var(--hero-split-image-width, 45%);
+    height: auto;
+    min-height: unset;
+    order: 0; /* reset — comes after content in DOM = right side */
+  }
+
+  /* image left variant */
+  .hero-elite--split-reverse {
+    flex-direction: row-reverse;
+  }
+}
+
+/* content box inside split inherits text alignment via --align-* modifier */
+.hero-elite--layout-split .hero-elite__content-box {
+  background: transparent !important;
+  max-width: var(--hero-content-max-width, 640px);
+}
+
+/* =============================================================================
+   INLINE RATING BLOCK
+   ============================================================================= */
+
+.hero-elite__inline-rating {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.hero-elite__stars {
+  font-size: 1.8rem;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.hero-elite__rating-inline-text {
+  font-size: 1.35rem;
+  line-height: 1.4;
+}
+
+.hero-elite__rating-sep {
+  opacity: 0.5;
+}
+
+/* =============================================================================
+   TRUST BADGE BLOCK
+   ============================================================================= */
+
+.hero-elite__trust-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 1.3rem;
+}
+
+.hero-elite__trust-icon {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.hero-elite__trust-text {
+  line-height: 1.3;
+}
+
+.hero-elite__trust-info {
+  display: inline-flex;
+  align-items: center;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  opacity: 0.55;
+  transition: opacity 0.2s ease;
+  color: inherit;
+}
+.hero-elite__trust-info:hover { opacity: 1; }

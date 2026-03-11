@@ -1,8 +1,8 @@
 {{ 'section-hero-elite.css' | asset_url | stylesheet_tag }}
 
 {%- liquid
-  assign has_desktop_image  = false
-  assign has_mobile_image   = false
+  assign has_desktop_image = false
+  assign has_mobile_image  = false
 
   if section.settings.image_desktop != blank
     assign has_desktop_image = true
@@ -22,6 +22,12 @@
       assign scroll_block = block
     endif
   endfor
+
+  assign layout = section.settings.layout_style | default: 'overlay'
+  assign is_split = false
+  if layout == 'split'
+    assign is_split = true
+  endif
 -%}
 
 {%- style -%}
@@ -30,15 +36,33 @@
     --hero-overlay-opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }};
     --hero-content-padding: {{ section.settings.content_padding }}px;
     --hero-content-max-width: {{ section.settings.content_max_width }}px;
+    --hero-content-gap: {{ section.settings.content_gap }}px;
     --hero-anim-duration: {{ section.settings.animation_duration }}ms;
     --hero-height-mobile: {{ section.settings.height_mobile }}vh;
     --hero-height-desktop: {{ section.settings.height_desktop }}vh;
+    {%- if is_split -%}
+    --hero-split-image-width: {{ section.settings.split_image_width }}%;
+    {%- if section.settings.split_bg_color != blank -%}
+    --hero-split-bg: {{ section.settings.split_bg_color }};
+    {%- endif -%}
+    {%- endif -%}
   }
+  {%- if scroll_block != nil -%}
+  #HeroElite-{{ section.id }} .hero-elite__scroll-btn {
+    width: {{ scroll_block.settings.scroll_size }}px;
+    height: {{ scroll_block.settings.scroll_size }}px;
+  }
+  #HeroElite-{{ section.id }} .hero-elite__scroll-btn svg {
+    width: calc({{ scroll_block.settings.scroll_size }}px * 0.48);
+    height: calc({{ scroll_block.settings.scroll_size }}px * 0.48);
+  }
+  {%- endif -%}
 {%- endstyle -%}
 
 <section
   id="HeroElite-{{ section.id }}"
   class="hero-elite
+    hero-elite--layout-{{ layout }}
     hero-elite--pos-{{ section.settings.content_position }}
     hero-elite--mobile-pos-{{ section.settings.mobile_content_position }}
     hero-elite--align-{{ section.settings.content_alignment }}
@@ -46,16 +70,29 @@
     hero-elite--anim-{{ section.settings.animation_style }}
     {% if section.settings.show_text_box %} hero-elite--has-box{% endif %}
     {% if section.settings.rounded_bottom %} hero-elite--rounded-bottom{% endif %}
-    {% if section.settings.show_text_below_on_mobile %} hero-elite--mobile-text-below{% endif %}
-    {% if has_separate_mobile == false %} hero-elite--no-separate-mobile{% endif %}"
+    {% if is_split and section.settings.split_image_side == 'left' %} hero-elite--split-reverse{% endif %}
+    {% if section.settings.show_text_below_on_mobile and is_split == false %} hero-elite--mobile-text-below{% endif %}
+    {% if has_separate_mobile == false and is_split == false %} hero-elite--no-separate-mobile{% endif %}"
   aria-label="{{ section.settings.accessibility_info | default: shop.name | escape }}"
 >
 
-  {%- comment -%} ── MEDIA LAYER ── {%- endcomment -%}
-  <div class="hero-elite__media-wrap">
+  {%- if is_split -%}
 
-    {%- comment -%} Desktop media {%- endcomment -%}
-    <div class="hero-elite__media hero-elite__media--desktop hero-elite__media--behavior-{{ section.settings.image_behavior }}">
+    {%- comment -%} ── SPLIT LAYOUT ── {%- endcomment -%}
+    <div class="hero-elite__split-content color-{{ section.settings.color_scheme }} gradient">
+      <div class="hero-elite__content-box">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'scroll_indicator' -%}{%- continue -%}{%- endif -%}
+          {%- liquid
+            assign delay = forloop.index | times: 0.14 | plus: 0.05
+            assign delay_s = delay | append: 's'
+          -%}
+          {%- render 'hero-elite-block', block: block, delay_s: delay_s -%}
+        {%- endfor -%}
+      </div>
+    </div>
+
+    <div class="hero-elite__split-media">
       {%- if section.settings.video_desktop != blank -%}
         {{
           section.settings.video_desktop
@@ -64,40 +101,35 @@
             loop: section.settings.video_loop,
             muted: true,
             playsinline: true,
-            class: 'hero-elite__video'
+            class: 'hero-elite__split-img'
         }}
-      {%- elsif section.settings.video_url_desktop != blank -%}
-        <video
-          class="hero-elite__video"
-          src="{{ section.settings.video_url_desktop }}"
-          {% if section.settings.video_autoplay %}autoplay{% endif %}
-          {% if section.settings.video_loop %}loop{% endif %}
-          muted
-          playsinline
-          {% if has_desktop_image %}poster="{{ section.settings.image_desktop | image_url: width: 1920 }}"{% endif %}
-        ></video>
       {%- elsif has_desktop_image -%}
+        {%- assign split_sizes = '(min-width: 750px) ' | append: section.settings.split_image_width | append: 'vw, 100vw' -%}
         {{
           section.settings.image_desktop
-          | image_url: width: 3840
+          | image_url: width: 1600
           | image_tag:
-            class: 'hero-elite__img',
+            class: 'hero-elite__split-img',
             loading: 'eager',
             fetchpriority: 'high',
-            sizes: '100vw',
-            widths: '375, 550, 750, 1100, 1500, 1780, 2000, 3000, 3840'
+            sizes: split_sizes,
+            widths: '375, 550, 750, 900, 1100, 1400, 1600'
         }}
       {%- else -%}
         {{ 'hero-apparel-1' | placeholder_svg_tag: 'placeholder-svg hero-elite__placeholder' }}
       {%- endif -%}
     </div>
 
-    {%- comment -%} Mobile media (only rendered if set separately) {%- endcomment -%}
-    {%- if has_separate_mobile -%}
-      <div class="hero-elite__media hero-elite__media--mobile hero-elite__media--behavior-{{ section.settings.image_behavior }}">
-        {%- if section.settings.video_mobile != blank -%}
+  {%- else -%}
+
+    {%- comment -%} ── OVERLAY LAYOUT ── {%- endcomment -%}
+    <div class="hero-elite__media-wrap">
+
+      {%- comment -%} Desktop media {%- endcomment -%}
+      <div class="hero-elite__media hero-elite__media--desktop hero-elite__media--behavior-{{ section.settings.image_behavior }}">
+        {%- if section.settings.video_desktop != blank -%}
           {{
-            section.settings.video_mobile
+            section.settings.video_desktop
             | video_tag:
               autoplay: section.settings.video_autoplay,
               loop: section.settings.video_loop,
@@ -105,156 +137,91 @@
               playsinline: true,
               class: 'hero-elite__video'
           }}
-        {%- elsif section.settings.video_url_mobile != blank -%}
+        {%- elsif section.settings.video_url_desktop != blank -%}
           <video
             class="hero-elite__video"
-            src="{{ section.settings.video_url_mobile }}"
+            src="{{ section.settings.video_url_desktop }}"
             {% if section.settings.video_autoplay %}autoplay{% endif %}
             {% if section.settings.video_loop %}loop{% endif %}
             muted
             playsinline
-            {% if has_mobile_image %}poster="{{ section.settings.image_mobile | image_url: width: 750 }}"{% endif %}
+            {% if has_desktop_image %}poster="{{ section.settings.image_desktop | image_url: width: 1920 }}"{% endif %}
           ></video>
-        {%- elsif has_mobile_image -%}
+        {%- elsif has_desktop_image -%}
           {{
-            section.settings.image_mobile
-            | image_url: width: 1100
+            section.settings.image_desktop
+            | image_url: width: 3840
             | image_tag:
               class: 'hero-elite__img',
               loading: 'eager',
               fetchpriority: 'high',
               sizes: '100vw',
-              widths: '375, 550, 750, 1100'
+              widths: '375, 550, 750, 1100, 1500, 1780, 2000, 3000, 3840'
           }}
+        {%- else -%}
+          {{ 'hero-apparel-1' | placeholder_svg_tag: 'placeholder-svg hero-elite__placeholder' }}
         {%- endif -%}
       </div>
-    {%- endif -%}
 
-    {%- comment -%} Overlay {%- endcomment -%}
-    <div class="hero-elite__overlay{% if section.settings.overlay_gradient != 'none' %} hero-elite__overlay--{{ section.settings.overlay_gradient }}{% endif %}"></div>
+      {%- comment -%} Mobile media (only rendered if set separately) {%- endcomment -%}
+      {%- if has_separate_mobile -%}
+        <div class="hero-elite__media hero-elite__media--mobile hero-elite__media--behavior-{{ section.settings.image_behavior }}">
+          {%- if section.settings.video_mobile != blank -%}
+            {{
+              section.settings.video_mobile
+              | video_tag:
+                autoplay: section.settings.video_autoplay,
+                loop: section.settings.video_loop,
+                muted: true,
+                playsinline: true,
+                class: 'hero-elite__video'
+            }}
+          {%- elsif section.settings.video_url_mobile != blank -%}
+            <video
+              class="hero-elite__video"
+              src="{{ section.settings.video_url_mobile }}"
+              {% if section.settings.video_autoplay %}autoplay{% endif %}
+              {% if section.settings.video_loop %}loop{% endif %}
+              muted
+              playsinline
+              {% if has_mobile_image %}poster="{{ section.settings.image_mobile | image_url: width: 750 }}"{% endif %}
+            ></video>
+          {%- elsif has_mobile_image -%}
+            {{
+              section.settings.image_mobile
+              | image_url: width: 1100
+              | image_tag:
+                class: 'hero-elite__img',
+                loading: 'eager',
+                fetchpriority: 'high',
+                sizes: '100vw',
+                widths: '375, 550, 750, 1100'
+            }}
+          {%- endif -%}
+        </div>
+      {%- endif -%}
 
-  </div>
-
-  {%- comment -%} ── CONTENT LAYER ── {%- endcomment -%}
-  <div class="hero-elite__content-outer page-width">
-    <div class="hero-elite__content-box color-{{ section.settings.color_scheme }} gradient">
-
-      {%- for block in section.blocks -%}
-        {%- if block.type == 'scroll_indicator' -%}{%- continue -%}{%- endif -%}
-        {%- liquid
-          assign delay = forloop.index | times: 0.14 | plus: 0.05
-          assign delay_s = delay | append: 's'
-        -%}
-
-        {%- case block.type -%}
-
-          {%- when 'eyebrow' -%}
-            <p
-              class="hero-elite__eyebrow hero-elite__anim"
-              style="animation-delay: {{ delay_s }}{% if block.settings.text_color != blank %}; color: {{ block.settings.text_color }}{% endif %}"
-              {{ block.shopify_attributes }}
-            >
-              {{- block.settings.text -}}
-            </p>
-
-          {%- when 'heading' -%}
-            <{{ block.settings.heading_tag }}
-              class="hero-elite__heading hero-elite__anim {{ block.settings.heading_size }} inline-richtext"
-              style="animation-delay: {{ delay_s }}{% if block.settings.text_color != blank %}; color: {{ block.settings.text_color }}{% endif %}"
-              {{ block.shopify_attributes }}
-            >
-              {{ block.settings.heading }}
-            </{{ block.settings.heading_tag }}>
-
-          {%- when 'subheading' -%}
-            <p
-              class="hero-elite__subheading hero-elite__anim subtitle"
-              style="animation-delay: {{ delay_s }}{% if block.settings.text_color != blank %}; color: {{ block.settings.text_color }}{% endif %}"
-              {{ block.shopify_attributes }}
-            >
-              {{- block.settings.text -}}
-            </p>
-
-          {%- when 'text' -%}
-            <div
-              class="hero-elite__text hero-elite__anim rte {{ block.settings.text_style }}"
-              style="animation-delay: {{ delay_s }}{% if block.settings.text_color != blank %}; color: {{ block.settings.text_color }}{% endif %}"
-              {{ block.shopify_attributes }}
-            >
-              {{ block.settings.text }}
-            </div>
-
-          {%- when 'rating_badge' -%}
-            <div
-              class="hero-elite__rating-wrap hero-elite__anim"
-              style="animation-delay: {{ delay_s }}"
-              {{ block.shopify_attributes }}
-            >
-              {%- render 'glass-rating-badge', block: block -%}
-            </div>
-
-          {%- when 'buttons' -%}
-            {%- liquid
-              assign btn1_style = block.settings.button_style_1
-              assign btn2_style = block.settings.button_style_2
-              assign btn1_bg    = block.settings.button_color_bg_1
-              assign btn1_text  = block.settings.button_color_text_1
-              assign btn2_bg    = block.settings.button_color_bg_2
-              assign btn2_text  = block.settings.button_color_text_2
-            -%}
-            <div
-              class="hero-elite__buttons hero-elite__anim{% if block.settings.button_label_1 != blank and block.settings.button_label_2 != blank %} hero-elite__buttons--double{% endif %}"
-              style="animation-delay: {{ delay_s }}"
-              {{ block.shopify_attributes }}
-            >
-              {%- if block.settings.button_label_1 != blank -%}
-                <a
-                  {% if block.settings.button_link_1 == blank %}
-                    role="link" aria-disabled="true"
-                  {% else %}
-                    href="{{ block.settings.button_link_1 }}"
-                  {% endif %}
-                  class="hero-btn hero-btn--{{ btn1_style }}"
-                  style="--hbtn-bg: {{ btn1_bg }}; --hbtn-text: {{ btn1_text }};"
-                >
-                  <span>{{- block.settings.button_label_1 | escape -}}</span>
-                </a>
-              {%- endif -%}
-              {%- if block.settings.button_label_2 != blank -%}
-                <a
-                  {% if block.settings.button_link_2 == blank %}
-                    role="link" aria-disabled="true"
-                  {% else %}
-                    href="{{ block.settings.button_link_2 }}"
-                  {% endif %}
-                  class="hero-btn hero-btn--{{ btn2_style }}"
-                  style="--hbtn-bg: {{ btn2_bg }}; --hbtn-text: {{ btn2_text }};"
-                >
-                  <span>{{- block.settings.button_label_2 | escape -}}</span>
-                </a>
-              {%- endif -%}
-            </div>
-
-          {%- when 'divider' -%}
-            <div
-              class="hero-elite__divider hero-elite__anim"
-              style="animation-delay: {{ delay_s }}"
-              {{ block.shopify_attributes }}
-            >
-              <span class="hero-elite__divider-line"></span>
-              {%- if block.settings.text != blank -%}
-                <span class="hero-elite__divider-text">{{ block.settings.text }}</span>
-                <span class="hero-elite__divider-line"></span>
-              {%- endif -%}
-            </div>
-
-        {%- endcase -%}
-      {%- endfor -%}
+      {%- comment -%} Overlay {%- endcomment -%}
+      <div class="hero-elite__overlay{% if section.settings.overlay_gradient != 'none' %} hero-elite__overlay--{{ section.settings.overlay_gradient }}{% endif %}"></div>
 
     </div>
-  </div>
 
-  {%- comment -%} ── SCROLL INDICATOR — fixed bottom center, separate from content ── {%- endcomment -%}
+    <div class="hero-elite__content-outer page-width">
+      <div class="hero-elite__content-box color-{{ section.settings.color_scheme }} gradient">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'scroll_indicator' -%}{%- continue -%}{%- endif -%}
+          {%- liquid
+            assign delay = forloop.index | times: 0.14 | plus: 0.05
+            assign delay_s = delay | append: 's'
+          -%}
+          {%- render 'hero-elite-block', block: block, delay_s: delay_s -%}
+        {%- endfor -%}
+      </div>
+    </div>
+
+  {%- endif -%}
+
+  {%- comment -%} ── SCROLL INDICATOR — fixed bottom center ── {%- endcomment -%}
   {%- if scroll_block != nil -%}
     {%- liquid
       assign sc_delay = section.blocks.size | times: 0.14 | plus: 0.4
@@ -287,20 +254,17 @@
     var hero = document.getElementById('HeroElite-{{ section.id }}');
     if (!hero) return;
 
-    // Trigger entrance animations on next paint
     requestAnimationFrame(function () {
       requestAnimationFrame(function () {
         hero.classList.add('hero-elite--loaded');
       });
     });
 
-    // Ensure autoplay on URL-based videos (upload videos handle themselves)
-    hero.querySelectorAll('video.hero-elite__video').forEach(function (v) {
+    hero.querySelectorAll('video.hero-elite__video, video.hero-elite__split-img').forEach(function (v) {
       v.play().catch(function () {});
     });
 
-    {%- if section.settings.image_behavior == 'parallax' -%}
-    // Parallax scroll
+    {%- if section.settings.image_behavior == 'parallax' and is_split == false -%}
     var mediaEls = hero.querySelectorAll(
       '.hero-elite__media--behavior-parallax .hero-elite__img, .hero-elite__media--behavior-parallax .hero-elite__video'
     );
@@ -332,11 +296,59 @@
   "settings": [
     {
       "type": "header",
+      "content": "🖼 Layout"
+    },
+    {
+      "type": "select",
+      "id": "layout_style",
+      "label": "Layout style",
+      "options": [
+        { "value": "overlay", "label": "Overlay — content over fullscreen image" },
+        { "value": "split",   "label": "Split — content left / image right" }
+      ],
+      "default": "overlay"
+    },
+    {
+      "type": "header",
+      "content": "↔ Split Layout Options"
+    },
+    {
+      "type": "paragraph",
+      "content": "Only applied when Layout style is set to Split."
+    },
+    {
+      "type": "select",
+      "id": "split_image_side",
+      "label": "Image panel side",
+      "options": [
+        { "value": "right", "label": "Right" },
+        { "value": "left",  "label": "Left" }
+      ],
+      "default": "right"
+    },
+    {
+      "type": "range",
+      "id": "split_image_width",
+      "min": 25,
+      "max": 65,
+      "step": 5,
+      "unit": "%",
+      "label": "Image panel width",
+      "default": 45
+    },
+    {
+      "type": "color",
+      "id": "split_bg_color",
+      "label": "Section background color",
+      "info": "Sets the background behind both panels in split mode."
+    },
+    {
+      "type": "header",
       "content": "📸 Desktop Media"
     },
     {
       "type": "paragraph",
-      "content": "Recommended image: 2560×1440px (16:9). Video: 1920×1080px H.264, under 10 MB."
+      "content": "Overlay: 2560×1440px recommended. Split: tall product image works best."
     },
     {
       "type": "image_picker",
@@ -352,7 +364,7 @@
       "type": "text",
       "id": "video_url_desktop",
       "label": "Desktop video — external URL (.mp4)",
-      "info": "Alternative to upload. Upload takes priority if both are set."
+      "info": "Upload video takes priority if both are set."
     },
     {
       "type": "header",
@@ -360,7 +372,7 @@
     },
     {
       "type": "paragraph",
-      "content": "Recommended image: 750×1334px (portrait 9:16). If blank, desktop media is used."
+      "content": "Overlay: 750×1334px (portrait) recommended. If blank, desktop media is used."
     },
     {
       "type": "image_picker",
@@ -398,6 +410,10 @@
       "content": "✨ Image / Video Effect"
     },
     {
+      "type": "paragraph",
+      "content": "Effects apply to Overlay layout only."
+    },
+    {
       "type": "select",
       "id": "image_behavior",
       "label": "Media effect",
@@ -413,6 +429,10 @@
     {
       "type": "header",
       "content": "🎨 Overlay"
+    },
+    {
+      "type": "paragraph",
+      "content": "Applies to Overlay layout only."
     },
     {
       "type": "color",
@@ -521,6 +541,16 @@
       "default": 760
     },
     {
+      "type": "range",
+      "id": "content_gap",
+      "min": 4,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "label": "Gap between content elements",
+      "default": 24
+    },
+    {
       "type": "header",
       "content": "📱 Content Position — Mobile"
     },
@@ -556,6 +586,7 @@
       "type": "checkbox",
       "id": "show_text_below_on_mobile",
       "label": "Show text below image on mobile",
+      "info": "Overlay layout only.",
       "default": false
     },
     {
@@ -566,6 +597,7 @@
       "type": "checkbox",
       "id": "show_text_box",
       "label": "Show background box behind text",
+      "info": "Overlay layout only.",
       "default": false
     },
     {
@@ -603,7 +635,7 @@
     },
     {
       "type": "header",
-      "content": "⚙️ Layout"
+      "content": "⚙️ Other"
     },
     {
       "type": "checkbox",
@@ -731,6 +763,139 @@
       ]
     },
     {
+      "type": "inline_rating",
+      "name": "Inline Rating",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "header",
+          "content": "Rating value"
+        },
+        {
+          "type": "text",
+          "id": "rating_value",
+          "label": "Rating number",
+          "default": "4.8"
+        },
+        {
+          "type": "text",
+          "id": "rating_label",
+          "label": "Rating label",
+          "default": "stars"
+        },
+        {
+          "type": "header",
+          "content": "Segment 1 (e.g. reviews)"
+        },
+        {
+          "type": "text",
+          "id": "segment_1_number",
+          "label": "Number (bold)",
+          "default": "85,000"
+        },
+        {
+          "type": "text",
+          "id": "segment_1_label",
+          "label": "Label",
+          "default": "reviews"
+        },
+        {
+          "type": "header",
+          "content": "Segment 2 (e.g. members)"
+        },
+        {
+          "type": "text",
+          "id": "segment_2_number",
+          "label": "Number (bold)",
+          "default": "1,000,000+"
+        },
+        {
+          "type": "text",
+          "id": "segment_2_label",
+          "label": "Label",
+          "default": "members"
+        },
+        {
+          "type": "header",
+          "content": "Colors"
+        },
+        {
+          "type": "color",
+          "id": "star_color",
+          "label": "Star color",
+          "default": "#22a06b"
+        },
+        {
+          "type": "color",
+          "id": "rating_value_color",
+          "label": "Rating number color",
+          "info": "Leave empty to inherit text color"
+        },
+        {
+          "type": "color",
+          "id": "segment_1_color",
+          "label": "Segment 1 number color",
+          "info": "Leave empty to inherit text color"
+        },
+        {
+          "type": "color",
+          "id": "segment_2_color",
+          "label": "Segment 2 number color",
+          "info": "Leave empty to inherit text color"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Text color",
+          "info": "Leave empty to use color scheme"
+        }
+      ]
+    },
+    {
+      "type": "trust_badge",
+      "name": "Trust badge",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            { "value": "check",  "label": "Checkmark" },
+            { "value": "shield", "label": "Shield" },
+            { "value": "lock",   "label": "Lock" },
+            { "value": "truck",  "label": "Truck" },
+            { "value": "leaf",   "label": "Leaf" }
+          ],
+          "default": "check"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "30-Day Guarantee"
+        },
+        {
+          "type": "text",
+          "id": "tooltip",
+          "label": "Tooltip text (optional)",
+          "info": "Shows an info icon with tooltip on hover."
+        },
+        {
+          "type": "color",
+          "id": "icon_color",
+          "label": "Icon color",
+          "info": "Leave empty to inherit text color"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Text color",
+          "info": "Leave empty to use color scheme"
+        }
+      ]
+    },
+    {
       "type": "divider",
       "name": "Divider line",
       "limit": 1,
@@ -774,7 +939,7 @@
             { "value": "ghost",        "label": "Ghost — minimal uppercase" },
             { "value": "underline",    "label": "Underline — text link" }
           ],
-          "default": "solid"
+          "default": "pill-solid"
         },
         {
           "type": "color",
@@ -795,8 +960,7 @@
         {
           "type": "text",
           "id": "button_label_2",
-          "label": "Label",
-          "default": "Explore"
+          "label": "Label"
         },
         {
           "type": "url",
@@ -815,7 +979,7 @@
             { "value": "ghost",        "label": "Ghost — minimal uppercase" },
             { "value": "underline",    "label": "Underline — text link" }
           ],
-          "default": "outline"
+          "default": "pill-outline"
         },
         {
           "type": "color",
@@ -913,21 +1077,50 @@
         {
           "type": "color",
           "id": "arrow_color",
-          "label": "Arrow color",
+          "label": "Arrow & border color",
           "default": "#ffffff"
+        },
+        {
+          "type": "range",
+          "id": "scroll_size",
+          "min": 32,
+          "max": 80,
+          "step": 4,
+          "unit": "px",
+          "label": "Button size",
+          "default": 44
         }
       ]
     }
   ],
   "presets": [
     {
-      "name": "Hero Elite",
+      "name": "Hero Elite — Overlay",
+      "settings": {
+        "layout_style": "overlay"
+      },
       "blocks": [
         { "type": "eyebrow" },
         { "type": "heading" },
         { "type": "subheading" },
+        { "type": "rating_badge" },
         { "type": "buttons" },
         { "type": "scroll_indicator" }
+      ]
+    },
+    {
+      "name": "Hero Elite — Split",
+      "settings": {
+        "layout_style": "split",
+        "content_alignment": "left",
+        "mobile_content_alignment": "left"
+      },
+      "blocks": [
+        { "type": "inline_rating" },
+        { "type": "heading" },
+        { "type": "text" },
+        { "type": "buttons" },
+        { "type": "trust_badge" }
       ]
     }
   ]
