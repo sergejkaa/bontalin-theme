@@ -184,7 +184,7 @@
         "color_scheme": "scheme-4",
         "animation_style": "fade-up",
         "animation_duration": 800,
-        "rounded_bottom": true,
+        "rounded_bottom": false,
         "accessibility_info": "Hero section"
       }
     },
