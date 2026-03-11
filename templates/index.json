@@ -28,6 +28,8 @@
             "segment_1_label": "reviews",
             "segment_2_number": "1,000,000+",
             "segment_2_label": "members",
+            "segment_1_number_mobile": "85K",
+            "segment_2_number_mobile": "1M+",
             "star_color": "#f4d625",
             "rating_value_color": "#ffffff",
             "segment_1_color": "#ffffff",
@@ -132,21 +134,19 @@
         "trust_badge_jyYEmR": {
           "type": "trust_badge",
           "settings": {
-            "icon": "check",
-            "text": "30-Day Guarantee",
-            "tooltip": "",
-            "icon_color": "#10b981",
+            "icon_1": "check",
+            "text_1": "30-Day Guarantee",
+            "tooltip_1": "",
+            "icon_color_1": "#10b981",
+            "icon_2": "lock",
+            "text_2": "Secure Payment",
+            "tooltip_2": "",
+            "icon_color_2": "#00c6ff",
+            "icon_3": "truck",
+            "text_3": "Free Shipping",
+            "tooltip_3": "",
+            "icon_color_3": "#10b981",
             "text_color": "#f7f5f0"
-          }
-        },
-        "trust_badge_WNrNNp": {
-          "type": "trust_badge",
-          "settings": {
-            "icon": "check",
-            "text": "30-Day Guarantee",
-            "tooltip": "",
-            "icon_color": "",
-            "text_color": ""
           }
         },
         "scroll_indicator_aXzLBx": {
@@ -165,7 +165,6 @@
         "rating_badge_fwLHHH",
         "buttons_iixVk9",
         "trust_badge_jyYEmR",
-        "trust_badge_WNrNNp",
         "scroll_indicator_aXzLBx"
       ],
       "name": "Hero Elite",
@@ -173,6 +172,8 @@
         "layout_style": "overlay",
         "split_image_side": "right",
         "split_image_width": 60,
+        "split_image_fit": "cover",
+        "split_image_position": "center center",
         "split_bg_color": "#938181",
         "image_desktop": "shopify://shop_images/weavy-Gemini_2.5_Flash_Nano_Banana_-2026-01-03_at_16.29.41.png",
         "video_url_desktop": "",
