@@ -57,12 +57,26 @@
         {%- if block.settings.rating_label != blank %} {{ block.settings.rating_label }}{%- endif -%}
         {%- if block.settings.segment_1_number != blank or block.settings.segment_1_label != blank -%}
           <span class="hero-elite__rating-sep" aria-hidden="true"> | </span>
-          {%- if block.settings.segment_1_number != blank -%}<strong style="color: {{ block.settings.segment_1_color | default: 'inherit' }}">{{ block.settings.segment_1_number }}</strong>{%- endif -%}
+          {%- if block.settings.segment_1_number != blank -%}
+            {%- if block.settings.segment_1_number_mobile != blank -%}
+              <strong class="hero-elite__num--desktop" style="color: {{ block.settings.segment_1_color | default: 'inherit' }}">{{ block.settings.segment_1_number }}</strong>
+              <strong class="hero-elite__num--mobile" style="color: {{ block.settings.segment_1_color | default: 'inherit' }}">{{ block.settings.segment_1_number_mobile }}</strong>
+            {%- else -%}
+              <strong style="color: {{ block.settings.segment_1_color | default: 'inherit' }}">{{ block.settings.segment_1_number }}</strong>
+            {%- endif -%}
+          {%- endif -%}
           {%- if block.settings.segment_1_label != blank %} {{ block.settings.segment_1_label }}{%- endif -%}
         {%- endif -%}
         {%- if block.settings.segment_2_number != blank or block.settings.segment_2_label != blank -%}
           <span class="hero-elite__rating-sep" aria-hidden="true"> | </span>
-          {%- if block.settings.segment_2_number != blank -%}<strong style="color: {{ block.settings.segment_2_color | default: 'inherit' }}">{{ block.settings.segment_2_number }}</strong>{%- endif -%}
+          {%- if block.settings.segment_2_number != blank -%}
+            {%- if block.settings.segment_2_number_mobile != blank -%}
+              <strong class="hero-elite__num--desktop" style="color: {{ block.settings.segment_2_color | default: 'inherit' }}">{{ block.settings.segment_2_number }}</strong>
+              <strong class="hero-elite__num--mobile" style="color: {{ block.settings.segment_2_color | default: 'inherit' }}">{{ block.settings.segment_2_number_mobile }}</strong>
+            {%- else -%}
+              <strong style="color: {{ block.settings.segment_2_color | default: 'inherit' }}">{{ block.settings.segment_2_number }}</strong>
+            {%- endif -%}
+          {%- endif -%}
           {%- if block.settings.segment_2_label != blank %} {{ block.settings.segment_2_label }}{%- endif -%}
         {%- endif -%}
       </span>

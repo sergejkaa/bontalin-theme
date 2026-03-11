@@ -42,6 +42,8 @@
     --hero-height-desktop: {{ section.settings.height_desktop }}vh;
     {%- if is_split -%}
     --hero-split-image-width: {{ section.settings.split_image_width }}%;
+    --hero-split-image-fit: {{ section.settings.split_image_fit | default: 'cover' }};
+    --hero-split-image-position: {{ section.settings.split_image_position | default: 'center center' }};
     {%- if section.settings.split_bg_color != blank -%}
     --hero-split-bg: {{ section.settings.split_bg_color }};
     {%- endif -%}
@@ -337,6 +339,29 @@
       "default": 45
     },
     {
+      "type": "select",
+      "id": "split_image_fit",
+      "label": "Image fit",
+      "options": [
+        { "value": "cover",   "label": "Cover — fill panel (crop if needed)" },
+        { "value": "contain", "label": "Contain — show full image" }
+      ],
+      "default": "cover"
+    },
+    {
+      "type": "select",
+      "id": "split_image_position",
+      "label": "Image position",
+      "options": [
+        { "value": "center center", "label": "Center" },
+        { "value": "top center",    "label": "Top" },
+        { "value": "bottom center", "label": "Bottom" },
+        { "value": "center left",   "label": "Left" },
+        { "value": "center right",  "label": "Right" }
+      ],
+      "default": "center center"
+    },
+    {
       "type": "color",
       "id": "split_bg_color",
       "label": "Section background color",
@@ -490,7 +515,11 @@
     },
     {
       "type": "header",
-      "content": "📍 Content Position — Desktop"
+      "content": "📍 Content Position & Alignment"
+    },
+    {
+      "type": "paragraph",
+      "content": "Position applies to Overlay layout. Text alignment applies to both Overlay and Split."
     },
     {
       "type": "select",
@@ -814,6 +843,26 @@
           "id": "segment_2_label",
           "label": "Label",
           "default": "members"
+        },
+        {
+          "type": "header",
+          "content": "📱 Mobile compact numbers"
+        },
+        {
+          "type": "paragraph",
+          "content": "Shorter versions shown on mobile only. Leave empty to use full number."
+        },
+        {
+          "type": "text",
+          "id": "segment_1_number_mobile",
+          "label": "Segment 1 — mobile short",
+          "default": "85K"
+        },
+        {
+          "type": "text",
+          "id": "segment_2_number_mobile",
+          "label": "Segment 2 — mobile short",
+          "default": "1M+"
         },
         {
           "type": "header",
