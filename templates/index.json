@@ -130,7 +130,6 @@
         },
         "trust_badge_jyYEmR": {
           "type": "trust_badge",
-          "disabled": true,
           "settings": {
             "icon": "check",
             "text": "30-Day Guarantee",
@@ -162,8 +161,7 @@
         "layout_style": "overlay",
         "split_image_side": "right",
         "split_image_width": 45,
-        "split_bg_color": "",
-        "image_desktop": "shopify://shop_images/weavy-Gemini_2.5_Flash_Nano_Banana_-2025-12-07_at_18.42.04.png",
+        "split_bg_color": "#fd7575",
         "video_url_desktop": "",
         "video_url_mobile": "",
         "video_autoplay": true,
