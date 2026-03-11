@@ -112,6 +112,16 @@
             "button_color_text_2": "#ffffff"
           }
         },
+        "trust_badge_jyYEmR": {
+          "type": "trust_badge",
+          "settings": {
+            "icon": "check",
+            "text": "30-Day Guarantee",
+            "tooltip": "",
+            "icon_color": "#10b981",
+            "text_color": "#f7f5f0"
+          }
+        },
         "scroll_indicator_aXzLBx": {
           "type": "scroll_indicator",
           "settings": {
@@ -126,6 +136,7 @@
         "subheading_NWb4tP",
         "rating_badge_fwLHHH",
         "buttons_iixVk9",
+        "trust_badge_jyYEmR",
         "scroll_indicator_aXzLBx"
       ],
       "name": "Hero Elite",
