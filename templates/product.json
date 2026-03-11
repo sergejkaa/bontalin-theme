@@ -15,7 +15,7 @@
         "inline_rating_iifCgL": {
           "type": "inline_rating",
           "settings": {
-            "rating_value": "4.8",
+            "rating_value": "4.9",
             "rating_label": "stars",
             "segment_1_number": "85,000",
             "segment_1_label": "reviews",
@@ -23,7 +23,7 @@
             "segment_2_label": "members",
             "segment_1_number_mobile": "85K",
             "segment_2_number_mobile": "1M+",
-            "star_color": "#22a06b",
+            "star_color": "#c4ad24",
             "rating_value_color": "",
             "segment_1_color": "",
             "segment_2_color": "",
