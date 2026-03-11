@@ -32,6 +32,7 @@
         },
         "rating_badge_RL64rM": {
           "type": "rating_badge",
+          "disabled": true,
           "settings": {
             "badge_prefix": "Rated",
             "rating_value": "4.8",
