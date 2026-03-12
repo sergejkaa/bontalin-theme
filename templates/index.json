@@ -15,7 +15,7 @@
         "eyebrow_Qntce4": {
           "type": "eyebrow",
           "settings": {
-            "text": "New Collection",
+            "text": "Reconnect With Nature",
             "text_color": "#fafafa"
           }
         },
@@ -191,8 +191,8 @@
         "content_position": "middle-left",
         "content_alignment": "left",
         "content_padding": 48,
-        "content_max_width": 760,
-        "content_gap": 32,
+        "content_max_width": 960,
+        "content_gap": 28,
         "mobile_content_position": "bottom-center",
         "mobile_content_alignment": "center",
         "show_text_below_on_mobile": false,
