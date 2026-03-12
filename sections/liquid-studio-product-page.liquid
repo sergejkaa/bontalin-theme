@@ -707,7 +707,15 @@
               {%- when 'feature-cards' -%}
                 {% render 'blocks-key-benefits', block: block, section: section %}
               {%- when 'inline_rating' -%}
+                {%- assign ir_id = 'ir-' | append: block.id -%}
+                <style>
+                  #{{ ir_id }} { --ir-font-desktop: {{ block.settings.font_size_desktop }}px; --ir-stars-desktop: {{ block.settings.stars_size_desktop }}px; }
+                  @media screen and (max-width: 749px) {
+                    #{{ ir_id }} { --ir-font-mobile: {{ block.settings.font_size_mobile }}px; --ir-stars-mobile: {{ block.settings.stars_size_mobile }}px; }
+                  }
+                </style>
                 <div
+                  id="{{ ir_id }}"
                   class="inline-rating"
                   style="{% if block.settings.text_color != blank %}color: {{ block.settings.text_color }};{% endif %}"
                   {{ block.shopify_attributes }}
@@ -2372,6 +2380,54 @@
         },
         { "type": "text", "id": "segment_1_number_mobile", "label": "Segment 1 — mobile short", "default": "85K" },
         { "type": "text", "id": "segment_2_number_mobile", "label": "Segment 2 — mobile short", "default": "1M+" },
+        {
+          "type": "header",
+          "content": "🖥 Desktop sizes"
+        },
+        {
+          "type": "range",
+          "id": "font_size_desktop",
+          "label": "Font size — desktop",
+          "min": 10,
+          "max": 24,
+          "step": 1,
+          "unit": "px",
+          "default": 13
+        },
+        {
+          "type": "range",
+          "id": "stars_size_desktop",
+          "label": "Stars size — desktop",
+          "min": 12,
+          "max": 36,
+          "step": 1,
+          "unit": "px",
+          "default": 18
+        },
+        {
+          "type": "header",
+          "content": "📱 Mobile sizes"
+        },
+        {
+          "type": "range",
+          "id": "font_size_mobile",
+          "label": "Font size — mobile",
+          "min": 9,
+          "max": 20,
+          "step": 1,
+          "unit": "px",
+          "default": 12
+        },
+        {
+          "type": "range",
+          "id": "stars_size_mobile",
+          "label": "Stars size — mobile",
+          "min": 10,
+          "max": 28,
+          "step": 1,
+          "unit": "px",
+          "default": 14
+        },
         {
           "type": "header",
           "content": "Colors"

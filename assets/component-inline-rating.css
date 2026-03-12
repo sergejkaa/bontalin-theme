@@ -11,14 +11,14 @@
 }
 
 .inline-rating__stars {
-  font-size: 1.8rem;
+  font-size: var(--ir-stars-desktop, 1.8rem);
   line-height: 1;
   letter-spacing: -0.02em;
   flex-shrink: 0;
 }
 
 .inline-rating__text {
-  font-size: 1.35rem;
+  font-size: var(--ir-font-desktop, 1.35rem);
   line-height: 1.4;
 }
 
@@ -33,6 +33,6 @@
   .inline-rating__num--desktop { display: none; }
   .inline-rating__num--mobile  { display: inline; }
 
-  .inline-rating__stars { font-size: 1.4rem; }
-  .inline-rating__text  { font-size: 12px; letter-spacing: -0.01em; }
+  .inline-rating__stars { font-size: var(--ir-stars-mobile, 1.4rem); }
+  .inline-rating__text  { font-size: var(--ir-font-mobile, 12px); letter-spacing: -0.01em; }
 }
