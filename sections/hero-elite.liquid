@@ -469,11 +469,11 @@
       "type": "range",
       "id": "overlay_opacity",
       "min": 0,
-      "max": 100,
+      "max": 90,
       "step": 5,
       "unit": "%",
       "label": "Overlay opacity",
-      "default": 100
+      "default": 35
     },
     {
       "type": "select",
@@ -487,7 +487,7 @@
         { "value": "left",   "label": "Gradient — darker on left" },
         { "value": "right",  "label": "Gradient — darker on right" }
       ],
-      "default": "bottom"
+      "default": "none"
     },
     {
       "type": "header",
@@ -897,6 +897,54 @@
           "id": "text_color",
           "label": "Text color",
           "info": "Leave empty to use color scheme"
+        },
+        {
+          "type": "header",
+          "content": "🖥 Desktop sizes"
+        },
+        {
+          "type": "range",
+          "id": "font_size_desktop",
+          "label": "Font size — desktop",
+          "min": 10,
+          "max": 24,
+          "step": 1,
+          "unit": "px",
+          "default": 13
+        },
+        {
+          "type": "range",
+          "id": "stars_size_desktop",
+          "label": "Stars size — desktop",
+          "min": 12,
+          "max": 36,
+          "step": 1,
+          "unit": "px",
+          "default": 18
+        },
+        {
+          "type": "header",
+          "content": "📱 Mobile sizes"
+        },
+        {
+          "type": "range",
+          "id": "font_size_mobile",
+          "label": "Font size — mobile",
+          "min": 9,
+          "max": 20,
+          "step": 1,
+          "unit": "px",
+          "default": 12
+        },
+        {
+          "type": "range",
+          "id": "stars_size_mobile",
+          "label": "Stars size — mobile",
+          "min": 10,
+          "max": 28,
+          "step": 1,
+          "unit": "px",
+          "default": 14
         }
       ]
     },

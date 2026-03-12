@@ -42,7 +42,15 @@
     </div>
 
   {%- when 'inline_rating' -%}
+    {%- assign ir_id = 'ir-hero-' | append: block.id -%}
+    <style>
+      #{{ ir_id }} { --ir-stars-desktop: {{ block.settings.stars_size_desktop }}px; --ir-font-desktop: {{ block.settings.font_size_desktop }}px; }
+      @media screen and (max-width: 749px) {
+        #{{ ir_id }} { --ir-stars-mobile: {{ block.settings.stars_size_mobile }}px; --ir-font-mobile: {{ block.settings.font_size_mobile }}px; }
+      }
+    </style>
     <div
+      id="{{ ir_id }}"
       class="hero-elite__inline-rating hero-elite__anim"
       style="animation-delay: {{ delay_s }}{% if block.settings.text_color != blank %}; color: {{ block.settings.text_color }}{% endif %}"
       {{ block.shopify_attributes }}
