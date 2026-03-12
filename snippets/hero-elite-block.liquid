@@ -91,9 +91,17 @@
     </div>
 
   {%- when 'trust_badge' -%}
+    {%- assign tb_id = 'tb-hero-' | append: block.id -%}
+    <style>
+      #{{ tb_id }} { --trust-font-desktop: {{ block.settings.font_size_desktop | default: 12 }}px; }
+      @media screen and (max-width: 749px) {
+        #{{ tb_id }} { --trust-font-mobile: {{ block.settings.font_size_mobile | default: 11 }}px; }
+      }
+    </style>
     <div
-      class="hero-elite__trust-row hero-elite__anim"
-      style="animation-delay: {{ delay_s }}{% if block.settings.text_color != blank %}; color: {{ block.settings.text_color }}{% endif %}; --trust-font-size: {{ block.settings.font_size | default: 12 }}px"
+      id="{{ tb_id }}"
+      class="hero-elite__trust-row hero-elite__anim{% if block.settings.mobile_inline %} hero-elite__trust-row--mobile-inline{% endif %}"
+      style="animation-delay: {{ delay_s }}{% if block.settings.text_color != blank %}; color: {{ block.settings.text_color }}{% endif %}"
       {{ block.shopify_attributes }}
     >
       {%- for i in (1..3) -%}

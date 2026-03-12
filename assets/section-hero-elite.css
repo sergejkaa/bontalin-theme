@@ -633,6 +633,12 @@
   gap: 1rem;
 }
 
+.hero-elite__trust-row--mobile-inline {
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 1.2rem;
+}
+
 @media screen and (min-width: 750px) {
   .hero-elite__trust-row {
     flex-direction: row;
@@ -646,8 +652,14 @@
   display: inline-flex;
   align-items: center;
   gap: 0.6rem;
-  font-size: var(--trust-font-size, 1.2rem);
+  font-size: var(--trust-font-desktop, 1.2rem);
   white-space: nowrap;
+}
+
+@media screen and (max-width: 749px) {
+  .hero-elite__trust-item {
+    font-size: var(--trust-font-mobile, 1.1rem);
+  }
 }
 
 .hero-elite__trust-icon {
