@@ -22,7 +22,7 @@
         "inline_rating_neNARE": {
           "type": "inline_rating",
           "settings": {
-            "rating_value": "4.8",
+            "rating_value": "4.9",
             "rating_label": "stars",
             "segment_1_number": "85,000",
             "segment_1_label": "reviews",
