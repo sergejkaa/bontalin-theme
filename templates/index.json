@@ -152,6 +152,7 @@
         },
         "scroll_indicator_aXzLBx": {
           "type": "scroll_indicator",
+          "disabled": true,
           "settings": {
             "arrow_color": "#ffffff",
             "scroll_size": 52
@@ -191,8 +192,8 @@
         "content_alignment": "left",
         "content_padding": 48,
         "content_max_width": 760,
-        "content_gap": 24,
-        "mobile_content_position": "middle-center",
+        "content_gap": 32,
+        "mobile_content_position": "bottom-center",
         "mobile_content_alignment": "center",
         "show_text_below_on_mobile": false,
         "show_text_box": false,
