@@ -34,7 +34,11 @@
             "rating_value_color": "#ffffff",
             "segment_1_color": "#ffffff",
             "segment_2_color": "#ffffff",
-            "text_color": "#dfdfdf"
+            "text_color": "#dfdfdf",
+            "font_size_desktop": 15,
+            "stars_size_desktop": 22,
+            "font_size_mobile": 13,
+            "stars_size_mobile": 14
           }
         },
         "heading_4N3Rcj": {
