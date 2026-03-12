@@ -52,6 +52,7 @@
         },
         "subheading_NWb4tP": {
           "type": "subheading",
+          "disabled": true,
           "settings": {
             "text": "Discover the new season",
             "text_color": "#ffffff"
