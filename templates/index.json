@@ -152,7 +152,6 @@
         },
         "scroll_indicator_aXzLBx": {
           "type": "scroll_indicator",
-          "disabled": true,
           "settings": {
             "arrow_color": "#ffffff",
             "scroll_size": 52
@@ -171,7 +170,7 @@
       ],
       "name": "Hero Elite",
       "settings": {
-        "layout_style": "split",
+        "layout_style": "overlay",
         "split_image_side": "right",
         "split_image_width": 50,
         "split_image_fit": "cover",
