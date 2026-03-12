@@ -150,7 +150,9 @@
             "text_3": "Fast Shipping",
             "tooltip_3": "",
             "icon_color_3": "#10b981",
-            "font_size": 13,
+            "mobile_inline": true,
+            "font_size_desktop": 12,
+            "font_size_mobile": 11,
             "text_color": "#f7f5f0"
           }
         },
