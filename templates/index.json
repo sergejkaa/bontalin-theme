@@ -177,7 +177,7 @@
       ],
       "name": "Hero Elite",
       "settings": {
-        "layout_style": "split",
+        "layout_style": "overlay",
         "split_image_side": "right",
         "split_image_width": 50,
         "split_image_fit": "cover",
@@ -190,7 +190,7 @@
         "video_loop": true,
         "image_behavior": "zoom-in",
         "overlay_color": "#ff0505",
-        "overlay_opacity": 25,
+        "overlay_opacity": 55,
         "overlay_gradient": "none",
         "height_desktop": 95,
         "height_mobile": 85,
