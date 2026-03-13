@@ -122,7 +122,7 @@
         "show_text_box": false,
         "color_scheme": "scheme-2",
         "animation_style": "fade-up",
-        "animation_duration": 900,
+        "animation_duration": 1000,
         "rounded_bottom": false,
         "accessibility_info": "Hero section"
       }
