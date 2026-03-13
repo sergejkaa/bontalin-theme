@@ -280,13 +280,24 @@
     margin-top: 14px;
   }
   #{{ section_id }} .ugc-slider__dot {
+    display: block;
     width: 10px;
     height: 10px;
+    min-width: 0;
+    min-height: 0;
     border-radius: 50%;
     border: 1px solid rgba(0,0,0,0.25);
     background: transparent;
     padding: 0;
+    margin: 0;
     cursor: pointer;
+    flex-shrink: 0;
+    -webkit-appearance: none;
+    appearance: none;
+    box-sizing: content-box;
+    line-height: 0;
+    font-size: 0;
+    overflow: hidden;
   }
   #{{ section_id }} .ugc-slider__dot.is-active {
     background: {{ accent_color }};

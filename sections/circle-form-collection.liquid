@@ -247,18 +247,26 @@
   }
 
   #circle-menu-{{ section.id }} .circle-menu__mobile-dot {
+    display: block;
     width: var(--cm-mobile-dots-size, 8px);
     height: var(--cm-mobile-dots-size, 8px);
+    min-width: 0;
+    min-height: 0;
     border-radius: 999px;
     border: 0;
     padding: 0;
     margin: 0;
     background: var(--cm-mobile-dots-color, #FFFFFF);
-    opacity: 0.35;
+    opacity: 0.4;
     cursor: pointer;
-    transition: width 0.2s ease, opacity 0.2s ease;
+    flex-shrink: 0;
+    transition: width 0.25s ease, opacity 0.25s ease;
     -webkit-appearance: none;
     appearance: none;
+    box-sizing: content-box;
+    line-height: 0;
+    font-size: 0;
+    overflow: hidden;
   }
 
   #circle-menu-{{ section.id }} .circle-menu__mobile-dot.is-active {
