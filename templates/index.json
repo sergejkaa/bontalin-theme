@@ -35,6 +35,28 @@
             "text_color": ""
           }
         },
+        "inline_rating_WmchVz": {
+          "type": "inline_rating",
+          "settings": {
+            "rating_value": "4.8",
+            "rating_label": "stars",
+            "segment_1_number": "85,000",
+            "segment_1_label": "reviews",
+            "segment_2_number": "1,000,000+",
+            "segment_2_label": "members",
+            "segment_1_number_mobile": "85K",
+            "segment_2_number_mobile": "1M+",
+            "star_color": "#22a06b",
+            "rating_value_color": "",
+            "segment_1_color": "",
+            "segment_2_color": "",
+            "text_color": "",
+            "font_size_desktop": 13,
+            "stars_size_desktop": 18,
+            "font_size_mobile": 12,
+            "stars_size_mobile": 14
+          }
+        },
         "rating_badge_tfLU4c": {
           "type": "rating_badge",
           "settings": {
@@ -127,6 +149,7 @@
         "eyebrow_PaFjFG",
         "heading_8kak6X",
         "subheading_Rhcd3Q",
+        "inline_rating_WmchVz",
         "rating_badge_tfLU4c",
         "buttons_eeBBTN",
         "scroll_indicator_GBcyzP"
@@ -138,15 +161,15 @@
         "split_image_width": 45,
         "split_image_fit": "cover",
         "split_image_position": "center center",
-        "split_bg_color": "",
+        "split_bg_color": "#000000",
         "image_desktop": "shopify://shop_images/weavy-Gemini_2.5_Flash_Nano_Banana_-2026-01-03_at_16.28.54.png",
         "video_url_desktop": "",
         "video_url_mobile": "",
         "video_autoplay": true,
         "video_loop": true,
-        "image_behavior": "zoom-in",
+        "image_behavior": "none",
         "overlay_color": "#000000",
-        "overlay_opacity": 45,
+        "overlay_opacity": 35,
         "overlay_gradient": "none",
         "height_desktop": 85,
         "height_mobile": 70,
@@ -160,7 +183,7 @@
         "mobile_content_alignment": "center",
         "show_text_below_on_mobile": false,
         "show_text_box": false,
-        "color_scheme": "",
+        "color_scheme": "scheme-2",
         "animation_style": "fade-up",
         "animation_duration": 900,
         "rounded_bottom": false,
