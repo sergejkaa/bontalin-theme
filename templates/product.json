@@ -409,7 +409,7 @@
         "color_scheme": "scheme-4",
         "dots_color": "#1b4a3d",
         "show_nav": true,
-        "show_nav_mobile": true,
+        "show_nav_mobile": false,
         "nav_color": "#1b4a3d",
         "nav_opacity": 80,
         "max_chars": 180,
