@@ -1731,5 +1731,42 @@
         "info": "Shown when the goal is reached."
       }
     ]
+  },
+  {
+    "name": "Click Spark",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "click_spark_enable",
+        "label": "Enable Click Spark effect",
+        "default": true,
+        "info": "Adds a spark animation on every click across the entire page."
+      },
+      {
+        "type": "color",
+        "id": "click_spark_color",
+        "label": "Spark color",
+        "default": "#F05577"
+      },
+      {
+        "type": "range",
+        "id": "click_spark_size",
+        "label": "Spark size",
+        "min": 16,
+        "max": 80,
+        "step": 2,
+        "default": 30,
+        "unit": "px"
+      },
+      {
+        "type": "range",
+        "id": "click_spark_count",
+        "label": "Number of sparks",
+        "min": 4,
+        "max": 16,
+        "step": 1,
+        "default": 8
+      }
+    ]
   }
 ]

@@ -402,5 +402,15 @@
 
  {% section 'sticky-add' %}
 
+  {%- if settings.click_spark_enable -%}
+    <script src="{{ 'click-spark.js' | asset_url }}" defer></script>
+    <click-spark
+      spark-color="{{ settings.click_spark_color }}"
+      spark-size="{{ settings.click_spark_size }}"
+      spark-count="{{ settings.click_spark_count }}"
+      style="--click-spark-color: {{ settings.click_spark_color }}">
+    </click-spark>
+  {%- endif -%}
+
   </body>
 </html>

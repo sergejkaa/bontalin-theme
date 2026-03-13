@@ -34,9 +34,11 @@
     {% endif %}
 
     <div class="ts-wrapper reveal-trigger" data-ts-wrapper>
+      {%- if section.settings.show_nav -%}
       <button class="ts-nav ts-nav--prev" aria-label="Previous" data-ts-prev>
         {% render 'icon-caret' %}
       </button>
+      {%- endif -%}
 
       <div class="ts-viewport" data-ts-viewport>
         <ul class="ts-track" data-ts-track>
@@ -123,9 +125,11 @@
         </ul>
       </div>
 
+      {%- if section.settings.show_nav -%}
       <button class="ts-nav ts-nav--next" aria-label="Next" data-ts-next>
         {% render 'icon-caret' %}
       </button>
+      {%- endif -%}
     </div>
 
     <div class="ts-dots" role="tablist" aria-label="Testimonials pagination" data-ts-dots></div>
@@ -258,7 +262,13 @@
     #testimonials-{{ sec_id }} .ts-nav--prev{left:16px}
     #testimonials-{{ sec_id }} .ts-nav--next{right:16px}
     #testimonials-{{ sec_id }} .ts-nav--prev svg{ transform:rotate(180deg); }
-    @media (max-width:640px){ #testimonials-{{ sec_id }} .ts-nav{ display:none; } } /* hide on mobile */
+    @media (max-width:640px){ #testimonials-{{ sec_id }} .ts-nav{ display:none; } } /* hide on mobile by default */
+    {%- if section.settings.show_nav_mobile -%}
+    @media (max-width:640px){
+      #testimonials-{{ sec_id }} .ts-nav{ display:grid; }
+      #testimonials-{{ sec_id }} .ts-viewport{ margin: 0 56px; }
+    }
+    {%- endif -%}
 
     /* ===== Dots / CTA ===== */
     #testimonials-{{ sec_id }} .ts-dots{ display:flex; gap:8px; justify-content:center; margin-top:14px; }
@@ -546,6 +556,8 @@
     { "type": "checkbox", "id": "enable_page_width", "label": "Use page width", "default": true },
     { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" },
     { "type": "color", "id": "dots_color", "label": "Dots color", "default": "#666666" },
+    { "type": "checkbox", "id": "show_nav", "label": "Show arrows", "default": true },
+    { "type": "checkbox", "id": "show_nav_mobile", "label": "Show arrows on mobile", "default": false },
     { "type": "color", "id": "nav_color", "label": "Arrows color", "default": "#ffffff" },
     { "type": "range", "id": "nav_opacity", "label": "Arrows opacity", "min": 20, "max": 100, "step": 5, "default": 80 },
 
