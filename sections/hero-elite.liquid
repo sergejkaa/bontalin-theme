@@ -201,16 +201,16 @@
         </div>
       {%- endif -%}
 
-      {%- comment -%} Overlay {%- endcomment -%}
-      {%- assign overlay_gradient = section.settings.overlay_gradient | default: 'none' -%}
-      {%- assign overlay_opacity_val = section.settings.overlay_opacity | default: 35 | times: 0.01 -%}
-      {%- assign overlay_color_val = section.settings.overlay_color | default: '#000000' -%}
-      <div
-        class="hero-elite__overlay{% if overlay_gradient != 'none' %} hero-elite__overlay--{{ overlay_gradient }}{% endif %}"
-        style="position:absolute;top:0;right:0;bottom:0;left:0;z-index:1;pointer-events:none;{% if overlay_gradient == 'none' %}background-color:{{ overlay_color_val }};opacity:{{ overlay_opacity_val }};{% endif %}"
-      ></div>
-
     </div>
+
+    {%- comment -%} Overlay — outside media-wrap to avoid stacking context issues {%- endcomment -%}
+    {%- assign overlay_gradient = section.settings.overlay_gradient | default: 'none' -%}
+    {%- assign overlay_opacity_val = section.settings.overlay_opacity | default: 35 | times: 0.01 -%}
+    {%- assign overlay_color_val = section.settings.overlay_color | default: '#000000' -%}
+    <div
+      class="hero-elite__overlay{% if overlay_gradient != 'none' %} hero-elite__overlay--{{ overlay_gradient }}{% endif %}"
+      style="position:absolute;top:0;right:0;bottom:0;left:0;z-index:1;pointer-events:none;{% if overlay_gradient == 'none' %}background-color:{{ overlay_color_val }};opacity:{{ overlay_opacity_val }};{% endif %}"
+    ></div>
 
     <div class="hero-elite__content-outer page-width">
       <div class="hero-elite__content-box color-{{ section.settings.color_scheme }} gradient">

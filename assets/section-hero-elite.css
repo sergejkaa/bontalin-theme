@@ -131,7 +131,7 @@
 .hero-elite__content-outer {
   position: absolute;
   inset: 0;
-  z-index: 2;
+  z-index: 3;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -397,7 +397,7 @@
   bottom: 2.8rem;
   left: 0;
   right: 0;
-  z-index: 3;
+  z-index: 4;
   display: flex;
   justify-content: center;
   pointer-events: none;
