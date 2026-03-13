@@ -32,9 +32,7 @@
 
 {%- style -%}
   #HeroElite-{{ section.id }} {
-    --hero-overlay-color: {{ section.settings.overlay_color }};
-    --hero-overlay-opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }};
-    --hero-content-padding: {{ section.settings.content_padding }}px;
+--hero-content-padding: {{ section.settings.content_padding }}px;
     --hero-content-max-width: {{ section.settings.content_max_width }}px;
     --hero-content-gap: {{ section.settings.content_gap }}px;
     --hero-content-gap-mobile: {{ section.settings.content_gap_mobile | default: 16 }}px;
@@ -204,7 +202,11 @@
       {%- endif -%}
 
       {%- comment -%} Overlay {%- endcomment -%}
-      <div class="hero-elite__overlay{% if section.settings.overlay_gradient != 'none' %} hero-elite__overlay--{{ section.settings.overlay_gradient }}{% endif %}"></div>
+      {%- assign overlay_gradient = section.settings.overlay_gradient | default: 'none' -%}
+      <div
+        class="hero-elite__overlay{% if overlay_gradient != 'none' %} hero-elite__overlay--{{ overlay_gradient }}{% endif %}"
+        {% if overlay_gradient == 'none' %}style="background-color: {{ section.settings.overlay_color | default: '#000000' }}; opacity: {{ section.settings.overlay_opacity | default: 35 | times: 0.01 }};"{% endif %}
+      ></div>
 
     </div>
 
