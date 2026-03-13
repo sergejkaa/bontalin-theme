@@ -37,6 +37,7 @@
     --hero-content-padding: {{ section.settings.content_padding }}px;
     --hero-content-max-width: {{ section.settings.content_max_width }}px;
     --hero-content-gap: {{ section.settings.content_gap }}px;
+    --hero-content-gap-mobile: {{ section.settings.content_gap_mobile | default: 16 }}px;
     --hero-anim-duration: {{ section.settings.animation_duration }}ms;
     --hero-height-mobile: {{ section.settings.height_mobile }}vh;
     --hero-height-desktop: {{ section.settings.height_desktop }}vh;
@@ -238,36 +239,22 @@
       style="animation-delay: {{ sc_delay_s }}"
       {{ scroll_block.shopify_attributes }}
     >
-      {%- if sc_icon == 'line' -%}
-        <button
-          class="hero-elite__scroll-btn hero-elite__scroll-btn--line"
-          style="color: {{ arrow_color }};"
-          onclick="window.scrollBy({ top: window.innerHeight * 0.85, behavior: 'smooth' })"
-          aria-label="Scroll down"
-          type="button"
-        >
-          <span class="hero-elite__scroll-line-track">
-            <span class="hero-elite__scroll-line-dot"></span>
-          </span>
-        </button>
-      {%- else -%}
-        <button
-          class="hero-elite__scroll-btn"
-          style="color: {{ arrow_color }}; border-color: {{ arrow_color }};"
-          onclick="window.scrollBy({ top: window.innerHeight * 0.85, behavior: 'smooth' })"
-          aria-label="Scroll down"
-          type="button"
-        >
-          {%- case sc_icon -%}
-            {%- when 'chevron' -%}
-              <svg viewBox="0 0 22 22" fill="none" aria-hidden="true"><path d="M4.5 8.5l6.5 6.5 6.5-6.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            {%- when 'double_chevron' -%}
-              <svg viewBox="0 0 22 22" fill="none" aria-hidden="true"><path d="M4.5 6.5l6.5 5.5 6.5-5.5M4.5 12l6.5 5.5 6.5-5.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            {%- else -%}
-              <svg viewBox="0 0 22 22" fill="none" aria-hidden="true"><path d="M11 3v16M3.5 11.5l7.5 7.5 7.5-7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          {%- endcase -%}
-        </button>
-      {%- endif -%}
+      <button
+        class="hero-elite__scroll-btn"
+        style="color: {{ arrow_color }}; border-color: {{ arrow_color }};"
+        onclick="window.scrollBy({ top: window.innerHeight * 0.85, behavior: 'smooth' })"
+        aria-label="Scroll down"
+        type="button"
+      >
+        {%- case sc_icon -%}
+          {%- when 'chevron' -%}
+            <svg viewBox="0 0 22 22" fill="none" aria-hidden="true"><path d="M4.5 8.5l6.5 6.5 6.5-6.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          {%- when 'double_chevron' -%}
+            <svg viewBox="0 0 22 22" fill="none" aria-hidden="true"><path d="M4.5 6.5l6.5 5.5 6.5-5.5M4.5 12l6.5 5.5 6.5-5.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          {%- else -%}
+            <svg viewBox="0 0 22 22" fill="none" aria-hidden="true"><path d="M11 3v16M3.5 11.5l7.5 7.5 7.5-7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        {%- endcase -%}
+      </button>
     </div>
   {%- endif -%}
 
@@ -598,8 +585,18 @@
       "max": 60,
       "step": 2,
       "unit": "px",
-      "label": "Gap between content elements",
+      "label": "Gap — desktop",
       "default": 24
+    },
+    {
+      "type": "range",
+      "id": "content_gap_mobile",
+      "min": 4,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "label": "Gap — mobile",
+      "default": 16
     },
     {
       "type": "header",
@@ -1266,8 +1263,7 @@
           "options": [
             { "value": "arrow",         "label": "Arrow (line + head)" },
             { "value": "chevron",       "label": "Chevron" },
-            { "value": "double_chevron","label": "Double chevron" },
-            { "value": "line",          "label": "Scroll line" }
+            { "value": "double_chevron","label": "Double chevron" }
           ],
           "default": "arrow"
         },

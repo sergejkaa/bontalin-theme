@@ -427,8 +427,7 @@
   will-change: transform, opacity;
 }
 .hero-elite__scroll-btn:hover { opacity: 0.65; }
-.hero-elite__scroll-anchor:has(.hero-elite__scroll-btn:hover) svg,
-.hero-elite__scroll-anchor:has(.hero-elite__scroll-btn:hover) .hero-elite__scroll-line-dot {
+.hero-elite__scroll-anchor:has(.hero-elite__scroll-btn:hover) svg {
   animation-play-state: paused;
 }
 
@@ -460,39 +459,6 @@
   50%       { opacity: 0.2; }
 }
 
-/* ── Icon: scroll line ── */
-.hero-elite__scroll-btn--line {
-  border: none;
-  background: none;
-  width: auto !important;
-  height: auto !important;
-}
-.hero-elite__scroll-line-track {
-  display: block;
-  width: 1.5px;
-  height: 3.6rem;
-  background: currentColor;
-  opacity: 0.35;
-  position: relative;
-  overflow: hidden;
-  border-radius: 1px;
-}
-.hero-elite__scroll-line-dot {
-  display: block;
-  position: absolute;
-  left: 0;
-  width: 100%;
-  height: 1rem;
-  background: currentColor;
-  border-radius: 1px;
-  animation: hero-scroll-line-slide 2s ease-in-out infinite;
-}
-@keyframes hero-scroll-line-slide {
-  0%   { top: -1rem; opacity: 0; }
-  20%  { opacity: 1; }
-  80%  { opacity: 1; }
-  100% { top: 100%;  opacity: 0; }
-}
 
 /* ─── RATING BADGE WRAPPER ─── */
 .hero-elite__rating-wrap {
@@ -551,6 +517,7 @@
 @media screen and (max-width: 749px) {
   .hero-elite__content-outer { padding: 2.4rem 1.6rem; }
   .hero-elite--layout-overlay.hero-elite--has-box .hero-elite__content-box { padding: 2.8rem 2.4rem; }
+  .hero-elite__content-box { gap: var(--hero-content-gap-mobile, 16px); }
   .hero-elite__scroll-anchor { bottom: 2rem; }
   .hero-elite--has-scroll .hero-elite__content-outer {
     padding-bottom: calc(var(--hero-scroll-size-mobile, 40px) + 4rem);
