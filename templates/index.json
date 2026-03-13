@@ -153,15 +153,18 @@
             "icon_color_3": "#10b981",
             "mobile_inline": true,
             "font_size_desktop": 14,
-            "font_size_mobile": 11,
+            "font_size_mobile": 10.5,
             "text_color": "#f7f5f0"
           }
         },
         "scroll_indicator_aXzLBx": {
           "type": "scroll_indicator",
           "settings": {
+            "scroll_icon_style": "arrow",
+            "scroll_anim_style": "bounce",
             "arrow_color": "#ffffff",
-            "scroll_size": 52
+            "scroll_size_desktop": 44,
+            "scroll_size_mobile": 32
           }
         }
       },
