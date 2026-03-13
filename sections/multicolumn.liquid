@@ -156,12 +156,12 @@
           >
             <span class="svg-wrapper">{{ 'icon-caret.svg' | inline_asset_content }}</span>
           </button>
-          <div class="slider-counter caption">
+          <div class="slider-counter caption" style="display:none" aria-hidden="true">
             <span class="slider-counter--current">1</span>
-            <span aria-hidden="true"> / </span>
-            <span class="visually-hidden">{{ 'general.slider.of' | t }}</span>
+            <span> / </span>
             <span class="slider-counter--total">{{ section.blocks.size }}</span>
           </div>
+          <div class="mc-dots-{{ section.id }}" role="tablist" aria-label="Slider pagination"></div>
           <button
             type="button"
             class="slider-button slider-button--next"
@@ -171,6 +171,62 @@
             <span class="svg-wrapper">{{ 'icon-caret.svg' | inline_asset_content }}</span>
           </button>
         </div>
+
+        <style>
+          .mc-dots-{{ section.id }} {
+            display: flex; gap: 6px; align-items: center; justify-content: center; flex: 1;
+          }
+          .mc-dots-{{ section.id }} button {
+            display: block; width: 7px; height: 7px; border-radius: 999px; border: none; padding: 0;
+            -webkit-appearance: none; appearance: none; box-sizing: content-box;
+            min-width: 0; min-height: 0; line-height: 0; font-size: 0; overflow: hidden; flex-shrink: 0;
+            background: currentColor; opacity: .35; cursor: pointer;
+            transition: opacity .2s ease, width .2s ease;
+          }
+          .mc-dots-{{ section.id }} button.is-active { opacity: 1; width: 20px; }
+        </style>
+
+        <script>
+          (function() {
+            var sid = '{{ section.id }}';
+            var sliderEl = document.getElementById('Slider-' + sid);
+            var dotsWrap = document.querySelector('.mc-dots-' + sid);
+            var counterEl = document.querySelector('#Slider-' + sid)
+              ?.closest('slider-component')
+              ?.querySelector('.slider-counter--current');
+
+            if (!sliderEl || !dotsWrap) return;
+
+            var total = {{ section.blocks.size }};
+
+            // Build dots
+            for (var i = 0; i < total; i++) {
+              (function(idx) {
+                var btn = document.createElement('button');
+                btn.type = 'button';
+                btn.setAttribute('role', 'tab');
+                btn.setAttribute('aria-label', 'Slide ' + (idx + 1));
+                if (idx === 0) btn.classList.add('is-active');
+                btn.addEventListener('click', function() {
+                  sliderEl.scrollTo({ left: idx * sliderEl.offsetWidth, behavior: 'smooth' });
+                });
+                dotsWrap.appendChild(btn);
+              })(i);
+            }
+
+            function updateDots(current) {
+              dotsWrap.querySelectorAll('button').forEach(function(d, i) {
+                d.classList.toggle('is-active', i === current - 1);
+              });
+            }
+
+            if (counterEl) {
+              new MutationObserver(function() {
+                updateDots(parseInt(counterEl.textContent) || 1);
+              }).observe(counterEl, { childList: true, subtree: true, characterData: true });
+            }
+          })();
+        </script>
       {%- endif -%}
     </slider-component>
     <div class="center{% if show_mobile_slider %} small-hide medium-hide{% endif %}">
