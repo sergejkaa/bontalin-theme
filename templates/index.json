@@ -9,124 +9,6 @@
  */
 {
   "sections": {
-    "hero_elite_rkY7tA": {
-      "type": "hero-elite",
-      "blocks": {
-        "eyebrow_PaFjFG": {
-          "type": "eyebrow",
-          "settings": {
-            "text": "New Collection",
-            "text_color": ""
-          }
-        },
-        "heading_8kak6X": {
-          "type": "heading",
-          "settings": {
-            "heading": "Elegant by Nature",
-            "heading_size": "hxl",
-            "heading_tag": "h1",
-            "text_color": ""
-          }
-        },
-        "subheading_Rhcd3Q": {
-          "type": "subheading",
-          "settings": {
-            "text": "Discover the new season",
-            "text_color": ""
-          }
-        },
-        "inline_rating_WmchVz": {
-          "type": "inline_rating",
-          "settings": {
-            "rating_value": "4.8",
-            "rating_label": "stars",
-            "segment_1_number": "85,000",
-            "segment_1_label": "reviews",
-            "segment_2_number": "1,000,000+",
-            "segment_2_label": "members",
-            "segment_1_number_mobile": "85K",
-            "segment_2_number_mobile": "1M+",
-            "star_color": "#22a06b",
-            "rating_value_color": "",
-            "segment_1_color": "",
-            "segment_2_color": "",
-            "text_color": "",
-            "font_size_desktop": 13,
-            "stars_size_desktop": 18,
-            "font_size_mobile": 12,
-            "stars_size_mobile": 14
-          }
-        },
-        "buttons_eeBBTN": {
-          "type": "buttons",
-          "settings": {
-            "button_label_1": "Shop Now",
-            "button_link_1": "",
-            "button_style_1": "ghost",
-            "button_color_bg_1": "#ffffff",
-            "button_color_text_1": "#1b4a3d",
-            "button_label_2": "",
-            "button_link_2": "",
-            "button_style_2": "pill-outline",
-            "button_color_bg_2": "#ffffff",
-            "button_color_text_2": "#ffffff"
-          }
-        },
-        "scroll_indicator_GBcyzP": {
-          "type": "scroll_indicator",
-          "settings": {
-            "scroll_icon_style": "arrow",
-            "scroll_anim_style": "bounce",
-            "arrow_color": "#ffffff",
-            "scroll_size_desktop": 44,
-            "scroll_size_mobile": 40
-          }
-        }
-      },
-      "block_order": [
-        "eyebrow_PaFjFG",
-        "heading_8kak6X",
-        "subheading_Rhcd3Q",
-        "inline_rating_WmchVz",
-        "buttons_eeBBTN",
-        "scroll_indicator_GBcyzP"
-      ],
-      "name": "Hero Elite",
-      "settings": {
-        "layout_style": "overlay",
-        "split_image_side": "right",
-        "split_image_width": 45,
-        "split_image_fit": "cover",
-        "split_image_position": "center center",
-        "split_bg_color": "#000000",
-        "image_desktop": "shopify://shop_images/weavy-Gemini_2.5_Flash_Nano_Banana_-2026-01-03_at_16.28.54.png",
-        "video_url_desktop": "",
-        "video_url_mobile": "",
-        "video_autoplay": false,
-        "video_loop": false,
-        "image_behavior": "zoom-in",
-        "overlay_color": "#0d0d0d",
-        "overlay_opacity": 45,
-        "overlay_gradient": "none",
-        "height_desktop": 85,
-        "height_mobile": 70,
-        "content_position": "middle-center",
-        "content_alignment": "center",
-        "content_padding": 48,
-        "content_max_width": 760,
-        "content_gap": 24,
-        "content_gap_mobile": 16,
-        "mobile_content_position": "top-center",
-        "mobile_content_alignment": "center",
-        "show_text_below_on_mobile": false,
-        "show_text_box": false,
-        "color_scheme": "scheme-2",
-        "animation_style": "fade-up",
-        "animation_duration": 1000,
-        "rounded_bottom": false,
-        "accessibility_info": "Hero section"
-      }
-    },
     "hero_elite_YMVm86": {
       "type": "hero-elite",
       "blocks": {
@@ -763,6 +645,8 @@
         "enable_page_width": true,
         "color_scheme": "scheme-4",
         "dots_color": "#1b4a3d",
+        "show_nav": true,
+        "show_nav_mobile": false,
         "nav_color": "#1b4a3d",
         "nav_opacity": 80,
         "max_chars": 180,
@@ -1327,7 +1211,6 @@
     }
   },
   "order": [
-    "hero_elite_rkY7tA",
     "hero_elite_YMVm86",
     "slideshow_custom_UqM993",
     "logo_ticker_7XVqNT",
