@@ -203,9 +203,11 @@
 
       {%- comment -%} Overlay {%- endcomment -%}
       {%- assign overlay_gradient = section.settings.overlay_gradient | default: 'none' -%}
+      {%- assign overlay_opacity_val = section.settings.overlay_opacity | default: 35 | times: 0.01 -%}
+      {%- assign overlay_color_val = section.settings.overlay_color | default: '#000000' -%}
       <div
         class="hero-elite__overlay{% if overlay_gradient != 'none' %} hero-elite__overlay--{{ overlay_gradient }}{% endif %}"
-        {% if overlay_gradient == 'none' %}style="background-color: {{ section.settings.overlay_color | default: '#000000' }}; opacity: {{ section.settings.overlay_opacity | default: 35 | times: 0.01 }};"{% endif %}
+        style="position:absolute;top:0;right:0;bottom:0;left:0;z-index:1;pointer-events:none;{% if overlay_gradient == 'none' %}background-color:{{ overlay_color_val }};opacity:{{ overlay_opacity_val }};{% endif %}"
       ></div>
 
     </div>
@@ -1311,7 +1313,7 @@
   ],
   "presets": [
     {
-      "name": "Hero Elite — Overlay",
+      "name": "Hero Elite",
       "settings": {
         "layout_style": "overlay"
       },
@@ -1322,21 +1324,6 @@
         { "type": "rating_badge" },
         { "type": "buttons" },
         { "type": "scroll_indicator" }
-      ]
-    },
-    {
-      "name": "Hero Elite — Split",
-      "settings": {
-        "layout_style": "split",
-        "content_alignment": "left",
-        "mobile_content_alignment": "left"
-      },
-      "blocks": [
-        { "type": "inline_rating" },
-        { "type": "heading" },
-        { "type": "text" },
-        { "type": "buttons" },
-        { "type": "trust_badge" }
       ]
     }
   ]
