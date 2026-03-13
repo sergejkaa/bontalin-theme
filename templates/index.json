@@ -116,7 +116,7 @@
         "content_max_width": 760,
         "content_gap": 24,
         "content_gap_mobile": 16,
-        "mobile_content_position": "middle-center",
+        "mobile_content_position": "top-center",
         "mobile_content_alignment": "center",
         "show_text_below_on_mobile": false,
         "show_text_box": false,
