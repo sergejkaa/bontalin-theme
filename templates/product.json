@@ -281,7 +281,7 @@
         "media_fit": "contain",
         "gallery_layout": "thumbnail_slider",
         "mobile_thumbnails": "hide",
-        "mobile_hide_dots_color": "#1b4a3d",
+        "mobile_hide_dots_color": "#4a7c6e",
         "media_position": "left",
         "image_zoom": "none",
         "hide_variants": true,
