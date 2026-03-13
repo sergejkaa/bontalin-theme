@@ -1,5 +1,5 @@
 /*
- * -----------------------------------------------------------
+ * ------------------------------------------------------------
  * IMPORTANT: The contents of this file are auto-generated.
  *
  * This file may be updated by the Shopify admin theme editor
@@ -971,7 +971,6 @@
       "name": "Looping Marquee Products",
       "settings": {
         "marquee_heading": "Bestsellers",
-        "heading_size_class": "h1",
         "use_page_width": false,
         "image_ratio": "1-1",
         "focus_y": 16,
