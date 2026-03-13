@@ -349,8 +349,8 @@
       padding-bottom: var(--compare-section-padding-bottom-mobile);
     }
     #compare-{{ section.id }} .compare-table {
-      min-width: 130vw;
-      width: 130vw;
+      min-width: 115vw;
+      width: 115vw;
       table-layout: fixed;
     }
     #compare-{{ section.id }} .compare-heading {
@@ -372,10 +372,10 @@
     #compare-{{ section.id }} .compare-lottie--product {
       transform: translate(calc(-50% + var(--compare-lottie-right)), calc(-100% + var(--compare-lottie-mobile-offset)));
     }
-    /* feature+primary ≈ 100vw visible; secondary starts off-screen, scrollable right */
-    #compare-{{ section.id }} .compare-col--feature { width: 57%; }
-    #compare-{{ section.id }} .compare-col--primary { width: 20%; }
-    #compare-{{ section.id }} .compare-col--secondary { width: 23%; }
+    /* feature+primary ≈ 92% of 115vw ≈ ~315px — fits within padded viewport with ~20px right margin */
+    #compare-{{ section.id }} .compare-col--feature { width: 52%; }
+    #compare-{{ section.id }} .compare-col--primary { width: 21%; }
+    #compare-{{ section.id }} .compare-col--secondary { width: 27%; }
 
     #compare-{{ section.id }} thead th,
     #compare-{{ section.id }} tbody th,
