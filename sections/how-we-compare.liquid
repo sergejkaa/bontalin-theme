@@ -349,8 +349,8 @@
       padding-bottom: var(--compare-section-padding-bottom-mobile);
     }
     #compare-{{ section.id }} .compare-table {
-      min-width: 115vw;
-      width: 115vw;
+      min-width: 120vw;
+      width: 120vw;
       table-layout: fixed;
     }
     #compare-{{ section.id }} .compare-heading {
@@ -372,10 +372,10 @@
     #compare-{{ section.id }} .compare-lottie--product {
       transform: translate(calc(-50% + var(--compare-lottie-right)), calc(-100% + var(--compare-lottie-mobile-offset)));
     }
-    /* feature+primary ≈ 92% of 115vw ≈ ~315px — fits within padded viewport with ~20px right margin */
-    #compare-{{ section.id }} .compare-col--feature { width: 52%; }
-    #compare-{{ section.id }} .compare-col--primary { width: 21%; }
-    #compare-{{ section.id }} .compare-col--secondary { width: 27%; }
+    /* feature+primary = 75% of 120vw = 90vw — fills exactly to section's page-width right edge */
+    #compare-{{ section.id }} .compare-col--feature { width: 55%; }
+    #compare-{{ section.id }} .compare-col--primary { width: 20%; }
+    #compare-{{ section.id }} .compare-col--secondary { width: 25%; }
 
     #compare-{{ section.id }} thead th,
     #compare-{{ section.id }} tbody th,
