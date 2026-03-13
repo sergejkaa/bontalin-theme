@@ -403,12 +403,17 @@
   pointer-events: none;
 }
 
+/* Content clearance — prevent overlap with scroll indicator */
+.hero-elite--has-scroll .hero-elite__content-outer {
+  padding-bottom: calc(var(--hero-scroll-size-desktop, 44px) + 4.5rem);
+}
+
 .hero-elite__scroll-btn {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 4.4rem;
-  height: 4.4rem;
+  width: var(--hero-scroll-size-desktop, 44px);
+  height: var(--hero-scroll-size-desktop, 44px);
   border: 1px solid currentColor;
   border-radius: 50%;
   background: transparent;
@@ -416,19 +421,77 @@
   pointer-events: auto;
   transition: opacity 0.25s ease;
 }
-.hero-elite__scroll-btn:hover { opacity: 0.65; }
-
-/* Arrow inside the button animates — smooth continuous loop */
 .hero-elite__scroll-btn svg {
-  animation: hero-scroll-arrow 3s ease-in-out infinite;
+  width: calc(var(--hero-scroll-size-desktop, 44px) * 0.48);
+  height: calc(var(--hero-scroll-size-desktop, 44px) * 0.48);
   will-change: transform, opacity;
 }
-.hero-elite__scroll-anchor:has(.hero-elite__scroll-btn:hover) svg {
+.hero-elite__scroll-btn:hover { opacity: 0.65; }
+.hero-elite__scroll-anchor:has(.hero-elite__scroll-btn:hover) svg,
+.hero-elite__scroll-anchor:has(.hero-elite__scroll-btn:hover) .hero-elite__scroll-line-dot {
   animation-play-state: paused;
 }
-@keyframes hero-scroll-arrow {
-  0%, 100% { transform: translateY(-2px); opacity: 0.5;  }
-  50%       { transform: translateY(4px);  opacity: 1;    }
+
+/* ── Animation: bounce (default) ── */
+.hero-elite__scroll-anchor[data-scroll-anim="bounce"] .hero-elite__scroll-btn svg,
+.hero-elite__scroll-anchor:not([data-scroll-anim]) .hero-elite__scroll-btn svg {
+  animation: hero-scroll-bounce 3s ease-in-out infinite;
+}
+@keyframes hero-scroll-bounce {
+  0%, 100% { transform: translateY(-2px); opacity: 0.5; }
+  50%       { transform: translateY(4px);  opacity: 1;   }
+}
+
+/* ── Animation: pulse ── */
+.hero-elite__scroll-anchor[data-scroll-anim="pulse"] .hero-elite__scroll-btn {
+  animation: hero-scroll-pulse 2.2s ease-in-out infinite;
+}
+@keyframes hero-scroll-pulse {
+  0%, 100% { transform: scale(1);    opacity: 0.7; }
+  50%       { transform: scale(1.15); opacity: 1;   }
+}
+
+/* ── Animation: blink ── */
+.hero-elite__scroll-anchor[data-scroll-anim="blink"] .hero-elite__scroll-btn {
+  animation: hero-scroll-blink 2s ease-in-out infinite;
+}
+@keyframes hero-scroll-blink {
+  0%, 100% { opacity: 1;   }
+  50%       { opacity: 0.2; }
+}
+
+/* ── Icon: scroll line ── */
+.hero-elite__scroll-btn--line {
+  border: none;
+  background: none;
+  width: auto !important;
+  height: auto !important;
+}
+.hero-elite__scroll-line-track {
+  display: block;
+  width: 1.5px;
+  height: 3.6rem;
+  background: currentColor;
+  opacity: 0.35;
+  position: relative;
+  overflow: hidden;
+  border-radius: 1px;
+}
+.hero-elite__scroll-line-dot {
+  display: block;
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 1rem;
+  background: currentColor;
+  border-radius: 1px;
+  animation: hero-scroll-line-slide 2s ease-in-out infinite;
+}
+@keyframes hero-scroll-line-slide {
+  0%   { top: -1rem; opacity: 0; }
+  20%  { opacity: 1; }
+  80%  { opacity: 1; }
+  100% { top: 100%;  opacity: 0; }
 }
 
 /* ─── RATING BADGE WRAPPER ─── */
@@ -489,6 +552,17 @@
   .hero-elite__content-outer { padding: 2.4rem 1.6rem; }
   .hero-elite--layout-overlay.hero-elite--has-box .hero-elite__content-box { padding: 2.8rem 2.4rem; }
   .hero-elite__scroll-anchor { bottom: 2rem; }
+  .hero-elite--has-scroll .hero-elite__content-outer {
+    padding-bottom: calc(var(--hero-scroll-size-mobile, 40px) + 4rem);
+  }
+  .hero-elite__scroll-btn {
+    width: var(--hero-scroll-size-mobile, 40px);
+    height: var(--hero-scroll-size-mobile, 40px);
+  }
+  .hero-elite__scroll-btn svg {
+    width: calc(var(--hero-scroll-size-mobile, 40px) * 0.48);
+    height: calc(var(--hero-scroll-size-mobile, 40px) * 0.48);
+  }
 }
 
 /* ─── REDUCED MOTION ─── */

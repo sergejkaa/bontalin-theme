@@ -50,13 +50,11 @@
     {%- endif -%}
   }
   {%- if scroll_block != nil -%}
-  #HeroElite-{{ section.id }} .hero-elite__scroll-btn {
-    width: {{ scroll_block.settings.scroll_size }}px;
-    height: {{ scroll_block.settings.scroll_size }}px;
-  }
-  #HeroElite-{{ section.id }} .hero-elite__scroll-btn svg {
-    width: calc({{ scroll_block.settings.scroll_size }}px * 0.48);
-    height: calc({{ scroll_block.settings.scroll_size }}px * 0.48);
+  {%- assign sc_d = scroll_block.settings.scroll_size_desktop | default: 44 -%}
+  {%- assign sc_m = scroll_block.settings.scroll_size_mobile  | default: 40 -%}
+  #HeroElite-{{ section.id }} {
+    --hero-scroll-size-desktop: {{ sc_d }}px;
+    --hero-scroll-size-mobile: {{ sc_m }}px;
   }
   {%- endif -%}
 {%- endstyle -%}
@@ -74,7 +72,8 @@
     {% if section.settings.rounded_bottom %} hero-elite--rounded-bottom{% endif %}
     {% if is_split and section.settings.split_image_side == 'left' %} hero-elite--split-reverse{% endif %}
     {% if section.settings.show_text_below_on_mobile and is_split == false %} hero-elite--mobile-text-below{% endif %}
-    {% if has_separate_mobile == false and is_split == false %} hero-elite--no-separate-mobile{% endif %}"
+    {% if has_separate_mobile == false and is_split == false %} hero-elite--no-separate-mobile{% endif %}
+    {% if scroll_block != nil %} hero-elite--has-scroll{% endif %}"
   aria-label="{{ section.settings.accessibility_info | default: shop.name | escape }}"
 >
 
@@ -229,23 +228,46 @@
       assign sc_delay = section.blocks.size | times: 0.14 | plus: 0.4
       assign sc_delay_s = sc_delay | append: 's'
       assign arrow_color = scroll_block.settings.arrow_color | default: '#ffffff'
+      assign sc_icon = scroll_block.settings.scroll_icon_style | default: 'arrow'
+      assign sc_anim = scroll_block.settings.scroll_anim_style | default: 'bounce'
     -%}
     <div
       class="hero-elite__scroll-anchor hero-elite__anim"
+      data-scroll-icon="{{ sc_icon }}"
+      data-scroll-anim="{{ sc_anim }}"
       style="animation-delay: {{ sc_delay_s }}"
       {{ scroll_block.shopify_attributes }}
     >
-      <button
-        class="hero-elite__scroll-btn"
-        style="color: {{ arrow_color }}; border-color: {{ arrow_color }};"
-        onclick="window.scrollBy({ top: window.innerHeight * 0.85, behavior: 'smooth' })"
-        aria-label="Scroll down"
-        type="button"
-      >
-        <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path d="M11 3v16M3.5 11.5l7.5 7.5 7.5-7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </button>
+      {%- if sc_icon == 'line' -%}
+        <button
+          class="hero-elite__scroll-btn hero-elite__scroll-btn--line"
+          style="color: {{ arrow_color }};"
+          onclick="window.scrollBy({ top: window.innerHeight * 0.85, behavior: 'smooth' })"
+          aria-label="Scroll down"
+          type="button"
+        >
+          <span class="hero-elite__scroll-line-track">
+            <span class="hero-elite__scroll-line-dot"></span>
+          </span>
+        </button>
+      {%- else -%}
+        <button
+          class="hero-elite__scroll-btn"
+          style="color: {{ arrow_color }}; border-color: {{ arrow_color }};"
+          onclick="window.scrollBy({ top: window.innerHeight * 0.85, behavior: 'smooth' })"
+          aria-label="Scroll down"
+          type="button"
+        >
+          {%- case sc_icon -%}
+            {%- when 'chevron' -%}
+              <svg viewBox="0 0 22 22" fill="none" aria-hidden="true"><path d="M4.5 8.5l6.5 6.5 6.5-6.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            {%- when 'double_chevron' -%}
+              <svg viewBox="0 0 22 22" fill="none" aria-hidden="true"><path d="M4.5 6.5l6.5 5.5 6.5-5.5M4.5 12l6.5 5.5 6.5-5.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            {%- else -%}
+              <svg viewBox="0 0 22 22" fill="none" aria-hidden="true"><path d="M11 3v16M3.5 11.5l7.5 7.5 7.5-7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          {%- endcase -%}
+        </button>
+      {%- endif -%}
     </div>
   {%- endif -%}
 
@@ -1238,20 +1260,53 @@
       "limit": 1,
       "settings": [
         {
+          "type": "select",
+          "id": "scroll_icon_style",
+          "label": "Icon style",
+          "options": [
+            { "value": "arrow",         "label": "Arrow (line + head)" },
+            { "value": "chevron",       "label": "Chevron" },
+            { "value": "double_chevron","label": "Double chevron" },
+            { "value": "line",          "label": "Scroll line" }
+          ],
+          "default": "arrow"
+        },
+        {
+          "type": "select",
+          "id": "scroll_anim_style",
+          "label": "Animation style",
+          "options": [
+            { "value": "bounce", "label": "Bounce down" },
+            { "value": "pulse",  "label": "Pulse" },
+            { "value": "blink",  "label": "Blink" }
+          ],
+          "default": "bounce"
+        },
+        {
           "type": "color",
           "id": "arrow_color",
-          "label": "Arrow & border color",
+          "label": "Color",
           "default": "#ffffff"
         },
         {
           "type": "range",
-          "id": "scroll_size",
-          "min": 32,
+          "id": "scroll_size_desktop",
+          "min": 28,
           "max": 80,
           "step": 4,
           "unit": "px",
-          "label": "Button size",
+          "label": "Size — desktop",
           "default": 44
+        },
+        {
+          "type": "range",
+          "id": "scroll_size_mobile",
+          "min": 24,
+          "max": 64,
+          "step": 4,
+          "unit": "px",
+          "label": "Size — mobile",
+          "default": 40
         }
       ]
     }
