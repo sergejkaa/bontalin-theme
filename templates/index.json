@@ -766,57 +766,6 @@
         "padding_bottom_mobile": 40
       }
     },
-    "image_with_text_custom_PWwA4Y": {
-      "type": "image-with-text-custom",
-      "blocks": {
-        "heading_JGhbQB": {
-          "type": "heading",
-          "settings": {
-            "heading": "Carpathian Amanita Muscaria",
-            "heading_size": "h1"
-          }
-        },
-        "text_L3bmAb": {
-          "type": "text",
-          "settings": {
-            "text": "<p>Sourced from the Carpathian region and prepared with care, this Amanita Muscaria supplement is designed to support calm, balance, and mindful well-being.</p>",
-            "text_style": "body"
-          }
-        },
-        "button_zFtdAg": {
-          "type": "button",
-          "settings": {
-            "button_label": "Discover Amanita",
-            "button_link": "shopify://products/amanita-muscaria-extract-powder",
-            "button_style_secondary": false
-          }
-        }
-      },
-      "block_order": [
-        "heading_JGhbQB",
-        "text_L3bmAb",
-        "button_zFtdAg"
-      ],
-      "custom_css": [
-        "img {border-radius: 10px;}"
-      ],
-      "name": "💜Image with text Custom",
-      "settings": {
-        "height": "adapt",
-        "desktop_image_width": "medium",
-        "layout": "image_first",
-        "image_behavior": "none",
-        "content_layout": "no-overlap",
-        "desktop_content_position": "middle",
-        "desktop_content_alignment": "left",
-        "mobile_content_alignment": "left",
-        "section_color_scheme": "scheme-4",
-        "color_scheme": "scheme-4",
-        "btn_glow": "#1b4a3d",
-        "padding_top": 40,
-        "padding_bottom": 36
-      }
-    },
     "waves_49czhC": {
       "type": "waves",
       "name": "Animated Wave Divider",
@@ -882,7 +831,7 @@
       ],
       "name": "t:sections.multicolumn.presets.name",
       "settings": {
-        "title": "So, why Naturena?",
+        "title": "So, why Bontalin?",
         "heading_size": "h1",
         "image_width": "third",
         "image_ratio": "adapt",
@@ -894,7 +843,7 @@
         "color_scheme": "scheme-2",
         "columns_mobile": "1",
         "swipe_on_mobile": true,
-        "dots_color": "#f7f5f0",
+        "dots_color": "#1d3557",
         "padding_top": 36,
         "padding_bottom": 36
       }
@@ -1216,7 +1165,6 @@
     "collection_list_wiKHpx",
     "testimonials_slider_Th6Nzd",
     "how_we_compare_7VpxCL",
-    "image_with_text_custom_PWwA4Y",
     "waves_49czhC",
     "multicolumn_xaBPEm",
     "waves_U4V6NX",
