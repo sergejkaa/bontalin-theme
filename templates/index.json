@@ -410,7 +410,7 @@
       "type": "waves",
       "name": "Animated Wave Divider",
       "settings": {
-        "color_scheme": "scheme-4",
+        "color_scheme": "scheme-1",
         "color_band": 50,
         "wave1_color": "#bee3f8",
         "wave1_opacity": 20,
@@ -477,7 +477,7 @@
       "type": "waves",
       "name": "Animated Wave Divider",
       "settings": {
-        "color_scheme": "scheme-4",
+        "color_scheme": "scheme-1",
         "color_band": 50,
         "wave1_color": "#bee3f8",
         "wave1_opacity": 20,
