@@ -50,7 +50,7 @@
         "enable_country_selector": true,
         "enable_language_selector": true,
         "enable_customer_avatar": true,
-        "active_menu_text_decoration_color": "#ffd9b3",
+        "active_menu_text_decoration_color": "#4ea8de",
         "active_menu_text_decoration_thickness": "1.5px",
         "active_menu_text_underline_offset": "4px",
         "cart_count_bubble_bg_color": "#ffd9b3",
