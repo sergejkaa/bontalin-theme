@@ -127,13 +127,13 @@
             "button_label_1": "",
             "button_link_1": "shopify://collections/all",
             "button_style_1": "outline",
-            "button_color_bg_1": "#1b4a3d",
-            "button_color_text_1": "#1b4a3d",
+            "button_color_bg_1": "#1d3557",
+            "button_color_text_1": "#eaf6ff",
             "button_label_2": "Shop Now",
-            "button_link_2": "shopify://products/lions-mane-focus-extract-powder",
-            "button_style_2": "solid",
-            "button_color_bg_2": "#1b4a3d",
-            "button_color_text_2": "#ffffff"
+            "button_link_2": "",
+            "button_style_2": "pill-solid",
+            "button_color_bg_2": "#1d3557",
+            "button_color_text_2": "#eaf6ff"
           }
         },
         "trust_badge_jyYEmR": {
@@ -186,7 +186,6 @@
         "split_image_fit": "cover",
         "split_image_position": "center center",
         "split_bg_color": "#938181",
-        "image_desktop": "shopify://shop_images/weavy-Gemini_2.5_Flash_Nano_Banana_-2026-01-03_at_16.29.41.png",
         "video_url_desktop": "",
         "video_url_mobile": "",
         "video_autoplay": true,
@@ -220,7 +219,6 @@
         "slide_6QmCLy": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/weavy-Gemini_2.5_Flash_Nano_Banana_-2025-12-07_at_18.42.04.png",
             "image_overlay_opacity": 40,
             "heading": "Daily Balance Starts Here",
             "heading_size": "h1",
@@ -755,7 +753,6 @@
         "secondary_text_color": "#123643",
         "icon_size": 32,
         "icon_stroke": 3,
-        "primary_image": "shopify://shop_images/Frame_342_1.png",
         "primary_image_max_width": 140,
         "primary_label": "Nutrii Deep Sleep",
         "secondary_image_max_width": 80,
@@ -804,7 +801,6 @@
       ],
       "name": "💜Image with text Custom",
       "settings": {
-        "image": "shopify://shop_images/weavy-Gemini_2.5_Flash_Nano_Banana_-2026-01-01_at_15.53.41.png",
         "height": "adapt",
         "desktop_image_width": "medium",
         "layout": "image_first",
@@ -850,7 +846,6 @@
         "column_7QHtRR": {
           "type": "column",
           "settings": {
-            "image": "shopify://shop_images/weavy-Gemini_2.5_Flash__Nano_Banana_-2026-01-03_at_14.49.57-removebg-preview_1.png",
             "title": "Clean Mushroom Formula",
             "text": "<p>No artificial fillers or additives. Carefully selected mushrooms and clean preparation keep our formulas simple and transparent.</p>",
             "link_label": "",
@@ -860,7 +855,6 @@
         "column_Mcd67P": {
           "type": "column",
           "settings": {
-            "image": "shopify://shop_images/weavy-Gemini_2.5_Flash_Nano_Banana_-2026-01-03_at_14.42.54_2.png",
             "title": "Trusted Quality",
             "text": "<p>Every batch is prepared with attention to quality, consistency, and responsible sourcing.</p>",
             "link_label": "",
@@ -870,7 +864,6 @@
         "column_ttCTqJ": {
           "type": "column",
           "settings": {
-            "image": "shopify://shop_images/weavy-Gemini_2.5_Flash_Nano_Banana_-2026-01-03_at_14.42.20_1.png",
             "title": "Fast Shipping",
             "text": "<p>Orders are processed quickly and shipped with care, so you receive your supplements fresh and on time, wherever you are.</p>",
             "link_label": "",
@@ -1016,6 +1009,7 @@
       "name": "Looping Marquee Products",
       "settings": {
         "marquee_heading": "BESTSELLERS",
+        "heading_size": "h1",
         "use_page_width": false,
         "image_ratio": "3-4",
         "focus_y": 12,
