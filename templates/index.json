@@ -435,7 +435,7 @@
       "name": "Trust Metrics Bar",
       "settings": {
         "use_color_scheme": true,
-        "color_scheme": "scheme-1",
+        "color_scheme": "scheme-2",
         "grad_direction": "90deg",
         "grad_left": "#121212",
         "grad_right": "#a78bfa",
@@ -503,7 +503,7 @@
         "featured_collection_7f3DLK": {
           "type": "featured_collection",
           "settings": {
-            "collection": "focus-mental-clarity"
+            "collection": "apple-iphones"
           }
         },
         "featured_collection_g73dtA": {
