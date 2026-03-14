@@ -961,57 +961,57 @@
     "looping_products_z7kqxX": {
       "type": "looping-products",
       "blocks": {
-        "product_xrF9ei": {
+        "product_3tjEWG": {
           "type": "product",
           "settings": {
-            "product": "amanita-muscaria-extract-powder"
+            "product": "iphone-11-refurbished"
           }
         },
-        "product_ERtQeQ": {
+        "product_f44iWR": {
           "type": "product",
           "settings": {
-            "product": "chaga-immune-shield-extract-powder"
+            "product": "iphone-12-refurbished"
           }
         },
-        "product_bBjyTJ": {
+        "product_bzDyaT": {
           "type": "product",
           "settings": {
-            "product": "cordyceps-natural-energy-extract-powder"
+            "product": "apple-iphone-15-refurbished"
           }
         },
-        "product_DfzzgE": {
+        "product_gy9peJ": {
           "type": "product",
           "settings": {
-            "product": "lions-mane-focus-extract-powder"
+            "product": "iphone-se-2020-schwarz-generaluberholt"
           }
         },
-        "product_kqRMpK": {
+        "product_TffhMf": {
           "type": "product",
           "settings": {
-            "product": "reishi-calm-and-balance-extract-powder"
+            "product": "apple-iphone-14-refurbished"
           }
         },
-        "product_wTUtzQ": {
+        "product_DK86PK": {
           "type": "product",
           "settings": {
-            "product": "spirulina-daily-greens-superfood-powder"
+            "product": "apple-iphone-15-refurbished"
           }
         }
       },
       "block_order": [
-        "product_xrF9ei",
-        "product_ERtQeQ",
-        "product_bBjyTJ",
-        "product_DfzzgE",
-        "product_kqRMpK",
-        "product_wTUtzQ"
+        "product_3tjEWG",
+        "product_f44iWR",
+        "product_bzDyaT",
+        "product_gy9peJ",
+        "product_TffhMf",
+        "product_DK86PK"
       ],
       "name": "Looping Marquee Products",
       "settings": {
         "marquee_heading": "BESTSELLERS",
         "heading_size": "h1",
         "use_page_width": false,
-        "image_ratio": "3-4",
+        "image_ratio": "1-1",
         "focus_y": 12,
         "product_title_color": "#4e4e4e",
         "title_size": "1.6rem",
