@@ -526,7 +526,7 @@
       ],
       "name": "t:sections.collection-list.presets.name",
       "settings": {
-        "title": "Shop By Benefit",
+        "title": "Categories",
         "heading_size": "h1",
         "image_ratio": "adapt",
         "columns_desktop": 3,
@@ -758,7 +758,7 @@
         "secondary_image_max_width": 80,
         "secondary_label": "OTHERS",
         "content_max_width": 1020,
-        "section_background": "#f7f5f0",
+        "section_background": "#eaf6ff",
         "padding_top": 64,
         "padding_top_mobile": 40,
         "padding_bottom": 64,
