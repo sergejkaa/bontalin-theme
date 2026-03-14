@@ -438,7 +438,7 @@
         "color_scheme": "scheme-2",
         "grad_direction": "90deg",
         "grad_left": "#000000",
-        "grad_right": "#A78BFA",
+        "grad_right": "#a78bfa",
         "grad_start": 79,
         "grad_end": 100,
         "use_page_width": true,
@@ -467,7 +467,7 @@
         "value_size": 42,
         "sub_color": "#213e66",
         "sub_size": 13,
-        "star_color": "#00c6ff",
+        "star_color": "#f4964b",
         "stars_size": 21,
         "enable_anim": false,
         "anim_duration": 1200
