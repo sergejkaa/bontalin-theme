@@ -467,8 +467,8 @@
         "value_size": 42,
         "sub_color": "#213e66",
         "sub_size": 13,
-        "star_color": "#10b981",
-        "stars_size": 19,
+        "star_color": "#00c6ff",
+        "stars_size": 21,
         "enable_anim": false,
         "anim_duration": 1200
       }
