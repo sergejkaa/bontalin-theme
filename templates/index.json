@@ -435,7 +435,7 @@
       "name": "Trust Metrics Bar",
       "settings": {
         "use_color_scheme": true,
-        "color_scheme": "scheme-2",
+        "color_scheme": "scheme-1",
         "grad_direction": "90deg",
         "grad_left": "#121212",
         "grad_right": "#a78bfa",
@@ -468,7 +468,7 @@
         "sub_color": "#1d3557",
         "sub_size": 14,
         "star_color": "#fbbf24",
-        "stars_size": 23,
+        "stars_size": 20,
         "enable_anim": false,
         "anim_duration": 1700
       }
