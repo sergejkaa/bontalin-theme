@@ -534,7 +534,7 @@
         "show_view_all": false,
         "columns_mobile": "1",
         "swipe_on_mobile": true,
-        "mobile_carousel_dots_color": "#1b4a3d",
+        "mobile_carousel_dots_color": "#1d3557",
         "padding_top": 36,
         "padding_bottom": 52
       }
