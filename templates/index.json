@@ -719,7 +719,7 @@
       "name": "💜How we compare",
       "settings": {
         "heading_text": "How We Compare",
-        "heading_color": "#4b4b4b",
+        "heading_color": "#1d3557",
         "heading_size": 42,
         "heading_spacing": 58,
         "heading_weight": "700",
@@ -759,7 +759,7 @@
         "secondary_image_max_width": 80,
         "secondary_label": "OTHERS",
         "content_max_width": 1020,
-        "section_background": "#eaf6ff",
+        "section_background": "#ffffff",
         "padding_top": 64,
         "padding_top_mobile": 40,
         "padding_bottom": 64,
