@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "hero_elite_YMVm86": {
@@ -73,6 +82,16 @@
       "name": "Hero Elite",
       "settings": {
         "layout_style": "overlay",
+        "split_image_side": "right",
+        "split_image_width": 45,
+        "split_image_fit": "cover",
+        "split_image_position": "center center",
+        "split_bg_color": "",
+        "video_url_desktop": "",
+        "video_url_mobile": "",
+        "video_autoplay": true,
+        "video_loop": true,
+        "image_behavior": "zoom-in",
         "overlay_color": "#1d3557",
         "overlay_opacity": 60,
         "overlay_gradient": "none",
@@ -242,6 +261,11 @@
       "settings": {
         "use_color_scheme": true,
         "color_scheme": "scheme-3",
+        "grad_direction": "90deg",
+        "grad_left": "#000000",
+        "grad_right": "#a78bfa",
+        "grad_start": 79,
+        "grad_end": 100,
         "use_page_width": true,
         "pad_top": 48,
         "pad_bottom": 48,
@@ -367,6 +391,9 @@
         "color_scheme": "scheme-2",
         "full_width": true,
         "enable_gradient_text_animation": false,
+        "gradient_text_color_1": "#f0963c",
+        "gradient_text_color_2": "#2477ca",
+        "gradient_text_color_3": "#f38b23",
         "padding_top": 56,
         "padding_bottom": 56
       }
@@ -500,30 +527,6 @@
         "padding_top": 56,
         "padding_bottom": 56
       }
-    },
-    "waves_EPyJwQ": {
-      "type": "waves",
-      "name": "Wave Divider — Pre-Footer",
-      "settings": {
-        "color_scheme": "scheme-4",
-        "color_band": 50,
-        "wave1_color": "#1d3557",
-        "wave1_opacity": 100,
-        "front_wave_solid_floor": true,
-        "wave2_color": "#1d3557",
-        "wave2_opacity": 80,
-        "wave2_solid_floor": false,
-        "wave3_color": "#1d3557",
-        "wave3_opacity": 60,
-        "wave3_solid_floor": false,
-        "wave4_color": "#1d3557",
-        "wave4_opacity": 40,
-        "wave4_solid_floor": false,
-        "mobile_wave_height": 14,
-        "desktop_wave_height": 36,
-        "wave_speed": 14,
-        "flip_wave": false
-      }
     }
   },
   "order": [
@@ -535,7 +538,6 @@
     "multicolumn_xaBPEm",
     "rich_text_rD4GYe",
     "testimonials_slider_Th6Nzd",
-    "newsletter_BakW9V",
-    "waves_EPyJwQ"
+    "newsletter_BakW9V"
   ]
 }
