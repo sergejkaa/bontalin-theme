@@ -148,6 +148,7 @@
     "free_shipping_upsell_variant_text_color": "#606060",
     "free_shipping_upsell_dot_color": "#1b4a3d",
     "free_shipping_upsell_arrow_color": "#1b4a3d",
+    "click_spark_enable": false,
     "click_spark_color": "#050505",
     "sections": {
       "main-password-header": {
